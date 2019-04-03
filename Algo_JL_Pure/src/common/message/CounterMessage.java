@@ -1,10 +1,12 @@
 package common.message;
 
+import peersim.core.Node;
+
 /**
  * <p>Classe representant un message transportant un compteur.</p>
  * <p>Ne contient que le compteur et l'ID de la ressource associe.</p>
  */
-public class CounterMessage {
+public class CounterMessage extends Message {
 
     // Variables.
 
@@ -20,7 +22,9 @@ public class CounterMessage {
 
     // Constructors.
 
-    public CounterMessage(int resourceID, long counter) {
+    public CounterMessage(int resourceID, long counter, Node sender) {
+        super(sender);
+
         this.resourceID = resourceID;
         this.counter = counter;
     }

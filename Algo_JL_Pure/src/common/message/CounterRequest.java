@@ -1,9 +1,11 @@
 package common.message;
 
+import peersim.core.Node;
+
 /**
  * <p>Represente une requete de compteur.</p>
  */
-public class CounterRequest {
+public class CounterRequest extends Message{
 
     // Variables.
 
@@ -13,20 +15,22 @@ public class CounterRequest {
     private final int resourceID;
 
     /**
-     * <p>L'ID du noeud qui envoie la requete.</p>
-     */
-    private final long nodeID;
-
-    /**
      * <p>L'id de la requete, permet ensuite de comparer pour savoir s'il elles sont obselete ou non.</p>
      */
     private final long requestID;
 
     // Constructors.
 
-    public CounterRequest(int resourceID, long nodeID, long requestID) {
+    /**
+     *
+     * @param resourceID
+     * @param requestID
+     * @param sender
+     */
+    public CounterRequest(int resourceID, long requestID, Node sender) {
+        super(sender);
+
         this.resourceID = resourceID;
-        this.nodeID = nodeID;
         this.requestID = requestID;
     }
 
@@ -36,10 +40,6 @@ public class CounterRequest {
 
     public int getResourceID() {
         return this.resourceID;
-    }
-
-    public long getNodeID() {
-        return nodeID;
     }
 
     public long getRequestID() {

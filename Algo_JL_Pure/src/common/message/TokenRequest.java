@@ -1,10 +1,12 @@
 package common.message;
 
+import peersim.core.Node;
+
 /**
  * <p>Represente une requete de ressource.</p>
  * <p>Lorsqu'un noeud veut une ou plusieurs ressource, il cree une requete pour chaque ressource et lui envoie.</p>
  */
-public class ResourceRequest {
+public class TokenRequest extends Message {
 
     // Variables.
 
@@ -12,11 +14,6 @@ public class ResourceRequest {
      * <p>L'ID de la ressource a qui est destine la requete.</p>
      */
     private final int resourceID;
-
-    /**
-     * <p>L'ID du noeud qui envoie la requete.</p>
-     */
-    private final long nodeID;
 
     /**
      * <p>L'id de la requete, permet ensuite de comparer pour savoir s'il elles sont obselete ou non.</p>
@@ -30,9 +27,17 @@ public class ResourceRequest {
 
     // Constructors.
 
-    public ResourceRequest(int resourceID, long nodeID, long requestID, long[] vectorCounter) {
+    /**
+     *
+     * @param resourceID
+     * @param requestID
+     * @param vectorCounter
+     * @param sender
+     */
+    public TokenRequest(int resourceID, long requestID, long[] vectorCounter, Node sender) {
+        super(sender);
+
         this.resourceID = resourceID;
-        this.nodeID = nodeID;
         this.requestID = requestID;
 
         long average = 0;
@@ -49,10 +54,6 @@ public class ResourceRequest {
 
     public int getResourceID() {
         return this.resourceID;
-    }
-
-    public long getNodeID() {
-        return nodeID;
     }
 
     public long getRequestID() {

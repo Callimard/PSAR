@@ -1,12 +1,13 @@
 package common.message;
 
 import common.util.Token;
+import peersim.core.Node;
 
 /**
  * <p>Classe representant un message transportant un jeton.</p>
  * <p>Ne contient que le jeton et l'ID de la ressource associe.</p>
  */
-public class TokenMessage {
+public class TokenMessage extends Message {
 
     // Variables.
 
@@ -22,7 +23,9 @@ public class TokenMessage {
 
     // Constructors.
 
-    public TokenMessage(int resourceID, Token token) {
+    public TokenMessage(int resourceID, Token token, Node sender) {
+        super(sender);
+
         this.resourceID = resourceID;
         this.token = token;
     }
