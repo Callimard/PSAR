@@ -1,0 +1,18 @@
+simulation.cycle 50
+simulation.endtime 50000
+
+network.size 10
+network.node GeneralNode
+
+random.seed 45
+
+protocol.transport UniformRandomTransport
+protocol.transport.maxdelay 25
+protocol.transport.mindelay 10
+
+protocol.algoJL project.AlgoJL
+protocol.algoJL.tr transport
+protocol.algoJL.nb_resource 4
+
+init.algoJLInit project.InitJL
+init.algoJLInit jl algoJL
