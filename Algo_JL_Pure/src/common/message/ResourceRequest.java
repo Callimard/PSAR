@@ -1,9 +1,10 @@
-package common;
+package common.message;
 
 /**
- * <p>Represente une requete de compteur.</p>
+ * <p>Represente une requete de ressource.</p>
+ * <p>Lorsqu'un noeud veut une ou plusieurs ressource, il cree une requete pour chaque ressource et lui envoie.</p>
  */
-public class CounterRequest {
+public class ResourceRequest {
 
     // Variables.
 
@@ -22,12 +23,24 @@ public class CounterRequest {
      */
     private final long requestID;
 
+    /**
+     * <p>La note calcule à partir du vecteur de counter donne en parametre au constructeur.</p>
+     */
+    private final double mark;
+
     // Constructors.
 
-    public CounterRequest(int resourceID, long nodeID, long requestID) {
+    public ResourceRequest(int resourceID, long nodeID, long requestID, long[] vectorCounter) {
         this.resourceID = resourceID;
         this.nodeID = nodeID;
         this.requestID = requestID;
+
+        long average = 0;
+        for (int i = 0; i < vectorCounter.length; i++) {
+            average += vectorCounter[i];
+        }
+
+        this.mark = ((double) average) / ((double) vectorCounter.length);
     }
 
     // Methods.
@@ -46,4 +59,7 @@ public class CounterRequest {
         return requestID;
     }
 
+    public double getMark() {
+        return mark;
+    }
 }

@@ -1,5 +1,7 @@
-package common;
+package common.util;
 
+import common.message.CounterRequest;
+import common.message.ResourceRequest;
 import peersim.AlgoJL;
 
 import java.util.*;
@@ -14,9 +16,9 @@ public class Token {
     private final AlgoJL parent;
 
     /**
-     * <p>Id de la ressource. Si un noeud veut la ressource, il utilisera cet id pour l'identifier.</p>
+     * <p>Id de la ressource. Si un noeud veut la ressource, il utilisera cet resourceID pour l'identifier.</p>
      */
-    private final int id;
+    private final int resourceID;
 
     /**
      * <p>Si cette variable est egale a true, alors le jeton est present sur le parent.</p>
@@ -31,7 +33,7 @@ public class Token {
     /**
      * <p>La queue des requetes de compteur.</p>
      */
-    private Queue<CounterRequest> queueCounterRequest = new LinkedList<>();
+    private List<CounterRequest> queueCounterRequest = new LinkedList<>();
 
     /**
      * <p>La queue des requetes de resources. Si une requete est presente dans cette queue, c'est que le noeud qui a envoye la requete veut cette ressource.</p>
@@ -41,10 +43,10 @@ public class Token {
 
     // Constructors.
 
-    public Token(AlgoJL parent, int id) {
+    public Token(AlgoJL parent, int resourceID) {
         this.parent = parent;
 
-        this.id = id;
+        this.resourceID = resourceID;
         this.isHere = false;
     }
 
@@ -69,14 +71,14 @@ public class Token {
      * @return true si la requete a ete ajoute.
      */
     public boolean addCounterRequest(CounterRequest counterRequest) {
-        return this.queueCounterRequest.offer(counterRequest);
+        return this.queueCounterRequest.add(counterRequest);
     }
 
     /**
      * @return la prochaine requete de compteur et la retire de la queue, si la liste est vide, retourne null.
      */
     public CounterRequest nextCounterRequest() {
-        return this.queueCounterRequest.poll();
+        return this.queueCounterRequest.remove(0);
     }
 
     /**
@@ -118,9 +120,42 @@ public class Token {
      */
     public ResourceRequest nextResourceRequest() {
         if (!this.queueResourceRequest.isEmpty()) {
-            return this.queueResourceRequest.get(0);
+            return this.queueResourceRequest.remove(0);
         } else
             return null;
+    }
+
+    /**
+     * <p>Met a jour le token local pour qu'il corresponde au token entre en parametres.</p>
+     * <p>Le token entre en parametre doit absolument gerer la meme ressource que l'instance qui appel la methode.</p>
+     *
+     * @param token
+     */
+    public void updateToken(Token token) {
+        if (token.getResourceID() == this.getResourceID()) {
+            this.counter = token.counter;
+            this.isHere = true;
+
+            this.parent.setNodeLink(this.resourceID, null);
+
+            if (!this.queueCounterRequest.isEmpty()) {
+                System.err.println("ATTENTION!!! COUNTER QUEUE PAS VIDE ET ON VA UPDATE -> PAS LOGIQUE.");
+            }
+            this.queueCounterRequest.clear();
+            for (CounterRequest counterRequest : token.queueCounterRequest) {
+                this.addCounterRequest(counterRequest);
+            }
+
+            if (!this.queueResourceRequest.isEmpty()) {
+                System.err.println("ATTENTION!!! RESOURCE QUEUE PAS VIDE ET ON VA UPDATE -> PAS LOGIQUE.");
+            }
+            this.queueResourceRequest.clear();
+            for (ResourceRequest resourceRequest : token.queueResourceRequest) {
+                this.addResourceRequest(resourceRequest);
+            }
+        } else {
+            System.err.println("UPDATE DE TOKEN QUI NE GERE PAS LA MEME RESSOURCE!!!");
+        }
     }
 
     // Getters and Setters.
@@ -129,8 +164,8 @@ public class Token {
         return this.parent;
     }
 
-    public int getId() {
-        return this.id;
+    public int getResourceID() {
+        return this.resourceID;
     }
 
     public boolean isHere() {

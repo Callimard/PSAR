@@ -1,6 +1,8 @@
 package peersim;
 
-import common.Token;
+import common.message.CounterMessage;
+import common.message.TokenMessage;
+import common.util.Token;
 import peersim.config.Configuration;
 import peersim.core.Node;
 import peersim.edsim.EDProtocol;
@@ -32,13 +34,13 @@ public class AlgoJL implements EDProtocol {
     /**
      * <p>Represente les jetons de chaque ressource. Les ressources sont presente ou non sur le site. Pour le savoir il faut appeler la methode {@link Token#isHere()}.</p>
      */
-    private Token arrayToken[];
+    private Token[] arrayToken;
 
     /**
      * <p>Point sur le noeud à qui il faut s'addresser pour acceder à la ressource d'indice i.</p>
      * <p>Si resourceNodeLink[i] est null alors cela signifie que nous possedons la ressource i.</p>
      */
-    private Node resourceNodeLink[];
+    private Node[] resourceNodeLink;
 
     // Constructors.
 
@@ -58,16 +60,31 @@ public class AlgoJL implements EDProtocol {
 
     // Methods.
 
+    public void receiveCounter(Node sender, CounterMessage counterMessage) {
+        // TODO
+    }
+
+    public void sendCounter(Node receiver, CounterMessage counterMessage) {
+        // TODO
+    }
+
+    public void receiveToken(Node sender, TokenMessage tokenMessage) {
+        // TODO
+    }
+
+    public void sendToken(Node receiver, TokenMessage tokenMessage) {
+        // TODO
+    }
+
     @Override
     public void processEvent(Node node, int i, Object o) {
-        // TODO Reception soit d'un objet de type CounterRequest, soit de type ResourceRequest.
+        // TODO Reception de CounterRequest, ResourceRequest, CounterMessage, TokenMessage.
     }
 
     @Override
     public Object clone() {
         try {
             AlgoJL o = (AlgoJL) super.clone();
-            System.out.println("Je suis la!!!");
 
             o.arrayToken = new Token[this.arrayToken.length];
             o.resourceNodeLink = new Node[this.resourceNodeLink.length];
