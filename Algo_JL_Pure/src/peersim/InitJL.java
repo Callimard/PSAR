@@ -27,6 +27,7 @@ public class InitJL implements Control {
         for (int i = 0; i < Network.size(); i++) {
             Node node = Network.get(i);
             AlgoJL nodeAlgoJL = (AlgoJL) node.getProtocol(this.algoJL);
+            nodeAlgoJL.setNodeID(node.getID());
 
             if (i == 0) {
                 firstNode = node;

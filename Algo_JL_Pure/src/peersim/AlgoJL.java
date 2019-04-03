@@ -1,5 +1,6 @@
 package peersim;
 
+import common.Token;
 import peersim.config.Configuration;
 import peersim.core.Node;
 import peersim.edsim.EDProtocol;
@@ -13,7 +14,20 @@ public class AlgoJL implements EDProtocol {
      */
     private final int transport;
 
+    /**
+     * <p>Nombre de ressource disponnible dans le systeme.</p>
+     */
     private final int nbResource;
+
+    /**
+     * <p>L'ID du noeud sur lequel l'instance du protocole est. (Initialisee grace au controler {@link InitJL} qui fait appel a la methode {@link AlgoJL#setNodeID(long)}</p>
+     */
+    private long nodeID = -1;
+
+    /**
+     * <p>False tant que la variable {@link AlgoJL#nodeID} n'a pas ete initialise avec @link AlgoJL#setNodeID(long)}. Si vrai, alors @link AlgoJL#setNodeID(long)} n'a plus aucun effet.</p>
+     */
+    private boolean nodeIDSet = false;
 
     /**
      * <p>Represente les jetons de chaque ressource. Les ressources sont presente ou non sur le site. Pour le savoir il faut appeler la methode {@link Token#isHere()}.</p>
@@ -34,7 +48,7 @@ public class AlgoJL implements EDProtocol {
 
         this.arrayToken = new Token[this.nbResource];
         for (int i = 0; i < this.arrayToken.length; i++) {
-            this.arrayToken[i] = new Token(i);
+            this.arrayToken[i] = new Token(this, i);
         }
 
         this.resourceNodeLink = new Node[this.nbResource];
@@ -46,7 +60,7 @@ public class AlgoJL implements EDProtocol {
 
     @Override
     public void processEvent(Node node, int i, Object o) {
-
+        // TODO Reception soit d'un objet de type CounterRequest, soit de type ResourceRequest.
     }
 
     @Override
@@ -65,6 +79,9 @@ public class AlgoJL implements EDProtocol {
         }
     }
 
+    /**
+     * <p>Est appele a l'initialisation pour le premiere noeud. Ce premier noeud possedera toutes les ressource au debut.</p>
+     */
     public void setAllResourcesHere() {
 
         System.out.println("Je suis la dans le setAllResourceHere.");
@@ -74,6 +91,12 @@ public class AlgoJL implements EDProtocol {
         }
     }
 
+    /**
+     * <p>Permet de faire pointer notre noeud sur le noeud link pour la ressource precisee en parametres.</p>
+     *
+     * @param resource
+     * @param link
+     */
     public void setNodeLink(int resource, Node link) {
         this.resourceNodeLink[resource] = link;
     }
@@ -84,37 +107,22 @@ public class AlgoJL implements EDProtocol {
         return this.nbResource;
     }
 
-    // Private class.
+    /**
+     * @return la valeur du noeud sur lequel est l'instance de ce protocole. Si la valeur n'a pas ete initialise, retourne -1.
+     */
+    public long getNodeID() {
+        return this.nodeID;
+    }
 
-    private class Token {
-
-        // Variables.
-
-        private int id;
-        private boolean isHere;
-
-        // Constructors.
-
-        public Token(int id) {
-            this.id = id;
-            this.isHere = false;
+    /**
+     * <p>Met la valeur de {@link AlgoJL#nodeID} a nodeID. Si la valeur a deja ete initialise, aucun changement n'est fait.</p>
+     *
+     * @param nodeID
+     */
+    public void setNodeID(long nodeID) {
+        if (!this.nodeIDSet) {
+            this.nodeID = nodeID;
+            this.nodeIDSet = true;
         }
-
-        // Methods.
-
-        // Getters and Setters.
-
-        public int getId() {
-            return this.id;
-        }
-
-        public boolean isHere() {
-            return this.isHere;
-        }
-
-        public void setHere(boolean isHere) {
-            this.isHere = isHere;
-        }
-
     }
 }
