@@ -12,29 +12,26 @@ public class TokenMessage extends Message {
     // Variables.
 
     /**
-     * <p>L'ID de la ressource.</p>
-     */
-    private final int resourceID;
-
-    /**
      * <p>Le jeton associe a la ressource.</p>
      */
     private final Token token;
 
     // Constructors.
 
-    public TokenMessage(int resourceID, Token token, Node sender) {
-        super(sender);
+    /**
+     *
+     * @param token
+     * @param resourceID
+     * @param sender
+     * @param receiver
+     */
+    public TokenMessage(Token token, int resourceID, Node sender, Node receiver) {
+        super(resourceID, sender, receiver);
 
-        this.resourceID = resourceID;
         this.token = token;
     }
 
     // Getters and Setters.
-
-    public int getResourceID() {
-        return resourceID;
-    }
 
     public Token getToken() {
         return token;

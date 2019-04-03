@@ -38,9 +38,9 @@ public class AlgoJL implements EDProtocol {
 
     /**
      * <p>Point sur le noeud à qui il faut s'addresser pour acceder à la ressource d'indice i.</p>
-     * <p>Si resourceNodeLink[i] est null alors cela signifie que nous possedons la ressource i.</p>
+     * <p>Si dynamicTree[i] est null alors cela signifie que nous possedons la ressource i.</p>
      */
-    private Node[] resourceNodeLink;
+    private Node[] dynamicTree;
 
     /**
      * <p>Vecteur de compteur. Tous initialement a 0.</p>
@@ -81,7 +81,7 @@ public class AlgoJL implements EDProtocol {
             this.arrayToken[i] = new Token(this, i);
         }
 
-        this.resourceNodeLink = new Node[this.nbResource];
+        this.dynamicTree = new Node[this.nbResource];
 
         System.out.println("Nb ressource = " + this.nbResource);
 
@@ -94,7 +94,7 @@ public class AlgoJL implements EDProtocol {
     // Methods.
 
     public void requestCS(Set<Integer> resources) {
-        if (this.currentRequestingCS == null) {
+        if (this.currentRequestingCS == null && this.state == State.NOTHING) {
             this.currentRequestingCS = new RequestingCS(resources);
 
             this.requestID++;
@@ -103,17 +103,30 @@ public class AlgoJL implements EDProtocol {
 
             for (int resourceID : resources) {
                 if (!this.getToken(resourceID).isHere()) { // Si le jeton n'est pas present sur notre noeud.
-                    CounterRequest counterRequest = new CounterRequest(resourceID, this.requestID, this.node);
+                    CounterRequest counterRequest = new CounterRequest(resourceID, this.requestID, this.node, this.dynamicTree[resourceID]);
                     this.sendCounterRequest(counterRequest);
                 } // Sinon le constructeur de RequestingCS a deja mis a jour les compteurs pour les jetons deja present sur le noeud.
             }
         } else {
-            System.err.println("ATTENTION!!! DEMANDE DE CS ALORS QU'IL Y EN A UNE DEJA EN COURS.");
+            if (this.currentRequestingCS != null)
+                System.err.println("ATTENTION!!! DEMANDE DE CS ALORS QU'IL Y EN A UNE DEJA EN COURS.");
+
+            if (this.state != State.NOTHING)
+                System.err.println("ATTENTION!!! DEMANDE DE CS ALORS QUE L'ETAT N'EST PAS NOTHING.");
         }
     }
 
-    private void receiveCounterRequest(CounterRequest counterRequest) {
+    public void releaseCS() {
         // TODO
+    }
+
+    private void receiveCounterRequest(CounterRequest counterRequest) {
+        if (this.getToken(counterRequest.getResourceID()).isHere()) {
+            // TODO
+        } else { // Si on a pas le jeton, on transmet.
+            CounterRequest cR = new CounterRequest(counterRequest.getResourceID(), counterRequest.getRequestID(), counterRequest.getSender(), this.dynamicTree[counterRequest.getResourceID()]);
+            this.sendCounterRequest(cR);
+        }
     }
 
     private void sendCounterRequest(CounterRequest counterRequest) {
@@ -121,7 +134,12 @@ public class AlgoJL implements EDProtocol {
     }
 
     private void receiveTokenRequest(TokenRequest tokenRequest) {
-        // TODO
+        if (this.getToken(tokenRequest.getResourceID()).isHere()) {
+            // TODO
+        } else { // Si on a pas le jeton, on transmet.
+            TokenRequest tR = new TokenRequest(tokenRequest.getMark(), tokenRequest.getResourceID(), tokenRequest.getRequestID(), tokenRequest.getSender(), this.dynamicTree[tokenRequest.getResourceID()]);
+            this.sendTokenRequest(tR);
+        }
     }
 
     private void sendTokenRequest(TokenRequest tokenRequest) {
@@ -129,7 +147,12 @@ public class AlgoJL implements EDProtocol {
     }
 
     private void receiveCounter(CounterMessage counterMessage) {
-        // TODO
+        if (this.getToken(counterMessage.getResourceID()).isHere()) {
+                     // TODO
+        } else { // Si on a pas le jeton, on transmet.
+            CounterMessage cM = new CounterMessage(counterMessage.getCounter(), counterMessage.getResourceID(), counterMessage.getSender(), this.dynamicTree[counterMessage.getResourceID()]);
+            this.sendCounter(cM);
+        }
     }
 
     private void sendCounter(CounterMessage counterMessage) {
@@ -137,7 +160,12 @@ public class AlgoJL implements EDProtocol {
     }
 
     private void receiveToken(TokenMessage tokenMessage) {
-        // TODO
+        if (this.getToken(tokenMessage.getResourceID()).isHere()) {
+            // TODO
+        } else { // Si on a pas le jeton, on transmet.
+            TokenMessage tM = new TokenMessage(tokenMessage.getToken(), tokenMessage.getResourceID(), tokenMessage.getSender(), this.dynamicTree[tokenMessage.getResourceID()]);
+            this.sendToken(tM);
+        }
     }
 
     private void sendToken(TokenMessage tokenMessage) {
@@ -147,6 +175,17 @@ public class AlgoJL implements EDProtocol {
     @Override
     public void processEvent(Node node, int i, Object o) {
         // TODO Reception de CounterRequest, TokenRequest, CounterMessage, TokenMessage.
+        if (o instanceof CounterRequest) {
+            this.receiveCounterRequest((CounterRequest) o);
+        } else if (o instanceof CounterMessage) {
+            this.receiveCounter((CounterMessage) o);
+        } else if (o instanceof  TokenRequest) {
+            this.receiveTokenRequest((TokenRequest) o);
+        } else if (o instanceof  TokenMessage) {
+            this.receiveToken((TokenMessage) o);
+        } else {
+            throw new RuntimeException( "Mauvais event") ;
+        }
     }
 
     @Override
@@ -175,7 +214,7 @@ public class AlgoJL implements EDProtocol {
      * @see Token#updateToken(Token)
      */
     public void setNodeLink(int resourceID, Node link) {
-        this.resourceNodeLink[resourceID] = link;
+        this.dynamicTree[resourceID] = link;
     }
 
     /**

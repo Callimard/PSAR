@@ -6,19 +6,9 @@ import peersim.core.Node;
  * <p>Represente une requete de ressource.</p>
  * <p>Lorsqu'un noeud veut une ou plusieurs ressource, il cree une requete pour chaque ressource et lui envoie.</p>
  */
-public class TokenRequest extends Message {
+public class TokenRequest extends Request {
 
     // Variables.
-
-    /**
-     * <p>L'ID de la ressource a qui est destine la requete.</p>
-     */
-    private final int resourceID;
-
-    /**
-     * <p>L'id de la requete, permet ensuite de comparer pour savoir s'il elles sont obselete ou non.</p>
-     */
-    private final long requestID;
 
     /**
      * <p>La note calcule à partir du vecteur de counter donne en parametre au constructeur.</p>
@@ -29,16 +19,14 @@ public class TokenRequest extends Message {
 
     /**
      *
+     * @param vectorCounter
      * @param resourceID
      * @param requestID
-     * @param vectorCounter
      * @param sender
+     * @param receiver
      */
-    public TokenRequest(int resourceID, long requestID, long[] vectorCounter, Node sender) {
-        super(sender);
-
-        this.resourceID = resourceID;
-        this.requestID = requestID;
+    public TokenRequest(long[] vectorCounter, int resourceID, long requestID, Node sender, Node receiver) {
+        super(resourceID, requestID, sender, receiver);
 
         long average = 0;
         for (int i = 0; i < vectorCounter.length; i++) {
@@ -48,17 +36,23 @@ public class TokenRequest extends Message {
         this.mark = ((double) average) / ((double) vectorCounter.length);
     }
 
+    /**
+     *
+     * @param mark
+     * @param resourceID
+     * @param requestID
+     * @param sender
+     * @param receiver
+     */
+    public TokenRequest(double mark, int resourceID, long requestID, Node sender, Node receiver) {
+        super(resourceID, requestID, sender, receiver);
+
+        this.mark = mark;
+    }
+
     // Methods.
 
     // Getters and Setters.
-
-    public int getResourceID() {
-        return this.resourceID;
-    }
-
-    public long getRequestID() {
-        return requestID;
-    }
 
     public double getMark() {
         return mark;
