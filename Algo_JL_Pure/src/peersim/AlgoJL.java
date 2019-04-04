@@ -5,12 +5,18 @@ import common.util.Token;
 import peersim.config.Configuration;
 import peersim.core.Node;
 import peersim.edsim.EDProtocol;
+import peersim.edsim.EDSimulator;
 import peersim.transport.Transport;
 
 import java.util.Set;
 import java.util.TreeSet;
 
 public class AlgoJL implements EDProtocol {
+
+    // Constants.
+
+    private final int MIN_CS;
+    private final int MAX_CS;
 
     // Variables.
 
@@ -72,10 +78,13 @@ public class AlgoJL implements EDProtocol {
     // Constructors.
 
     public AlgoJL(String prefix) {
-        this(Configuration.getPid(prefix + ".tr"), Configuration.getInt(prefix + "nb_resource"), Configuration.lookupPid(prefix.split("\\.")[prefix.split("\\.").length - 1]));
+        this(Configuration.getPid(prefix + ".tr"), Configuration.getInt(prefix + "nb_resource"), Configuration.lookupPid(prefix.split("\\.")[prefix.split("\\.").length - 1]), Configuration.getInt(prefix + ".min_cs"), Configuration.getInt(prefix + ".max_cs"));
     }
 
-    private AlgoJL(int transportPID, int nbResource, int myPid) {
+    private AlgoJL(int transportPID, int nbResource, int myPid, int min_cs, int max_cs) {
+        this.MIN_CS = min_cs;
+        this.MAX_CS = max_cs;
+
         this.myPid = myPid;
         this.transportPID = transportPID;
         this.nbResource = nbResource;
@@ -211,7 +220,11 @@ public class AlgoJL implements EDProtocol {
 
         if (this.currentRequestingCS.allTokenAreReceived()) {
             this.setState(State.IN_CS);
-            // TODO Simuler le traitement en CS.
+
+            // Genère un evenement qui lancera le relachement de la CS.
+
+            int delay = this.generateRandomCSTime();
+            EDSimulator.add(delay, new ReleaseMessage(-1, this.node, this.node), this.node, this.myPid);
         } else {
             if (this.state == State.WAIT_S && this.currentRequestingCS.allCounterAreReceived()) {
                 this.receivedAllCounter();
@@ -254,6 +267,15 @@ public class AlgoJL implements EDProtocol {
         Transport tr = (Transport) this.node.getProtocol(this.transportPID);
 
         tr.send(message.getSender(), message.getReceiver(), message, this.myPid);
+    }
+
+    /**
+     * <p>Permet de generer un temps de CS.</p>
+     *
+     * @return un temps entre {@link AlgoJL#MIN_CS} et {@link AlgoJL#MAX_CS}.
+     */
+    private int generateRandomCSTime() {
+        return this.MIN_CS + (int) (Math.random() * ((this.MAX_CS - this.MIN_CS) + 1));
     }
 
     /**
@@ -316,24 +338,28 @@ public class AlgoJL implements EDProtocol {
     @Override
     public void processEvent(Node node, int i, Object o) {
         // TODO Reception de CounterRequest, TokenRequest, CounterMessage, TokenMessage.
-        if (o instanceof CounterRequest) {
-            this.receiveCounterRequest((CounterRequest) o);
-        } else if (o instanceof CounterMessage) {
-            this.receiveCounter((CounterMessage) o);
-        } else if (o instanceof TokenRequest) {
-            this.receiveTokenRequest((TokenRequest) o);
-        } else if (o instanceof TokenMessage) {
-            this.receiveToken((TokenMessage) o);
-        } else if (o instanceof ReleaseMessage) {
-            this.releaseCS();
+        if (i == this.myPid) {
+            if (o instanceof CounterRequest) {
+                this.receiveCounterRequest((CounterRequest) o);
+            } else if (o instanceof CounterMessage) {
+                this.receiveCounter((CounterMessage) o);
+            } else if (o instanceof TokenRequest) {
+                this.receiveTokenRequest((TokenRequest) o);
+            } else if (o instanceof TokenMessage) {
+                this.receiveToken((TokenMessage) o);
+            } else if (o instanceof ReleaseMessage) {
+                this.releaseCS();
+            } else {
+                throw new RuntimeException("Mauvais event");
+            }
         } else {
-            throw new RuntimeException("Mauvais event");
+            throw new RuntimeException("Mauvais ID");
         }
     }
 
     @Override
     public Object clone() {
-        return new AlgoJL(this.transportPID, this.nbResource, this.myPid);
+        return new AlgoJL(this.transportPID, this.nbResource, this.myPid, this.MIN_CS, this.MAX_CS);
     }
 
     /**

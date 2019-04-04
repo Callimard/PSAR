@@ -14,7 +14,7 @@ public class ReleaseMessage extends Message {
      * @param sender
      * @param receiver
      */
-    protected ReleaseMessage(int resourceID, Node sender, Node receiver) {
+    public ReleaseMessage(int resourceID, Node sender, Node receiver) {
         super(resourceID, sender, receiver);
     }
 }
