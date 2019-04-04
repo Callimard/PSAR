@@ -125,8 +125,29 @@ public class AlgoJL implements EDProtocol {
         }
     }
 
+    /**
+     * <p>Relache la CS. Est appelee lorsque le message {@link ReleaseMessage} est recu.</p>
+     */
     public void releaseCS() {
-        // TODO
+        this.setState(State.NOTHING);
+
+        Set<Integer> resourceRequired = this.currentRequestingCS.getResourceSet();
+
+        for (int resourceID : resourceRequired) {
+            Token token = this.arrayToken[resourceID];
+
+            if (!token.tokenRequestQueueEmpty()) {
+                TokenRequest headTokenRequest = token.nextTokenRequest();
+
+                Token tokenSend = this.currentRequestingCS.sendToken(resourceID, headTokenRequest.getSender());
+
+                TokenMessage tokenM = new TokenMessage(tokenSend, headTokenRequest.getResourceID(), this.node, headTokenRequest.getSender());
+
+                this.sendMessage(tokenM);
+            }
+        }
+
+        this.currentRequestingCS = null;
     }
 
     private void receiveCounterRequest(CounterRequest counterRequest) {
@@ -303,6 +324,8 @@ public class AlgoJL implements EDProtocol {
             this.receiveTokenRequest((TokenRequest) o);
         } else if (o instanceof TokenMessage) {
             this.receiveToken((TokenMessage) o);
+        } else if (o instanceof ReleaseMessage) {
+            this.releaseCS();
         } else {
             throw new RuntimeException("Mauvais event");
         }
@@ -547,12 +570,13 @@ public class AlgoJL implements EDProtocol {
          * <p>S'occupe de mettre a jour les lien de l'arbre dynamique et le contenu du token sur le site.</p>
          * <p>Le set de ressource recue est aussi mis a jour.</p>
          *
-         * @param resourceID l'ID de la ressource concernee
+         * @param resourceID    l'ID de la ressource concernee
          * @param tokenReceiver le noeud qui va recevoir le jeton.
          * @return le jeton clone que l'on peut envoye.
          */
         Token sendToken(int resourceID, Node tokenReceiver) {
             Token tokenSend = (Token) this.parent.arrayToken[resourceID].clone();
+            this.parent.arrayToken[resourceID].setHere(false);
             this.parent.arrayToken[resourceID].clearAllQueue();
             this.parent.setNodeLink(resourceID, tokenReceiver);
 
