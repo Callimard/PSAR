@@ -289,10 +289,7 @@ public class AlgoJL implements EDProtocol {
     // Private class.
 
     /**
-     * <p>Classe qui represente l'etat du noeud qui demande une CS.</p>
-     * <p>Cette classe contient les ressources que l'on ne possede pas encore pour passer en CS mais aussi les compteurs manquant..</p>
-     *
-     * <p>Cette class a une reference directe sur l'instance {@link AlgoJL} qui la contient. Elle peut donc directement le mettre a jour.</p>
+     * 
      */
     private class RequestingCS {
 
