@@ -1,9 +1,6 @@
 package peersim;
 
-import common.message.CounterMessage;
-import common.message.CounterRequest;
-import common.message.TokenRequest;
-import common.message.TokenMessage;
+import common.message.*;
 import common.util.Token;
 import peersim.config.Configuration;
 import peersim.core.Node;
@@ -18,9 +15,9 @@ public class AlgoJL implements EDProtocol {
     // Variables.
 
     /**
-     * <p>Le protocol de transport.</p>
+     * <p>Le protocol de transportPID.</p>
      */
-    private final int transport;
+    private final int transportPID;
 
     /**
      * <p>Nombre de ressource disponnible dans le systeme.</p>
@@ -78,9 +75,9 @@ public class AlgoJL implements EDProtocol {
         this(Configuration.getPid(prefix + ".tr"), Configuration.getInt(prefix + "nb_resource"), Configuration.lookupPid(prefix.split("\\.")[prefix.split("\\.").length - 1]));
     }
 
-    private AlgoJL(int transport, int nbResource, int myPid) {
+    private AlgoJL(int transportPID, int nbResource, int myPid) {
         this.myPid = myPid;
-        this.transport = transport;
+        this.transportPID = transportPID;
         this.nbResource = nbResource;
 
         this.arrayToken = new Token[this.nbResource];
@@ -103,7 +100,7 @@ public class AlgoJL implements EDProtocol {
     /**
      * <p>Doit etre lance quand on veut faire une demande de CS. Ne peut-etre lance qu'une fois, il faut ensuite passer en CS puis faire {@link AlgoJL#releaseCS()} pour pouvoir refaire requestCS.</p>
      *
-     * @param resources
+     * @param resources le set de ressources requises pour entrer en CS.
      */
     public void requestCS(Set<Integer> resources) {
         if (this.currentRequestingCS == null && this.state == State.NOTHING) {
@@ -116,7 +113,7 @@ public class AlgoJL implements EDProtocol {
             for (int resourceID : resources) {
                 if (!this.getToken(resourceID).isHere()) { // Si le jeton n'est pas present sur notre noeud.
                     CounterRequest counterRequest = new CounterRequest(resourceID, this.requestID, this.node, this.dynamicTree[resourceID]);
-                    this.sendCounterRequest(counterRequest);
+                    this.sendMessage(counterRequest);
                 } // Sinon le constructeur de RequestingCS a deja mis a jour les compteurs pour les jetons deja present sur le noeud.
             }
         } else {
@@ -138,19 +135,13 @@ public class AlgoJL implements EDProtocol {
         Node sender = counterRequest.getSender();
 
         if (this.getToken(counterRequest.getResourceID()).isHere()) {
-            Transport tr = (Transport) this.node.getProtocol(this.transport);
-
             CounterMessage counterMessage = new CounterMessage(this.getToken(resourceID).incrementCounter(), resourceID, this.node, sender);
 
-            this.sendCounter(counterMessage);
+            this.sendMessage(counterMessage);
         } else { // Si on a pas le jeton, on transmet.
             CounterRequest cR = new CounterRequest(resourceID, requestID, sender, this.dynamicTree[resourceID]);
-            this.sendCounterRequest(cR);
+            this.sendMessage(cR);
         }
-    }
-
-    private void sendCounterRequest(CounterRequest counterRequest) {
-        // TODO
     }
 
     private void receiveTokenRequest(TokenRequest tokenRequest) {
@@ -161,7 +152,7 @@ public class AlgoJL implements EDProtocol {
             if (this.state == State.WAIT_S || (this.currentRequestingCS != null && !this.currentRequestingCS.isTokenNeeded(resourceID))) { // Si c'est une ressource dont on a pas besoin ou qu'on attend encore tout les compteurs.
                 Token tokenSend = this.currentRequestingCS.sendToken(resourceID, sender);
                 TokenMessage tokenMessage = new TokenMessage(tokenSend, resourceID, this.node, sender);
-                this.sendToken(tokenMessage);
+                this.sendMessage(tokenMessage);
             } else {
                 if (!this.arrayToken[resourceID].contains(tokenRequest)) {
                     if (this.state == State.WAIT_CS && this.compareRequest(tokenRequest, this.currentRequestingCS.getMyRequestMark())) { // Si la requete recue est plus prioritaire.
@@ -173,7 +164,7 @@ public class AlgoJL implements EDProtocol {
 
                         TokenMessage tokenMessage = new TokenMessage(tokenSend, resourceID, this.node, sender);
 
-                        this.sendToken(tokenMessage);
+                        this.sendMessage(tokenMessage);
                     } else {
                         this.arrayToken[resourceID].addTokenRequest(tokenRequest);
                     }
@@ -182,50 +173,73 @@ public class AlgoJL implements EDProtocol {
 
         } else { // Si on a pas le jeton, on transmet.
             TokenRequest tR = new TokenRequest(tokenRequest.getMark(), tokenRequest.getResourceID(), tokenRequest.getRequestID(), tokenRequest.getSender(), this.dynamicTree[tokenRequest.getResourceID()]);
-            this.sendTokenRequest(tR);
+            this.sendMessage(tR);
         }
-    }
-
-    private void sendTokenRequest(TokenRequest tokenRequest) {
-        // TODO
     }
 
     private void receiveCounter(CounterMessage counterMessage) {
         this.currentRequestingCS.receiveCounter(counterMessage);
 
         if (this.currentRequestingCS.allCounterAreReceived()) {
-            this.setState(State.WAIT_CS);
+            this.receivedAllCounter();
+        }
+    }
 
-            double mark = this.computeMark();
-            this.currentRequestingCS.setMyRequestMark(mark);
+    private void receiveToken(TokenMessage tokenMessage) {
+        this.currentRequestingCS.receiveToken(tokenMessage);
 
-            for (int resource : this.currentRequestingCS.getResourceSet()) {
-                if (!this.arrayToken[resource].isHere()) {
-                    TokenRequest tokenRequest = new TokenRequest(mark, resource, this.requestID, this.node, this.dynamicTree[resource]);
+        if (this.currentRequestingCS.allTokenAreReceived()) {
+            this.setState(State.IN_CS);
+            // TODO Simuler le traitement en CS.
+        } else {
+            if (this.state == State.WAIT_S && this.currentRequestingCS.allCounterAreReceived()) {
+                this.receivedAllCounter();
+            }
 
-                    this.sendTokenRequest(tokenRequest);
+            Set<Token> ownedToken = this.getOwnedToken();
+
+            for (Token token : ownedToken) {
+                if (!token.tokenRequestQueueEmpty()) {
+                    TokenRequest headTokenRequest = token.seeHeadTokenRequestQueue();
+
+                    if (this.state == State.WAIT_S) {
+                        headTokenRequest = token.nextTokenRequest();
+                        Token tokenSend = this.currentRequestingCS.sendToken(headTokenRequest.getResourceID(), headTokenRequest.getSender());
+
+                        TokenMessage tokenM = new TokenMessage(tokenSend, headTokenRequest.getResourceID(), this.node, headTokenRequest.getSender());
+
+                        this.sendMessage(tokenM);
+                    } else if (this.state == State.WAIT_CS) {
+                        if (this.compareRequest(headTokenRequest, this.currentRequestingCS.getMyRequestMark())) {
+                            headTokenRequest = token.nextTokenRequest();
+                            Token tokenSend = this.currentRequestingCS.sendToken(headTokenRequest.getResourceID(), headTokenRequest.getSender());
+
+                            TokenMessage tokenM = new TokenMessage(tokenSend, headTokenRequest.getResourceID(), this.node, headTokenRequest.getSender());
+
+                            this.sendMessage(tokenM);
+                        }
+                    }
                 }
             }
         }
     }
 
-    private void sendCounter(CounterMessage counterMessage) {
-        // TODO
-    }
+    /**
+     * <p>Envoie un message. (Toutes les infos comme a qui doit etre envoye le message sont dans le message).</p>
+     *
+     * @param message le message a envoyer
+     */
+    private void sendMessage(Message message) {
+        Transport tr = (Transport) this.node.getProtocol(this.transportPID);
 
-    private void receiveToken(TokenMessage tokenMessage) {
-        // TODO
-    }
-
-    private void sendToken(TokenMessage tokenMessage) {
-        // TODO
+        tr.send(message.getSender(), message.getReceiver(), message, this.myPid);
     }
 
     /**
      * <p>Retourne la moyenne du vecteur de compteurs.</p>
      *
      * @return la valeur de la note des requete de jetons courant en se basant sur le vecteur de compteur.
-     * @see {@link AlgoJL#counterVector}
+     * @see AlgoJL#counterVector
      */
     private double computeMark() {
         double sum = 0.0;
@@ -238,12 +252,44 @@ public class AlgoJL implements EDProtocol {
     }
 
     /**
-     * @param tokenRequestReceived
-     * @param myRequestMark
+     * <p>Effectue le traitement a faire lorsqu'on a recu tous les coutner.</p>
+     */
+    private void receivedAllCounter() {
+        this.setState(State.WAIT_CS);
+
+        double mark = this.computeMark();
+        this.currentRequestingCS.setMyRequestMark(mark);
+
+        for (int resource : this.currentRequestingCS.getResourceSet()) {
+            if (!this.arrayToken[resource].isHere()) {
+                TokenRequest tokenRequest = new TokenRequest(mark, resource, this.requestID, this.node, this.dynamicTree[resource]);
+
+                this.sendMessage(tokenRequest);
+            }
+        }
+    }
+
+    /**
+     * @param tokenRequestReceived la requete que l'on a recue et que l'on va comparer a notre note
+     * @param myRequestMark        la note de nos requete de jeton courantes.
      * @return true si la requete de jeton recue est plus prioritaire que la requete que nous avons envoye pour la demande de CS courante, sinon false.
      */
     private boolean compareRequest(TokenRequest tokenRequestReceived, double myRequestMark) {
         return tokenRequestReceived.getMark() < myRequestMark || ((tokenRequestReceived.getMark() == myRequestMark) && tokenRequestReceived.getSender().getID() < this.getNode().getID());
+    }
+
+    /**
+     * @return un set de tous les jetons present sur le noeud.
+     */
+    private Set<Token> getOwnedToken() {
+        Set<Token> setToken = new TreeSet<>();
+
+        for (Token token : this.arrayToken) {
+            if (token.isHere())
+                setToken.add(token);
+        }
+
+        return setToken;
     }
 
     @Override
@@ -264,7 +310,7 @@ public class AlgoJL implements EDProtocol {
 
     @Override
     public Object clone() {
-        return new AlgoJL(this.transport, this.nbResource, this.myPid);
+        return new AlgoJL(this.transportPID, this.nbResource, this.myPid);
     }
 
     /**
@@ -274,8 +320,8 @@ public class AlgoJL implements EDProtocol {
 
         System.out.println("Je suis la dans le setAllResourceHere.");
 
-        for (int i = 0; i < this.arrayToken.length; i++) {
-            this.arrayToken[i].setHere(true);
+        for (Token token : this.arrayToken) {
+            token.setHere(true);
         }
     }
 
@@ -283,8 +329,8 @@ public class AlgoJL implements EDProtocol {
      * <p>Permet de faire pointer notre noeud sur le noeud link pour la ressource precisee en parametres.</p>
      * <p><strong>ATTENTION!</strong> Le jeton contenue dans {@link AlgoJL#arrayToken} et associe a la ressource n'est pas mis a jour avec cette methode.</p>
      *
-     * @param resourceID
-     * @param link
+     * @param resourceID l'ID de la ressource concernee
+     * @param link       le nouveau noeud lien pour cette ressour (peut etre null)
      * @see Token#updateToken(Token)
      */
     public void setNodeLink(int resourceID, Node link) {
@@ -294,15 +340,15 @@ public class AlgoJL implements EDProtocol {
     /**
      * <p>Met a jour le counter associe a la ressource.</p>
      *
-     * @param resourceID
-     * @param counter
+     * @param resourceID l'ID de la ressource concernee
+     * @param counter    la nouvelle valeur du counter
      */
     private void setCounter(int resourceID, long counter) {
         this.counterVector[resourceID] = counter;
     }
 
     /**
-     * @param resourceID
+     * @param resourceID l'ID de la ressource concernee
      * @return le jeton assoicie a la ressource.
      */
     private Token getToken(int resourceID) {
@@ -312,8 +358,8 @@ public class AlgoJL implements EDProtocol {
     /**
      * <p>Met a jour le jeton associe a la ressource en se referenceant sur le jeton reference, entre en parametre.</p>
      *
-     * @param resourceID
-     * @param tokenRef
+     * @param resourceID l'ID de la ressource concernee
+     * @param tokenRef   le jeton reference sur lequel va se base le jeton local pour se mettre a jour
      */
     private void updateToken(int resourceID, Token tokenRef) {
         this.arrayToken[resourceID].updateToken(tokenRef);
@@ -361,7 +407,7 @@ public class AlgoJL implements EDProtocol {
         NOTHING, // On ne fait rien.
         WAIT_S, // On attend les compteurs.
         WAIT_CS, // on attend les jetons.
-        IN_CS; // On est en section critique.
+        IN_CS // On est en section critique.
     }
 
     // Private class.
@@ -379,9 +425,10 @@ public class AlgoJL implements EDProtocol {
         private final AlgoJL parent;
 
         /**
-         * <p>La note de chaque requete de jeton envoye pour cette section critque. Utile pour comparer avec d'autres requete que l'on recevra plus tard -> {@link AlgoJL#sendTokenRequest(TokenRequest)}.</p>
+         * <p>La note de chaque requete de jeton envoye pour cette section critque. Utile pour comparer avec d'autres requete que l'on recevra plus tard -> {@link AlgoJL#sendMessage(Message)}.</p>
+         * <p>Pour eviter tout probleme si jamais on a pas encore calculer notre mark, initialisee a {@link Double#MAX_VALUE}</p>
          */
-        private double myRequestMark;
+        private double myRequestMark = Double.MAX_VALUE;
 
         /**
          * <p>Le set de ressources qui représente toutes les ressources que l'on veut pour entrer en CS.</p>
@@ -409,7 +456,7 @@ public class AlgoJL implements EDProtocol {
          * met a jours les set de reception et aussi le vecteur de compteur. (Cela signifie que la fonction {@link AlgoJL#requestCS(Set)} verifie seulement si oui ou non le jeton est present,
          * si le jeton est deja present, aucun traitement est a faire, le constructeur de {@link RequestingCS} le fait automatiquement.</p>
          *
-         * @param resourceSet
+         * @param resourceSet le set de ressource requises pour entrer en CS.
          */
         RequestingCS(Set<Integer> resourceSet) {
             this.parent = AlgoJL.this;
@@ -455,7 +502,7 @@ public class AlgoJL implements EDProtocol {
          * <p>Ne fait aucun traitement qui aurait un rapport avec le fait que tout les compteurs ont ete recus. Apres avoir appele cette methode,
          * il faut appeler la mehtode {@link RequestingCS#allCounterAreReceived()} pour savoir si tous les compteurs sont recu et ensuite effectuer le traitement approprie.</p>
          *
-         * @param counterMessage
+         * @param counterMessage le message de compteur que l'on vient de recevoir
          */
         void receiveCounter(CounterMessage counterMessage) {
             int resourceID = counterMessage.getResourceID();
@@ -476,7 +523,7 @@ public class AlgoJL implements EDProtocol {
          * <p>Ne fait aucun traitement qui aurait un rapport avec le fait que toutes les ressources ont ete recues. Apres avoir appele cette methode,
          * il faut appeler la mehtode {@link RequestingCS#allTokenAreReceived()} pour savoir si tous les jetons sont recu et ensuite effectuer le traitement approprie.</p>
          *
-         * @param tokenMessage
+         * @param tokenMessage le message de jeton que l'on vient de recevoir
          */
         void receiveToken(TokenMessage tokenMessage) {
             int resourceID = tokenMessage.getResourceID();
@@ -500,8 +547,8 @@ public class AlgoJL implements EDProtocol {
          * <p>S'occupe de mettre a jour les lien de l'arbre dynamique et le contenu du token sur le site.</p>
          * <p>Le set de ressource recue est aussi mis a jour.</p>
          *
-         * @param resourceID
-         * @param tokenReceiver
+         * @param resourceID l'ID de la ressource concernee
+         * @param tokenReceiver le noeud qui va recevoir le jeton.
          * @return le jeton clone que l'on peut envoye.
          */
         Token sendToken(int resourceID, Node tokenReceiver) {
@@ -515,7 +562,7 @@ public class AlgoJL implements EDProtocol {
         }
 
         /**
-         * @param resourceID
+         * @param resourceID l'ID de la ressource concernee
          * @return true si le compteur de la ressource est un compteur dont on veut la valeur et qu'on n'a pas encore recu, sinon false.
          */
         boolean isCounterNeeded(int resourceID) {
@@ -523,7 +570,7 @@ public class AlgoJL implements EDProtocol {
         }
 
         /**
-         * @param resourceID
+         * @param resourceID l'ID de la ressource concernee
          * @return true si c'est une ressource dont on a besoin pour entrer en CS, sinon false.
          */
         boolean isTokenNeeded(int resourceID) {

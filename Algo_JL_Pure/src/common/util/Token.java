@@ -120,11 +120,28 @@ public class Token {
     /**
      * @return la prochaine requete de ressource et la retire de la queue, si la liste est vide, retourne null.
      */
-    public TokenRequest nextResourceRequest() {
+    public TokenRequest nextTokenRequest() {
         if (!this.queueTokenRequest.isEmpty()) {
             return this.queueTokenRequest.remove(0);
         } else
             return null;
+    }
+
+    /**
+     * @return la requete en tete de liste si cette derniere n'est pas vide, sinon null.
+     */
+    public TokenRequest seeHeadTokenRequestQueue() {
+        if (!this.queueTokenRequest.isEmpty()) {
+            return this.queueTokenRequest.get(0);
+        } else
+            return null;
+    }
+
+    /**
+     * @return true si la queue des requete de jeton est vide, sinon false.
+     */
+    public boolean tokenRequestQueueEmpty() {
+        return this.queueTokenRequest.isEmpty();
     }
 
     public boolean contains(TokenRequest tokenRequest) {

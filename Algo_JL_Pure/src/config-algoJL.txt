@@ -6,12 +6,12 @@ network.node GeneralNode
 
 random.seed 45
 
-protocol.transport UniformRandomTransport
-protocol.transport.maxdelay 25
-protocol.transport.mindelay 10
+protocol.transportPID UniformRandomTransport
+protocol.transportPID.maxdelay 25
+protocol.transportPID.mindelay 10
 
 protocol.algoJL project.AlgoJL
-protocol.algoJL.tr transport
+protocol.algoJL.tr transportPID
 protocol.algoJL.nb_resource 4
 
 init.algoJLInit project.InitJL
