@@ -18,26 +18,6 @@ public class TokenRequest extends Request {
     // Constructors.
 
     /**
-     *
-     * @param vectorCounter
-     * @param resourceID
-     * @param requestID
-     * @param sender
-     * @param receiver
-     */
-    public TokenRequest(long[] vectorCounter, int resourceID, long requestID, Node sender, Node receiver) {
-        super(resourceID, requestID, sender, receiver);
-
-        long average = 0;
-        for (int i = 0; i < vectorCounter.length; i++) {
-            average += vectorCounter[i];
-        }
-
-        this.mark = ((double) average) / ((double) vectorCounter.length);
-    }
-
-    /**
-     *
      * @param mark
      * @param resourceID
      * @param requestID
@@ -51,6 +31,20 @@ public class TokenRequest extends Request {
     }
 
     // Methods.
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null)
+            return false;
+        if (o == this)
+            return true;
+        if (o instanceof TokenRequest) {
+            TokenRequest tR = (TokenRequest) o;
+
+            return tR.mark == this.mark && tR.getResourceID() == this.getResourceID() && tR.getRequestID() == this.getRequestID() && tR.getSender().equals(this.getSender());
+        } else
+            return false;
+    }
 
     // Getters and Setters.
 

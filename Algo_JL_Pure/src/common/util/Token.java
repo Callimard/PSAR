@@ -90,9 +90,8 @@ public class Token {
      * soit la requete la plus prioritaire.</p>
      *
      * @param tokenRequest
-     * @return true
      */
-    public boolean addResourceRequest(TokenRequest tokenRequest) {
+    public void addTokenRequest(TokenRequest tokenRequest) {
         this.queueTokenRequest.add(tokenRequest);
 
         this.queueTokenRequest.sort((TokenRequest o1, TokenRequest o2) -> {
@@ -116,7 +115,6 @@ public class Token {
             }*/
         });
 
-        return true;
     }
 
     /**
@@ -127,6 +125,22 @@ public class Token {
             return this.queueTokenRequest.remove(0);
         } else
             return null;
+    }
+
+    public boolean contains(TokenRequest tokenRequest) {
+        return this.queueTokenRequest.contains(tokenRequest);
+    }
+
+    @Override
+    public Object clone() {
+        Token clone = new Token(this.parent, this.resourceID);
+
+        clone.counter = counter;
+
+        clone.queueCounterRequest.addAll(this.queueCounterRequest);
+        clone.queueTokenRequest.addAll(this.queueTokenRequest);
+
+        return clone;
     }
 
     /**
@@ -154,11 +168,19 @@ public class Token {
             }
             this.queueTokenRequest.clear();
             for (TokenRequest tokenRequest : token.queueTokenRequest) {
-                this.addResourceRequest(tokenRequest);
+                this.addTokenRequest(tokenRequest);
             }
         } else {
             System.err.println("UPDATE DE TOKEN QUI NE GERE PAS LA MEME RESSOURCE!!!");
         }
+    }
+
+    /**
+     * <p>Vide toutes les queues. Cette methode est appeler lorsque le token est envoye a un autre noeud. Le noeud est d'abord clone puis on le clear pour etre coherent.</p>
+     */
+    public void clearAllQueue() {
+        this.queueCounterRequest.clear();
+        this.queueTokenRequest.clear();
     }
 
     // Getters and Setters.
