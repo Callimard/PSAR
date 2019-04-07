@@ -1,4 +1,3 @@
-simulation.cycle 50
 simulation.endtime 50000
 
 network.size 10

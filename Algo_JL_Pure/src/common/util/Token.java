@@ -3,6 +3,7 @@ package common.util;
 import common.message.CounterRequest;
 import common.message.TokenRequest;
 import peersim.AlgoJL;
+import peersim.core.Node;
 
 import java.util.*;
 
@@ -40,6 +41,16 @@ public class Token {
      * <p>Cette queue est triee dans l'ordre des requete prioritaire a moins prioritaire (Tout depend du vecteur de compteur de la requete).</p>
      */
     private List<TokenRequest> queueTokenRequest = new LinkedList<>();
+
+    /**
+     * <p>Sont initialement vide. Permet de savoir si une requete de compteur est obselete ou pas.</p>
+     */
+    private Map<Node, Integer> lastReqC = new HashMap<>();
+
+    /**
+     * <p>Sont initialement vide. Permet de savoir si une requete de jeton est obselete ou pas.</p>
+     */
+    private Map<Node, Integer> lastCS = new HashMap<>();
 
     // Constructors.
 
@@ -148,6 +159,31 @@ public class Token {
         return this.queueTokenRequest.contains(tokenRequest);
     }
 
+    /**
+     * @param node le noeud pour lequel on veut voir la derniere requete de compteur traite.
+     * @return le requeteID de la derniere requete de compteur traite par ce jeton pour ce noeud. Retourne null si le jeton n'a encore jamais traiter de requete de compteur pour ce noeud.
+     */
+    public int getLastReqC(Node node) {
+        return this.lastReqC.get(node);
+    }
+
+    public void putLastReqC(Node node, int requestID) {
+        this.lastReqC.put(node, requestID);
+    }
+
+    /**
+     *
+     * @param node le noeud pour lequel on veut voir la derniere requete de jeton.
+     * @return  le requeteID de la derniere requete de jeton traite par ce jeton pour ce noeud. Retourne null si le jeton n'a encore jamais traiter de requete de compteur pour ce noeud.
+     */
+    public int getLastCS(Node node) {
+        return this.lastCS.get(node);
+    }
+
+    public void putLastCS(Node node, int requestID) {
+        this.lastCS.put(node, requestID);
+    }
+
     @Override
     public Object clone() {
         Token clone = new Token(this.parent, this.resourceID);
@@ -156,6 +192,8 @@ public class Token {
 
         clone.queueCounterRequest.addAll(this.queueCounterRequest);
         clone.queueTokenRequest.addAll(this.queueTokenRequest);
+        clone.lastReqC.putAll(this.lastReqC);
+        clone.lastCS.putAll(this.lastCS);
 
         return clone;
     }
@@ -181,11 +219,23 @@ public class Token {
             }
 
             if (!this.queueTokenRequest.isEmpty()) {
-                System.err.println("ATTENTION!!! RESOURCE QUEUE PAS VIDE ET ON VA UPDATE -> PAS LOGIQUE.");
+                System.err.println("ATTENTION!!! RESSOURCE QUEUE PAS VIDE ET ON VA UPDATE -> PAS LOGIQUE.");
             }
             this.queueTokenRequest.clear();
             for (TokenRequest tokenRequest : token.queueTokenRequest) {
                 this.addTokenRequest(tokenRequest);
+            }
+
+            this.lastReqC.clear();
+            Set<Map.Entry<Node, Integer>> setReqC = this.lastReqC.entrySet();
+            for (Map.Entry<Node, Integer> entry : setReqC) {
+                this.lastReqC.put(entry.getKey(), entry.getValue());
+            }
+
+            this.lastCS.clear();
+            Set<Map.Entry<Node, Integer>> setCS = this.lastCS.entrySet();
+            for (Map.Entry<Node, Integer> entry : setCS) {
+                this.lastCS.put(entry.getKey(), entry.getValue());
             }
         } else {
             System.err.println("UPDATE DE TOKEN QUI NE GERE PAS LA MEME RESSOURCE!!!");
@@ -194,6 +244,7 @@ public class Token {
 
     /**
      * <p>Vide toutes les queues. Cette methode est appeler lorsque le token est envoye a un autre noeud. Le noeud est d'abord clone puis on le clear pour etre coherent.</p>
+     * <p>Ne clear pas les map de lastReq et lastCS car elles sont toujours utile meme si on a plus le jeton pour voir les requete obselete.</p>
      */
     public void clearAllQueue() {
         this.queueCounterRequest.clear();
