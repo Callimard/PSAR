@@ -205,8 +205,8 @@ public class AlgoJL implements EDProtocol {
 
         this.currentRequestingCS = null;
 
-        int delay = this.generateRandomCSTime();
-        EDSimulator.add(delay, new BeginMessage(-1, this.node, this.node), this.node, this.myPid);
+        int delay = Util.generateRandom(this.MIN_CS, this.MAX_CS);
+        EDSimulator.add(delay, new BeginMessage(-1, null, null), this.node, this.myPid);
     }
 
     private void receiveCounterRequest(CounterRequest counterRequest) {
@@ -303,8 +303,8 @@ public class AlgoJL implements EDProtocol {
 
             System.out.println("Le noeud " + this.node.getID() + " est en CS avec les ressources = " + this.currentRequestingCS.getResourceSet());
 
-            int delay = this.generateRandomCSTime();
-            EDSimulator.add(delay, new ReleaseMessage(-1, this.node, this.node), this.node, this.myPid);
+            int delay = Util.generateRandom(this.MIN_CS, this.MAX_CS);
+            EDSimulator.add(delay, new ReleaseMessage(-1, null, null), this.node, this.myPid);
         }
 
         if (this.state == State.WAIT_S && this.currentRequestingCS.allCounterAreReceived()) {
@@ -340,15 +340,6 @@ public class AlgoJL implements EDProtocol {
         Transport tr = (Transport) this.node.getProtocol(this.transportPID);
 
         tr.send(message.getSender(), message.getReceiver(), message, this.myPid);
-    }
-
-    /**
-     * <p>Permet de generer un temps de CS.</p>
-     *
-     * @return un temps entre {@link AlgoJL#MIN_CS} et {@link AlgoJL#MAX_CS}.
-     */
-    private int generateRandomCSTime() {
-        return this.MIN_CS + (int) (Math.random() * ((this.MAX_CS - this.MIN_CS) + 1));
     }
 
     /**
