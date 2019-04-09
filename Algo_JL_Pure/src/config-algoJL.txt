@@ -12,6 +12,7 @@ protocol.transportPID.mindelay 10
 protocol.algoJL project.AlgoJL
 protocol.algoJL.tr transportPID
 protocol.algoJL.nb_resource 4
+protocol.algoJL.nb_cs 3
 protocol.algoJL.min_cs 150
 protocol.algoJL.max_cs 750
 

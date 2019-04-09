@@ -79,13 +79,29 @@ public class AlgoJL implements EDProtocol {
      */
     private List<Request> listPendingRequest = new LinkedList<>();
 
+    private int nb_cs;
+
+    /**
+     * <p>La liste des set de ressources de chaque demande de CS que le noeud doit effectuer.</p>
+     */
+    private List<Set<Integer>> listSetRequestCS = new ArrayList<>();
+
+    /**
+     * <p>Permet de recuperer le la requete CS courante, doit etre incremente à chaque fin de CS.</p>
+     */
+    private int iteListSetRequestCS = 0;
+
     // Constructors.
 
     public AlgoJL(String prefix) {
-        this(Configuration.getPid(prefix + ".tr"), Configuration.getInt(prefix + "nb_resource"), Configuration.lookupPid(prefix.split("\\.")[prefix.split("\\.").length - 1]), Configuration.getInt(prefix + ".min_cs"), Configuration.getInt(prefix + ".max_cs"));
+        this(Configuration.getPid(prefix + ".tr"), Configuration.getInt(prefix + "nb_resource"),
+                Configuration.lookupPid(prefix.split("\\.")[prefix.split("\\.").length - 1]),
+                Configuration.getInt(prefix + ".nb_cs"),
+                Configuration.getInt(prefix + ".min_cs"),
+                Configuration.getInt(prefix + ".max_cs"));
     }
 
-    private AlgoJL(int transportPID, int nbResource, int myPid, int min_cs, int max_cs) {
+    private AlgoJL(int transportPID, int nbResource, int myPid, int nb_cs, int min_cs, int max_cs) {
         this.MIN_CS = min_cs;
         this.MAX_CS = max_cs;
 
@@ -105,6 +121,29 @@ public class AlgoJL implements EDProtocol {
         this.counterVector = new long[this.nbResource];
         for (int i = 0; i < this.counterVector.length; i++) {
             this.counterVector[i] = 0;
+        }
+
+        this.nb_cs = nb_cs;
+        // On cree les set de resources de chaque Requete CS.
+        for (int i = 0; i < this.nb_cs; i++) {
+            Set<Integer> setResources = new TreeSet<Integer>();
+
+            int nbRes = (int) ((Math.random() * (this.nbResource + 1)) + 1);
+
+            int j = 0;
+
+            while (j < nbRes) {
+                int generate = (int) ((Math.random() * (this.nbResource)));
+
+                if (setResources.add(generate))
+                    j++;
+            }
+
+            this.listSetRequestCS.add(setResources);
+        }
+
+        for (int i = 0; i < this.listSetRequestCS.size(); i++) {
+            System.out.println("CS n°" + i + " = " + this.listSetRequestCS.get(i));
         }
     }
 
@@ -162,7 +201,12 @@ public class AlgoJL implements EDProtocol {
             }
         }
 
+        this.iteListSetRequestCS++;
+
         this.currentRequestingCS = null;
+
+        int delay = this.generateRandomCSTime();
+        EDSimulator.add(delay, new BeginMessage(-1, this.node, this.node), this.node, this.myPid);
     }
 
     private void receiveCounterRequest(CounterRequest counterRequest) {
@@ -195,12 +239,7 @@ public class AlgoJL implements EDProtocol {
 
         if (this.getToken(resourceID).isHere()) {
             if (this.state == State.WAIT_S || (this.currentRequestingCS != null && !this.currentRequestingCS.isTokenNeeded(resourceID))) { // Si c'est une ressource dont on a pas besoin ou qu'on attend encore tout les compteurs.
-                Token tokenSend = this.currentRequestingCS.sendToken(resourceID, sender);
-                TokenMessage tokenMessage = new TokenMessage(tokenSend, resourceID, this.node, sender);
-
-                this.setNodeLink(resourceID, sender);
-
-                this.sendMessage(tokenMessage);
+                this.sendToken(resourceID, sender);
             } else {
                 if (!this.arrayToken[resourceID].contains(tokenRequest)) {
                     if (this.state == State.WAIT_CS && this.compareRequest(tokenRequest, this.currentRequestingCS.getMyRequestMark())) { // Si la requete recue est plus prioritaire.
@@ -208,13 +247,7 @@ public class AlgoJL implements EDProtocol {
 
                         this.arrayToken[resourceID].addTokenRequest(myTokenRequest);
 
-                        Token tokenSend = this.currentRequestingCS.sendToken(resourceID, sender);
-
-                        TokenMessage tokenMessage = new TokenMessage(tokenSend, resourceID, this.node, sender);
-
-                        this.setNodeLink(resourceID, sender);
-
-                        this.sendMessage(tokenMessage);
+                        this.sendToken(resourceID, sender);
                     } else {
                         this.arrayToken[resourceID].addTokenRequest(tokenRequest);
                     }
@@ -226,6 +259,15 @@ public class AlgoJL implements EDProtocol {
             this.listPendingRequest.add(tR);
             this.sendMessage(tR);
         }
+    }
+
+    private void sendToken(int resourceID, Node receiver) {
+        Token tokenSend = this.currentRequestingCS.sendToken(resourceID, receiver);
+        TokenMessage tokenMessage = new TokenMessage(tokenSend, resourceID, this.node, receiver);
+
+        this.setNodeLink(resourceID, receiver);
+
+        this.sendMessage(tokenMessage);
     }
 
     private void receiveCounter(CounterMessage counterMessage) {
@@ -259,6 +301,8 @@ public class AlgoJL implements EDProtocol {
 
             // Genère un evenement qui lancera le relachement de la CS.
 
+            System.out.println("Le noeud " + this.node.getID() + " est en CS avec les ressources = " + this.currentRequestingCS.getResourceSet());
+
             int delay = this.generateRandomCSTime();
             EDSimulator.add(delay, new ReleaseMessage(-1, this.node, this.node), this.node, this.myPid);
         }
@@ -275,19 +319,11 @@ public class AlgoJL implements EDProtocol {
 
                 if (this.state == State.WAIT_S) {
                     headTokenRequest = token.nextTokenRequest();
-                    Token tokenSend = this.currentRequestingCS.sendToken(headTokenRequest.getResourceID(), headTokenRequest.getSender());
-
-                    TokenMessage tokenM = new TokenMessage(tokenSend, headTokenRequest.getResourceID(), this.node, headTokenRequest.getSender());
-
-                    this.sendMessage(tokenM);
+                    this.sendToken(headTokenRequest.getResourceID(), headTokenRequest.getSender());
                 } else if (this.state == State.WAIT_CS) {
                     if (this.compareRequest(headTokenRequest, this.currentRequestingCS.getMyRequestMark())) {
                         headTokenRequest = token.nextTokenRequest();
-                        Token tokenSend = this.currentRequestingCS.sendToken(headTokenRequest.getResourceID(), headTokenRequest.getSender());
-
-                        TokenMessage tokenM = new TokenMessage(tokenSend, headTokenRequest.getResourceID(), this.node, headTokenRequest.getSender());
-
-                        this.sendMessage(tokenM);
+                        this.sendToken(headTokenRequest.getResourceID(), headTokenRequest.getSender());
                     }
                 }
             }
@@ -401,6 +437,9 @@ public class AlgoJL implements EDProtocol {
                 this.receiveToken((TokenMessage) o);
             } else if (o instanceof ReleaseMessage) {
                 this.releaseCS();
+            } else if (o instanceof BeginMessage) {
+                Set<Integer> setResource = this.listSetRequestCS.get(this.iteListSetRequestCS);
+                this.requestCS(setResource);
             } else {
                 throw new RuntimeException("Mauvais event");
             }
@@ -411,7 +450,7 @@ public class AlgoJL implements EDProtocol {
 
     @Override
     public Object clone() {
-        return new AlgoJL(this.transportPID, this.nbResource, this.myPid, this.MIN_CS, this.MAX_CS);
+        return new AlgoJL(this.transportPID, this.nbResource, this.myPid, this.nb_cs, this.MIN_CS, this.MAX_CS);
     }
 
     /**
@@ -500,6 +539,10 @@ public class AlgoJL implements EDProtocol {
 
     private void setState(AlgoJL.State state) {
         this.state = state;
+    }
+
+    public boolean hasFinishAllCS() {
+        return this.iteListSetRequestCS >= this.nb_cs;
     }
 
     // Public enum.
