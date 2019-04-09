@@ -1,9 +1,13 @@
 package peersim;
 
+import common.message.BeginMessage;
 import peersim.config.Configuration;
 import peersim.core.Control;
 import peersim.core.Network;
 import peersim.core.Node;
+import peersim.edsim.EDSimulator;
+
+import javax.sound.midi.SysexMessage;
 
 public class InitJL implements Control {
 
@@ -11,17 +15,21 @@ public class InitJL implements Control {
 
     private int algoJL;
 
+    private int min;
+    private int max;
+
     // Constructors.
 
     public InitJL(String prefix) {
         this.algoJL = Configuration.getPid(prefix + ".jl");
+        this.min = Configuration.getInt(prefix + ".min");
+        this.max = Configuration.getInt(prefix + ".max");
     }
 
     // Methods.
 
     @Override
     public boolean execute() {
-
         Node firstNode = null;
 
         for (int i = 0; i < Network.size(); i++) {
@@ -37,10 +45,14 @@ public class InitJL implements Control {
                     nodeAlgoJL.setNodeLink(j, firstNode);
                 }
             }
+
+            int delay = Util.generateRandom(this.min, this.max);
+            EDSimulator.add(delay, new BeginMessage(-1, null, null), node, this.algoJL);
         }
 
         System.out.println("Init fini.");
 
         return false;
     }
+
 }
