@@ -7,6 +7,8 @@ import peersim.core.Network;
 import peersim.core.Node;
 import peersim.edsim.EDSimulator;
 
+import javax.sound.midi.SysexMessage;
+
 public class InitJL implements Control {
 
     // Variables.
@@ -28,7 +30,6 @@ public class InitJL implements Control {
 
     @Override
     public boolean execute() {
-
         Node firstNode = null;
 
         for (int i = 0; i < Network.size(); i++) {

@@ -164,7 +164,7 @@ public class Token {
      * @return le requeteID de la derniere requete de compteur traite par ce jeton pour ce noeud. Retourne null si le jeton n'a encore jamais traiter de requete de compteur pour ce noeud.
      */
     public int getLastReqC(Node node) {
-        return this.lastReqC.get(node);
+        return this.lastReqC.get(node) == null ? -1 : this.lastReqC.get(node);
     }
 
     public void putLastReqC(Node node, int requestID) {
@@ -172,12 +172,11 @@ public class Token {
     }
 
     /**
-     *
      * @param node le noeud pour lequel on veut voir la derniere requete de jeton.
-     * @return  le requeteID de la derniere requete de jeton traite par ce jeton pour ce noeud. Retourne null si le jeton n'a encore jamais traiter de requete de compteur pour ce noeud.
+     * @return le requeteID de la derniere requete de jeton traite par ce jeton pour ce noeud. Retourne null si le jeton n'a encore jamais traiter de requete de compteur pour ce noeud.
      */
     public int getLastCS(Node node) {
-        return this.lastCS.get(node);
+        return this.lastCS.get(node) == null ? -1 : this.lastCS.get(node);
     }
 
     public void putLastCS(Node node, int requestID) {
