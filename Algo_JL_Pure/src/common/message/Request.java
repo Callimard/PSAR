@@ -26,6 +26,13 @@ public class Request extends Message {
         this.requestID = resourceID;
     }
 
+    // Methods.
+
+    @Override
+    public String toString() {
+        return "[R = " + this.getClass().getSimpleName() + " Req_ID = " + this.requestID + " " + super.toString() + "]";
+    }
+
     // Getters and Setters.
 
     public int getRequestID() {

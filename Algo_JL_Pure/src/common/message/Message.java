@@ -39,6 +39,13 @@ public abstract class Message {
         this.receiver = receiver;
     }
 
+    // Methods
+
+    @Override
+    public String toString() {
+        return "[M = " + this.getClass().getSimpleName() + " Sender = " + this.sender.getID() + " Receiver = " + this.receiver.getID() + " R = " + this.resourceID + "]";
+    }
+
     // Getters and Setters.
 
     public int getResourceID() {

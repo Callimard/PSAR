@@ -101,6 +101,14 @@ public class AlgoJL implements EDProtocol {
                 Configuration.getInt(prefix + ".max_cs"));
     }
 
+    /**
+     * @param transportPID
+     * @param nbResource
+     * @param myPid
+     * @param nb_cs
+     * @param min_cs
+     * @param max_cs
+     */
     private AlgoJL(int transportPID, int nbResource, int myPid, int nb_cs, int min_cs, int max_cs) {
         this.MIN_CS = min_cs;
         this.MAX_CS = max_cs;
@@ -142,13 +150,21 @@ public class AlgoJL implements EDProtocol {
 
             this.listSetRequestCS.add(setResources);
         }
+
+        System.out.println("----------------------------------------------------------------------");
+
+        for (int i = 0; i < this.listSetRequestCS.size(); i++) {
+            System.out.println(this.listSetRequestCS.get(i));
+        }
+
+        System.out.println("----------------------------------------------------------------------");
     }
 
     // Methods.
 
     @Override
     public Object clone() {
-        AlgoJL algoJL = null;
+        /*AlgoJL algoJL = null;
 
         try {
             algoJL = (AlgoJL) super.clone();
@@ -188,7 +204,9 @@ public class AlgoJL implements EDProtocol {
             e.printStackTrace();
         }
 
-        return algoJL;
+        return algoJL;*/
+
+        return new AlgoJL(this.transportPID, this.nbResource, this.myPid, this.nb_cs, this.MIN_CS, this.MAX_CS);
     }
 
 
@@ -198,6 +216,8 @@ public class AlgoJL implements EDProtocol {
      * @param resources le set de ressources requises pour entrer en CS.
      */
     public void requestCS(Set<Integer> resources) {
+        System.out.println("ReqCS---------------------------------------------------------------------------------------");
+
         if (this.currentRequestingCS == null && this.state == State.NOTHING) {
             this.currentRequestingCS = new RequestingCS(resources, this);
 
@@ -205,11 +225,13 @@ public class AlgoJL implements EDProtocol {
 
             this.setState(State.WAIT_S);
 
-            System.out.println("Node = " + this.node.getID() + " RequestCS de = " + this.currentRequestingCS.getResourceSet() + " Ressource = " + resources);
+            System.out.println("N = " + this.node.getID() + " Req_CS = " + this.currentRequestingCS.getResourceSet());
 
             for (int resourceID : resources) {
                 if (!this.getToken(resourceID).isHere()) { // Si le jeton n'est pas present sur notre noeud.
                     CounterRequest counterRequest = new CounterRequest(resourceID, this.requestID, this.node, this.dynamicTree[resourceID]);
+
+                    System.out.println("N = " + this.node.getID() + " SEND REQ_C / R  = " + resourceID + ":");
                     this.sendMessage(counterRequest);
                 } // Sinon le constructeur de RequestingCS a deja mis a jour les compteurs pour les jetons deja present sur le noeud.
             }
@@ -220,6 +242,8 @@ public class AlgoJL implements EDProtocol {
             if (this.state != State.NOTHING)
                 System.err.println("ATTENTION!!! DEMANDE DE CS ALORS QUE L'ETAT N'EST PAS NOTHING.");
         }
+
+        System.out.println("---------------------------------------------------------------------------------------");
     }
 
     /**
@@ -229,6 +253,10 @@ public class AlgoJL implements EDProtocol {
         this.setState(State.NOTHING);
 
         Set<Integer> resourceRequired = this.currentRequestingCS.getResourceSet();
+
+        System.out.println("RelCS--------------------------------------------------------------------------------------");
+
+        System.out.println("N = " + this.node.getID() + " Release_CS / R_required = " + resourceRequired);
 
         for (int resourceID : resourceRequired) {
             Token token = this.arrayToken[resourceID];
@@ -242,23 +270,29 @@ public class AlgoJL implements EDProtocol {
 
                 TokenMessage tokenM = new TokenMessage(tokenSend, headTokenRequest.getResourceID(), this.node, headTokenRequest.getSender());
 
+                System.out.println("N = " + this.node.getID() + " SEND T / R = " + resourceID);
+
                 this.sendMessage(tokenM);
             }
         }
 
         this.iteListSetRequestCS++;
 
-        System.out.println("Node = " + this.node.getID() + " iteListSetRequestCS = " + this.iteListSetRequestCS + " Nb_cs = " + this.nb_cs);
-
-        if (this.iteListSetRequestCS >= this.nb_cs)
-            System.err.println("Node = " + this.node.getID() + " FIN DU NOEUD!!!!!!!!!!");
-
-        System.out.println("Node = " + this.node.getID() + " Relachement de CS pour = " + this.currentRequestingCS.getResourceSet());
+        System.out.println("N = " + this.node.getID() + " Release CS / R = " + this.currentRequestingCS.getResourceSet());
 
         this.currentRequestingCS = null;
 
-        int delay = Util.generateRandom(this.MIN_CS, this.MAX_CS);
-        EDSimulator.add(delay, new BeginMessage(-1, null, null), this.node, this.myPid);
+        if (this.iteListSetRequestCS >= this.nb_cs) {
+            System.err.println("N = " + this.node.getID() + " FIN DU NOEUD!!!!!!!!!!");
+        } else {
+
+            System.out.println("N = " + this.node.getID() + " JE SUIS ICI!!\n");
+
+            int delay = Util.generateRandom(this.MIN_CS, this.MAX_CS);
+            EDSimulator.add(delay, new BeginMessage(-1, null, null), this.node, this.myPid);
+        }
+
+        System.out.println("---------------------------------------------------------------------------------------");
     }
 
     private void receiveCounterRequest(CounterRequest counterRequest) {
@@ -266,8 +300,11 @@ public class AlgoJL implements EDProtocol {
         int requestID = counterRequest.getRequestID();
         Node sender = counterRequest.getSender();
 
+        System.out.println("RcvREQ_C---------------------------------------------------------------------------------------");
+
         if (this.isObsoletedRequest(counterRequest)) {
-            System.err.println("REQUETE OBSELETE!!!");
+            System.err.println("REQUETE OBSELETE!!! Req = " + counterRequest);
+            System.out.println("---------------------------------------------------------------------------------------");
             return;
         }
 
@@ -276,23 +313,35 @@ public class AlgoJL implements EDProtocol {
 
             this.arrayToken[requestID].putLastReqC(sender, counterRequest.getRequestID());
 
+            System.out.println("N = " + this.node.getID() + " SEND C / R = " + requestID + ":");
+
             this.sendMessage(counterMessage);
         } else { // Si on a pas le jeton, on transmet.
+            System.out.println("N = " + this.node.getID() + " ROUT / Counter R = " + resourceID + ":");
             CounterRequest cR = new CounterRequest(resourceID, requestID, sender, this.dynamicTree[resourceID]);
             this.listPendingRequest.add(cR);
             this.sendMessage(cR);
         }
+
+        System.out.println("---------------------------------------------------------------------------------------");
     }
 
     private void receiveTokenRequest(TokenRequest tokenRequest) {
         int resourceID = tokenRequest.getResourceID();
         Node sender = tokenRequest.getSender();
 
-        if (this.isObsoletedRequest(tokenRequest))
+        System.out.println("RcvREQ_T---------------------------------------------------------------------------------------");
+
+        if (this.isObsoletedRequest(tokenRequest)) {
+            System.err.println("REQUETE OBSELETE!!! Req = " + tokenRequest);
+            System.out.println("---------------------------------------------------------------------------------------");
             return;
+        }
 
         if (this.getToken(resourceID).isHere()) {
             if (this.state == State.WAIT_S || (this.currentRequestingCS != null && !this.currentRequestingCS.isTokenNeeded(resourceID))) { // Si c'est une ressource dont on a pas besoin ou qu'on attend encore tout les compteurs.
+
+
                 this.sendToken(resourceID, sender);
             } else {
                 if (!this.arrayToken[resourceID].contains(tokenRequest)) {
@@ -301,18 +350,26 @@ public class AlgoJL implements EDProtocol {
 
                         this.arrayToken[resourceID].addTokenRequest(myTokenRequest);
 
+                        System.out.println("N = " + this.node.getID() + " SEND T / R = " + resourceID + " :");
+
                         this.sendToken(resourceID, sender);
                     } else {
+                        System.out.println("N = " + this.node.getID() + "ADD REQ_T " + tokenRequest + " -> Token R = " + resourceID);
                         this.arrayToken[resourceID].addTokenRequest(tokenRequest);
                     }
+                } else {
+                    System.err.println("REQ_T -> " + tokenRequest + " ALREADY CONTAINS!!!");
                 }
             }
 
         } else { // Si on a pas le jeton, on transmet.
+            System.out.println("N = " + this.node.getID() + " ROUT / Token R = " + resourceID + ":");
             TokenRequest tR = new TokenRequest(tokenRequest.getMark(), tokenRequest.getResourceID(), tokenRequest.getRequestID(), tokenRequest.getSender(), this.dynamicTree[tokenRequest.getResourceID()]);
             this.listPendingRequest.add(tR);
             this.sendMessage(tR);
         }
+
+        System.out.println("---------------------------------------------------------------------------------------");
     }
 
     private void sendToken(int resourceID, Node receiver) {
@@ -325,28 +382,52 @@ public class AlgoJL implements EDProtocol {
     }
 
     private void receiveCounter(CounterMessage counterMessage) {
-        if (this.currentRequestingCS != null)
-            this.currentRequestingCS.receiveCounter(counterMessage);
+        System.out.println("RcvC---------------------------------------------------------------------------------------");
 
-        if (this.currentRequestingCS != null && this.currentRequestingCS.allCounterAreReceived()) {
+        if (this.currentRequestingCS == null) {
+            System.err.println("N = " + this.node.getID() + " RECEPTION COUNTER R = " + counterMessage.getResourceID() + " ALORS QU'ON A PAS DEMANDER DE CS!!!!");
+            return;
+        }
+
+        this.currentRequestingCS.receiveCounter(counterMessage);
+
+        if (this.currentRequestingCS.allCounterAreReceived()) {
             this.receivedAllCounter();
         }
+
+        System.out.println("---------------------------------------------------------------------------------------");
     }
 
     private void receiveToken(TokenMessage tokenMessage) {
+        System.out.println("RcvT---------------------------------------------------------------------------------------");
+
+        if (this.currentRequestingCS == null) {
+            System.err.println("N = " + this.node.getID() + " RECEPTION TOKEN R = " + tokenMessage.getResourceID() + " ALORS QU'ON A PAS DEMANDE DE CS.");
+        }
+
         if (this.currentRequestingCS != null)
             this.currentRequestingCS.receiveToken(tokenMessage);
 
+        System.out.println("N = " + this.node.getID() + " REQ_PENDING = " + this.listPendingRequest);
+
         for (Request request : this.listPendingRequest) {
-            if (this.isObsoletedRequest(request))
+            if (this.isObsoletedRequest(request)) {
+                System.err.println("REQUETE OBSELETE!!! Req = " + request);
                 continue;
+            }
 
             if (request instanceof CounterRequest) {
                 this.arrayToken[request.getResourceID()].putLastReqC(request.getSender(), request.getRequestID());
                 CounterMessage counterMessage = new CounterMessage(this.arrayToken[request.getResourceID()].incrementCounter(), request.getResourceID(), this.node, request.getSender());
+
+                System.out.println("N = " + this.node.getID() + " SEND C / R = " + counterMessage.getResourceID());
+
                 this.sendMessage(counterMessage);
             } else if (request instanceof TokenRequest) {
                 if (!this.arrayToken[request.getResourceID()].contains((TokenRequest) request)) {
+
+                    System.out.println("N = " + this.node.getID() + " ADD REQ_T = " + request + " IN R = " + request.getResourceID());
+
                     this.arrayToken[request.getResourceID()].addTokenRequest((TokenRequest) request);
                 }
             }  // else LoanRequest.
@@ -358,35 +439,52 @@ public class AlgoJL implements EDProtocol {
 
                 // Genère un evenement qui lancera le relachement de la CS.
 
-                System.out.println("Le noeud " + this.node.getID() + " est en CS avec les ressources = " + this.currentRequestingCS.getResourceSet());
+                System.out.println("N = " + this.node.getID() + " IN_CS / R = " + this.currentRequestingCS.getResourceSet());
 
                 int delay = Util.generateRandom(this.MIN_CS, this.MAX_CS);
                 EDSimulator.add(delay, new ReleaseMessage(-1, null, null), this.node, this.myPid);
             }
 
-        if (this.state == State.WAIT_S && this.currentRequestingCS.allCounterAreReceived()) {
+        if (this.state == State.WAIT_S && this.currentRequestingCS != null && this.currentRequestingCS.allCounterAreReceived()) {
+            System.out.println("N = " + this.node.getID() + " ALL COUNTER RECEIVED");
             this.receivedAllCounter();
         }
 
         /*Set<Token> ownedToken = this.getOwnedToken();*/
         Token[] ownedToken = this.getOwnedToken();
 
+        System.out.println("N = " + this.node.getID() + " Token OWNED = ");
+        System.out.print("[");
+        for (int i = 0; i < ownedToken.length; i++) {
+            System.out.print(" " + ownedToken[i].getResourceID() + " ");
+        }
+        System.out.println("]");
+
         for (Token token : ownedToken) {
             if (!token.tokenRequestQueueEmpty()) {
+                System.out.println("N = " + this.node.getID() + " R_OWNED = " + token.getResourceID() + " QUEUE_NOT EMPTY");
                 TokenRequest headTokenRequest = token.seeHeadTokenRequestQueue();
 
                 if (this.state == State.WAIT_S) {
                     headTokenRequest = token.nextTokenRequest();
+
+                    System.out.println("N = " + this.node.getID() +  " SEND FROM R  = " + token.getResourceID() + " PEND_REQ_T = " + headTokenRequest);
+
                     this.sendToken(headTokenRequest.getResourceID(), headTokenRequest.getSender());
                 } else if (this.state == State.WAIT_CS) {
                     if (this.compareRequest(headTokenRequest, this.currentRequestingCS.getMyRequestMark())) {
                         headTokenRequest = token.nextTokenRequest();
+
+                        System.out.println("N = " + this.node.getID() +  " SEND T / R = " + token.getResourceID());
+
                         this.sendToken(headTokenRequest.getResourceID(), headTokenRequest.getSender());
                     }
                 }
             }
         }
 
+
+        System.out.println("---------------------------------------------------------------------------------------");
     }
 
     /**
@@ -396,6 +494,8 @@ public class AlgoJL implements EDProtocol {
      */
     public void sendMessage(Message message) {
         Transport tr = (Transport) this.node.getProtocol(this.transportPID);
+
+        System.out.println("SEND " + message);
 
         tr.send(message.getSender(), message.getReceiver(), message, this.myPid);
     }
@@ -420,14 +520,19 @@ public class AlgoJL implements EDProtocol {
      * <p>Effectue le traitement a faire lorsqu'on a recu tous les coutner.</p>
      */
     public void receivedAllCounter() {
+        System.out.println("N = " + this.node.getID() + " " + this.getState() + "->  WAIT_CS");
         this.setState(State.WAIT_CS);
 
         double mark = this.computeMark();
         this.currentRequestingCS.setMyRequestMark(mark);
 
-        for (int resource : this.currentRequestingCS.getResourceSet()) {
-            if (!this.arrayToken[resource].isHere()) {
-                TokenRequest tokenRequest = new TokenRequest(mark, resource, this.requestID, this.node, this.dynamicTree[resource]);
+        System.out.println("N = " + this.node.getID() + " Current_Mark = " + this.currentRequestingCS.getMyRequestMark() + " mark = " + mark);
+
+        for (int resourceID : this.currentRequestingCS.getResourceSet()) {
+            if (!this.arrayToken[resourceID].isHere()) {
+                TokenRequest tokenRequest = new TokenRequest(mark, resourceID, this.requestID, this.node, this.dynamicTree[resourceID]);
+
+                System.out.println("N = " + this.node.getID() + " SEND REQ_T / R = " + resourceID + ":");
 
                 this.sendMessage(tokenRequest);
             }
