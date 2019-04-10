@@ -146,6 +146,7 @@ public class RequestingCS {
         if (res) {
             this.parent.updateToken(resourceID, token);
             this.parent.setNodeLink(resourceID, null);
+            this.parent.getArrayToken()[resourceID].setHere(true);
 
             if (this.isCounterNeeded(resourceID)) {
                 this.counterReceived.add(resourceID);

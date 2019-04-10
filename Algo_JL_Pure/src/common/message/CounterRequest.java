@@ -18,7 +18,7 @@ public class CounterRequest extends Request{
      * @param sender
      * @param receiver
      */
-    public CounterRequest(int resourceID, long requestID, Node sender, Node receiver) {
+    public CounterRequest(int resourceID, int requestID, Node sender, Node receiver) {
         super(resourceID, requestID, sender, receiver);
     }
 

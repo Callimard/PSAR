@@ -29,7 +29,7 @@ public class Token {
     /**
      * <p>Compteur qui est incrémenté à chaque fois que l'on veut voir sa valeur.</p>
      */
-    private long counter = 0;
+    private long counter = 1;
 
     /**
      * <p>La queue des requetes de compteur.</p>

@@ -24,7 +24,7 @@ public class TokenRequest extends Request {
      * @param sender
      * @param receiver
      */
-    public TokenRequest(double mark, int resourceID, long requestID, Node sender, Node receiver) {
+    public TokenRequest(double mark, int resourceID, int requestID, Node sender, Node receiver) {
         super(resourceID, requestID, sender, receiver);
 
         this.mark = mark;

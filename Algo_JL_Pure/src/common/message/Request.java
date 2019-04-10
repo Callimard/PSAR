@@ -20,10 +20,10 @@ public class Request extends Message {
      * @param sender
      * @param receiver
      */
-    public Request(int resourceID, long requestID, Node sender, Node receiver) {
+    public Request(int resourceID, int requestID, Node sender, Node receiver) {
         super(resourceID, sender, receiver);
 
-        this.requestID = resourceID;
+        this.requestID = requestID;
     }
 
     // Methods.
