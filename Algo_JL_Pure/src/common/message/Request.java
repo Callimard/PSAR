@@ -14,7 +14,6 @@ public class Request extends Message {
     // Constructors.
 
     /**
-     *
      * @param resourceID
      * @param requestID
      * @param sender
@@ -31,6 +30,20 @@ public class Request extends Message {
     @Override
     public String toString() {
         return "[R = " + this.getClass().getSimpleName() + " Req_ID = " + this.requestID + " " + super.toString() + "]";
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null)
+            return false;
+        if (o == this)
+            return true;
+
+        if (o instanceof Request) {
+            Request r = (Request) o;
+            return r.getRequestID() == this.getRequestID() && super.equals(o);
+        } else
+            return false;
     }
 
     // Getters and Setters.

@@ -2,6 +2,9 @@ package common.message;
 
 import peersim.core.Node;
 
+import java.util.Set;
+import java.util.TreeSet;
+
 /**
  * <p>Class abstraite representant un message.</p>
  * <p>Elle contient l'ID du noeud envoyeur du message, l'ID du receveur et l'ID de la ressource concernee.</p>
@@ -18,17 +21,18 @@ public abstract class Message {
     /**
      * <p>ID du noeud envoyeur du message.</p>
      */
-    private final Node sender;
+    private Node sender;
 
     /**
      * <p>ID du noeud receveur.</p>
      */
-    private final Node receiver;
+    private Node receiver;
+
+    private final Set<Long> visitedNode = new TreeSet<>();
 
     // Constructors.
 
     /**
-     *
      * @param resourceID
      * @param sender
      * @param receiver
@@ -46,6 +50,37 @@ public abstract class Message {
         return "[M = " + this.getClass().getSimpleName() + " Sender = " + this.sender.getID() + " Receiver = " + this.receiver.getID() + " R = " + this.resourceID + "]";
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (o == null)
+            return false;
+        if (o == this)
+            return true;
+
+        if (o instanceof Message) {
+            Message m = (Message) o;
+
+            return m.getResourceID() == this.getResourceID() && m.getSender().getID() == this.getSender().getID() && m.getReceiver().getID() == this.getReceiver().getID();
+        } else
+            return false;
+    }
+
+    public boolean addAllVisitedNode(Set<Long> visitedNode) {
+        return this.visitedNode.addAll(visitedNode);
+    }
+
+    public boolean addVisitedNode(Node visitedNode) {
+        return this.visitedNode.add(visitedNode.getID());
+    }
+
+    public boolean isVisitedNode(Node visitedNode) {
+        return this.visitedNode.contains(visitedNode.getID());
+    }
+
+    public Set<Long> getVisitedNode() {
+        return this.visitedNode;
+    }
+
     // Getters and Setters.
 
     public int getResourceID() {
@@ -56,8 +91,16 @@ public abstract class Message {
         return this.sender;
     }
 
+    public void setSender(Node sender) {
+        this.sender = sender;
+    }
+
     public Node getReceiver() {
         return this.receiver;
+    }
+
+    public void setReceiver(Node receiver) {
+        this.receiver = receiver;
     }
 
 }

@@ -5,14 +5,13 @@ import peersim.core.Node;
 /**
  * <p>Represente une requete de compteur.</p>
  */
-public class CounterRequest extends Request{
+public class CounterRequest extends Request {
 
     // Variables.
 
     // Constructors.
 
     /**
-     *
      * @param resourceID
      * @param requestID
      * @param sender

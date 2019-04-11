@@ -41,7 +41,7 @@ public class TokenRequest extends Request {
         if (o instanceof TokenRequest) {
             TokenRequest tR = (TokenRequest) o;
 
-            return tR.mark == this.mark && tR.getResourceID() == this.getResourceID() && tR.getRequestID() == this.getRequestID() && tR.getSender().equals(this.getSender());
+            return tR.mark == this.mark && super.equals(o);
         } else
             return false;
     }
