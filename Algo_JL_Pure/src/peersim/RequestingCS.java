@@ -103,10 +103,10 @@ public class RequestingCS {
         long counter = counterMessage.getCounter();
         Node sender = counterMessage.getSender();
 
-            System.out.println("-------------------------------------------------------------------------");
+        System.out.println("-------------------------------------------------------------------------");
 
-            System.out.println("Node = " + this.parent.getNode().getID() + " Reception counter pour = " + resourceID);
-            System.out.println("SENDER = " + sender.getID());
+        System.out.println("Node = " + this.parent.getNode().getID() + " Reception counter pour = " + resourceID);
+        System.out.println("SENDER = " + sender.getID());
 
         boolean res = this.counterReceived.add(resourceID);
         if (res) {
@@ -116,18 +116,18 @@ public class RequestingCS {
             this.parent.setCounter(resourceID, counter);
             this.parent.setNodeLink(resourceID, sender);
 
-             System.out.println("-------------------------------------------------------------------------");
+            System.out.println("-------------------------------------------------------------------------");
         } else {
-                try {
-                    throw new Exception();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+            try {
+                throw new Exception();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
             System.err.println("ATTENTION!!! Reception d'un COUNTER que l'on a deja recu.");
 
-                System.out.println("Node = " + this.parent.getNode().getID() + " DEJA RECU POUR = " + resourceID);
+            System.out.println("Node = " + this.parent.getNode().getID() + " DEJA RECU POUR = " + resourceID);
 
-                System.out.println("-------------------------------------------------------------------------");
+            System.out.println("-------------------------------------------------------------------------");
         }
     }
 

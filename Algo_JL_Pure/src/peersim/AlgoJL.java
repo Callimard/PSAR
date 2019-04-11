@@ -304,7 +304,7 @@ public class AlgoJL implements EDProtocol {
         if (this.iteListSetRequestCS >= this.nb_cs) {
             System.out.println("N = " + this.node.getID() + " FIN DU NOEUD!!!!!!!!!!");
         } else {
-            System.out.println("N = " + this.node.getID() + " JE SUIS ICI!!\n");
+            System.out.println("N = " + this.node.getID() + " JE SUIS ICI!!");
 
             int delay = Util.generateRandom(this.MIN_CS, this.MAX_CS);
             EDSimulator.add(delay, new BeginMessage(-1, null, null), this.node, this.myPid);
@@ -350,7 +350,7 @@ public class AlgoJL implements EDProtocol {
                 this.sendMessage(cR);
                  */
 
-                counterRequest.setSender(this.dynamicTree[resourceID]);
+                counterRequest.setReceiver(this.dynamicTree[resourceID]);
                 counterRequest.addVisitedNode(this.node);
 
                 this.listPendingRequest.add(counterRequest);
@@ -414,7 +414,7 @@ public class AlgoJL implements EDProtocol {
                 this.listPendingRequest.add(tR);
                 this.sendMessage(tR);*/
 
-                tokenRequest.setSender(this.dynamicTree[resourceID]);
+                tokenRequest.setReceiver(this.dynamicTree[resourceID]);
                 tokenRequest.addVisitedNode(this.node);
 
                 this.listPendingRequest.add(tokenRequest);

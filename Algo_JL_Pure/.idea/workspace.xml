@@ -5,18 +5,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="13d549e3-25ed-4132-a767-6630d5403d61" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Algo_JL_Pure/common/message/CounterRequest.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Algo_JL_Pure/common/message/CounterRequest.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Algo_JL_Pure/common/message/Message.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Algo_JL_Pure/common/message/Message.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Algo_JL_Pure/common/message/Request.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Algo_JL_Pure/common/message/Request.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Algo_JL_Pure/common/message/TokenRequest.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Algo_JL_Pure/common/message/TokenRequest.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Algo_JL_Pure/peersim/AlgoJL$State.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Algo_JL_Pure/peersim/AlgoJL$State.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Algo_JL_Pure/peersim/AlgoJL.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Algo_JL_Pure/peersim/AlgoJL.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/common/message/CounterRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/message/CounterRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/common/message/Message.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/message/Message.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/common/message/Request.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/message/Request.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/common/message/TokenRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/message/TokenRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/common/util/Token.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/util/Token.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/peersim/AlgoJL.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/peersim/AlgoJL.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/peersim/RequestingCS.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/peersim/RequestingCS.java" afterDir="false" />
     </list>
@@ -44,49 +32,27 @@
   <component name="DefaultGradleProjectSettings">
     <option name="isMigrated" value="true" />
   </component>
-  <component name="DockManager">
-    <window id="1">
-      <content type="file-editors">
-        <state>
-          <leaf>
-            <file pinned="false" current-in-tab="true">
-              <entry file="file://$PROJECT_DIR$/src/peersim/RequestingCS.java">
-                <provider selected="true" editor-type-id="text-editor">
-                  <state relative-caret-position="575">
-                    <caret line="170" column="8" selection-start-line="170" selection-start-column="8" selection-end-line="172" selection-end-column="59" />
-                    <folding>
-                      <element signature="imports" expanded="true" />
-                    </folding>
-                  </state>
-                </provider>
-              </entry>
-            </file>
-          </leaf>
-        </state>
-      </content>
-    </window>
-  </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/peersim/AlgoJL.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="388">
-              <caret line="437" column="49" selection-start-line="437" selection-start-column="49" selection-end-line="437" selection-end-column="49" />
+            <state relative-caret-position="534">
+              <caret line="352" column="42" selection-start-line="352" selection-start-column="42" selection-end-line="352" selection-end-column="42" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#29657#29658#0" expanded="true" />
-                <element signature="e#29967#29968#0" expanded="true" />
-                <element signature="e#30183#30184#0" expanded="true" />
-                <element signature="e#30613#30614#0" expanded="true" />
-                <element signature="e#30704#30705#0" expanded="true" />
-                <element signature="e#30776#30777#0" expanded="true" />
-                <element signature="e#30972#30973#0" expanded="true" />
-                <element signature="e#31351#31352#0" expanded="true" />
-                <element signature="e#31434#31435#0" expanded="true" />
-                <element signature="e#31534#31535#0" expanded="true" />
-                <element signature="e#31610#31611#0" expanded="true" />
-                <element signature="e#31708#31709#0" expanded="true" />
+                <element signature="e#29659#29660#0" expanded="true" />
+                <element signature="e#29969#29970#0" expanded="true" />
+                <element signature="e#30185#30186#0" expanded="true" />
+                <element signature="e#30615#30616#0" expanded="true" />
+                <element signature="e#30706#30707#0" expanded="true" />
+                <element signature="e#30778#30779#0" expanded="true" />
+                <element signature="e#30974#30975#0" expanded="true" />
+                <element signature="e#31353#31354#0" expanded="true" />
+                <element signature="e#31436#31437#0" expanded="true" />
+                <element signature="e#31536#31537#0" expanded="true" />
+                <element signature="e#31612#31613#0" expanded="true" />
+                <element signature="e#31710#31711#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -138,6 +104,20 @@
           </provider>
         </entry>
       </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/peersim/RequestingCS.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="272">
+              <caret line="82" column="12" selection-start-line="82" selection-start-column="12" selection-end-line="82" selection-end-column="12" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#3263#3264#0" expanded="true" />
+                <element signature="e#3336#3337#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
     </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
@@ -159,13 +139,13 @@
       <find>OBSEL</find>
       <find>err</find>
       <find>.err</find>
-      <find>isHere</find>
       <find>LINK</find>
       <find>currentRequestingCS</find>
       <find>ReleaseMessage</find>
-      <find>FIN</find>
-      <find>IN_CS</find>
       <find>setInCS</find>
+      <find>FIN</find>
+      <find>isHere</find>
+      <find>IN_CS</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -190,8 +170,8 @@
         <option value="$PROJECT_DIR$/src/common/message/TokenRequest.java" />
         <option value="$PROJECT_DIR$/src/common/message/Request.java" />
         <option value="$PROJECT_DIR$/src/common/message/Message.java" />
-        <option value="$PROJECT_DIR$/src/peersim/RequestingCS.java" />
         <option value="$PROJECT_DIR$/src/common/util/Token.java" />
+        <option value="$PROJECT_DIR$/src/peersim/RequestingCS.java" />
         <option value="$PROJECT_DIR$/src/peersim/AlgoJL.java" />
       </list>
     </option>
@@ -322,15 +302,15 @@
       <workItem from="1554818232036" duration="8220000" />
       <workItem from="1554896090771" duration="8789000" />
       <workItem from="1555000179286" duration="2783000" />
-      <workItem from="1555006605800" duration="2586000" />
+      <workItem from="1555006605800" duration="4028000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="58113000" />
+    <option name="totallyTimeSpent" value="59555000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-7" y="0" width="1294" height="1407" extended-state="0" />
+    <frame x="-8" y="-8" width="2576" height="1416" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" weight="0.4311183" />
@@ -343,7 +323,7 @@
       <window_info id="Favorites" order="7" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.3288854" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.32810047" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.3257989" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.3997833" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -584,32 +564,34 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/peersim/RequestingCS.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="575">
-          <caret line="170" column="8" selection-start-line="170" selection-start-column="8" selection-end-line="172" selection-end-column="59" />
+        <state relative-caret-position="272">
+          <caret line="82" column="12" selection-start-line="82" selection-start-column="12" selection-end-line="82" selection-end-column="12" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="e#3263#3264#0" expanded="true" />
+            <element signature="e#3336#3337#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/peersim/AlgoJL.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="388">
-          <caret line="437" column="49" selection-start-line="437" selection-start-column="49" selection-end-line="437" selection-end-column="49" />
+        <state relative-caret-position="534">
+          <caret line="352" column="42" selection-start-line="352" selection-start-column="42" selection-end-line="352" selection-end-column="42" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#29657#29658#0" expanded="true" />
-            <element signature="e#29967#29968#0" expanded="true" />
-            <element signature="e#30183#30184#0" expanded="true" />
-            <element signature="e#30613#30614#0" expanded="true" />
-            <element signature="e#30704#30705#0" expanded="true" />
-            <element signature="e#30776#30777#0" expanded="true" />
-            <element signature="e#30972#30973#0" expanded="true" />
-            <element signature="e#31351#31352#0" expanded="true" />
-            <element signature="e#31434#31435#0" expanded="true" />
-            <element signature="e#31534#31535#0" expanded="true" />
-            <element signature="e#31610#31611#0" expanded="true" />
-            <element signature="e#31708#31709#0" expanded="true" />
+            <element signature="e#29659#29660#0" expanded="true" />
+            <element signature="e#29969#29970#0" expanded="true" />
+            <element signature="e#30185#30186#0" expanded="true" />
+            <element signature="e#30615#30616#0" expanded="true" />
+            <element signature="e#30706#30707#0" expanded="true" />
+            <element signature="e#30778#30779#0" expanded="true" />
+            <element signature="e#30974#30975#0" expanded="true" />
+            <element signature="e#31353#31354#0" expanded="true" />
+            <element signature="e#31436#31437#0" expanded="true" />
+            <element signature="e#31536#31537#0" expanded="true" />
+            <element signature="e#31612#31613#0" expanded="true" />
+            <element signature="e#31710#31711#0" expanded="true" />
           </folding>
         </state>
       </provider>
