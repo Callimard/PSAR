@@ -50,21 +50,6 @@ public abstract class Message {
         return "[M = " + this.getClass().getSimpleName() + " Sender = " + this.sender.getID() + " Receiver = " + this.receiver.getID() + " R = " + this.resourceID + "]";
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (o == null)
-            return false;
-        if (o == this)
-            return true;
-
-        if (o instanceof Message) {
-            Message m = (Message) o;
-
-            return m.getResourceID() == this.getResourceID() && m.getSender().getID() == this.getSender().getID() && m.getReceiver().getID() == this.getReceiver().getID();
-        } else
-            return false;
-    }
-
     public boolean addAllVisitedNode(Set<Long> visitedNode) {
         return this.visitedNode.addAll(visitedNode);
     }

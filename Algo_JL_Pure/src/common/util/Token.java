@@ -226,16 +226,18 @@ public class Token {
             }
 
             this.lastReqC.clear();
-            Set<Map.Entry<Node, Integer>> setReqC = this.lastReqC.entrySet();
-            for (Map.Entry<Node, Integer> entry : setReqC) {
-                this.lastReqC.put(entry.getKey(), entry.getValue());
-            }
+            this.lastReqC.putAll(token.lastReqC);
+//            Set<Map.Entry<Node, Integer>> setReqC = token.lastReqC.entrySet();
+//            for (Map.Entry<Node, Integer> entry : setReqC) {
+//                this.lastReqC.put(entry.getKey(), entry.getValue());
+//            }
 
             this.lastCS.clear();
-            Set<Map.Entry<Node, Integer>> setCS = this.lastCS.entrySet();
-            for (Map.Entry<Node, Integer> entry : setCS) {
-                this.lastCS.put(entry.getKey(), entry.getValue());
-            }
+            this.lastCS.putAll(token.lastCS);
+//            Set<Map.Entry<Node, Integer>> setCS = token.lastCS.entrySet();
+//            for (Map.Entry<Node, Integer> entry : setCS) {
+//                this.lastCS.put(entry.getKey(), entry.getValue());
+//            }
         } else {
             System.err.println("UPDATE DE TOKEN QUI NE GERE PAS LA MEME RESSOURCE!!!");
         }

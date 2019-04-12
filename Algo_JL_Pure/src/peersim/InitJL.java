@@ -1,6 +1,7 @@
 package peersim;
 
 import common.message.BeginMessage;
+import common.util.Util;
 import peersim.config.Configuration;
 import peersim.core.Control;
 import peersim.core.Network;

@@ -1,4 +1,6 @@
-package peersim;
+package common.util;
+
+import peersim.core.CommonState;
 
 public class Util {
 
@@ -8,7 +10,7 @@ public class Util {
      * @return un nombre aleatoir entre min et max.
      */
     public static int generateRandom(int min, int max) {
-        return min + (int) (Math.random() * ((max - min) + 1));
+        return min + (int) (CommonState.r.nextDouble() * ((max - min) + 1));
     }
 
 }

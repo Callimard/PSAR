@@ -123,7 +123,7 @@ public class RequestingCS {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            System.err.println("ATTENTION!!! Reception d'un COUNTER que l'on a deja recu.");
+            System.out.println("ATTENTION!!! Reception d'un COUNTER que l'on a deja recu.");
 
             System.out.println("Node = " + this.parent.getNode().getID() + " DEJA RECU POUR = " + resourceID);
 

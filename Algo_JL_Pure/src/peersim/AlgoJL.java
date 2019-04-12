@@ -2,7 +2,9 @@ package peersim;
 
 import common.message.*;
 import common.util.Token;
+import common.util.Util;
 import peersim.config.Configuration;
+import peersim.core.CommonState;
 import peersim.core.Node;
 import peersim.edsim.EDProtocol;
 import peersim.edsim.EDSimulator;
@@ -145,7 +147,7 @@ public class AlgoJL implements EDProtocol {
             int j = 0;
 
             while (j < nbRes) {
-                int generate = (int) ((Math.random() * (this.nbResource)));
+                int generate = CommonState.r.nextInt(this.nbResource);
 
                 if (setResources.add(generate)) {
                     j++;

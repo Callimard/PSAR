@@ -32,20 +32,6 @@ public class TokenRequest extends Request {
 
     // Methods.
 
-    @Override
-    public boolean equals(Object o) {
-        if (o == null)
-            return false;
-        if (o == this)
-            return true;
-        if (o instanceof TokenRequest) {
-            TokenRequest tR = (TokenRequest) o;
-
-            return tR.mark == this.mark && super.equals(o);
-        } else
-            return false;
-    }
-
     // Getters and Setters.
 
     public double getMark() {
