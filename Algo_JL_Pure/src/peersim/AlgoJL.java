@@ -282,7 +282,7 @@ public class AlgoJL implements EDProtocol {
         for (int resourceID : resourceRequired) {
             Token token = this.arrayToken[resourceID];
 
-            token.putLastCS(this.node, this.requestID);
+            token.putLastCS(this.node.getID(), this.requestID);
 
             if (!token.tokenRequestQueueEmpty()) {
                 TokenRequest headTokenRequest = token.nextTokenRequest();
@@ -337,7 +337,7 @@ public class AlgoJL implements EDProtocol {
         if (this.getToken(resourceID).isHere()) {
             CounterMessage counterMessage = new CounterMessage(this.getToken(resourceID).incrementCounter(), resourceID, this.node, sender);
 
-            this.arrayToken[resourceID].putLastReqC(sender, counterRequest.getRequestID());
+            this.arrayToken[resourceID].putLastReqC(sender.getID(), counterRequest.getRequestID());
 
             System.out.println("N = " + this.node.getID() + " SEND C / R = " + resourceID + ":");
 
@@ -451,6 +451,8 @@ public class AlgoJL implements EDProtocol {
 
         System.out.println("N = " + this.node.getID() + " R = " + counterMessage.getResourceID() + " FROM " + counterMessage.getSender().getID() + " FOR " + counterMessage.getReceiver().getID());
 
+        System.out.println("Counter = " + counterMessage.getCounter());
+
         if (this.currentRequestingCS == null) {
             System.out.println("N = " + this.node.getID() + " RECEPTION COUNTER R = " + counterMessage.getResourceID() + " ALORS QU'ON A PAS DEMANDER DE CS!!!!");
             return;
@@ -488,7 +490,7 @@ public class AlgoJL implements EDProtocol {
             }
 
             if (request instanceof CounterRequest) {
-                this.arrayToken[request.getResourceID()].putLastReqC(request.getSender(), request.getRequestID());
+                this.arrayToken[request.getResourceID()].putLastReqC(request.getSender().getID(), request.getRequestID());
                 CounterMessage counterMessage = new CounterMessage(this.arrayToken[request.getResourceID()].incrementCounter(), request.getResourceID(), this.node, request.getSender());
 
                 System.out.println("N = " + this.node.getID() + " SEND C / R = " + counterMessage.getResourceID());
@@ -627,9 +629,9 @@ public class AlgoJL implements EDProtocol {
      */
     public boolean isObsoletedRequest(Request request) {
         if (request instanceof CounterRequest) {
-            return this.arrayToken[request.getResourceID()].getLastReqC(request.getSender()) > request.getRequestID();
+            return this.arrayToken[request.getResourceID()].getLastReqC(request.getSender().getID()) >= request.getRequestID();
         } else if (request instanceof TokenRequest) {
-            return this.arrayToken[request.getResourceID()].getLastCS(request.getSender()) > request.getRequestID();
+            return this.arrayToken[request.getResourceID()].getLastCS(request.getSender().getID()) >= request.getRequestID();
         } else {
             // Pour les LoanRequest.
             return false;

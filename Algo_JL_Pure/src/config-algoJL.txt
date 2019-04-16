@@ -4,8 +4,8 @@ simulation.endtime 10000000000
 network.size 3
 
 protocol.transportPID UniformRandomTransport
-protocol.transportPID.mindelay 100
-protocol.transportPID.maxdelay 250
+protocol.transportPID.mindelay 5
+protocol.transportPID.maxdelay 12
 
 protocol.algoJL peersim.AlgoJL
 protocol.algoJL.tr transportPID
