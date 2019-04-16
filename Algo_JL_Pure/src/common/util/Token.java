@@ -225,14 +225,14 @@ public class Token {
                 this.addTokenRequest(tokenRequest);
             }
 
-            this.lastReqC.clear();
+            //this.lastReqC.clear();
             this.lastReqC.putAll(token.lastReqC);
 //            Set<Map.Entry<Node, Integer>> setReqC = token.lastReqC.entrySet();
 //            for (Map.Entry<Node, Integer> entry : setReqC) {
 //                this.lastReqC.put(entry.getKey(), entry.getValue());
 //            }
 
-            this.lastCS.clear();
+            //this.lastCS.clear();
             this.lastCS.putAll(token.lastCS);
 //            Set<Map.Entry<Node, Integer>> setCS = token.lastCS.entrySet();
 //            for (Map.Entry<Node, Integer> entry : setCS) {
