@@ -337,7 +337,7 @@ public class AlgoJL implements EDProtocol {
         if (this.getToken(resourceID).isHere()) {
             CounterMessage counterMessage = new CounterMessage(this.getToken(resourceID).incrementCounter(), resourceID, this.node, sender);
 
-            this.arrayToken[resourceID].putLastReqC(sender.getID(), counterRequest.getRequestID());
+            this.arrayToken[resourceID].putLastReqC(sender.getID(), requestID);
 
             System.out.println("N = " + this.node.getID() + " SEND C / R = " + resourceID + ":");
 
@@ -484,26 +484,28 @@ public class AlgoJL implements EDProtocol {
         System.out.println("N = " + this.node.getID() + " REQ_PENDING = " + this.listPendingRequest);
 
         for (Request request : this.listPendingRequest) {
-            if (this.isObsoletedRequest(request)) {
-                System.out.println("REQUETE OBSELETE!!! Req = " + request);
-                continue;
-            }
-
-            if (request instanceof CounterRequest) {
-                this.arrayToken[request.getResourceID()].putLastReqC(request.getSender().getID(), request.getRequestID());
-                CounterMessage counterMessage = new CounterMessage(this.arrayToken[request.getResourceID()].incrementCounter(), request.getResourceID(), this.node, request.getSender());
-
-                System.out.println("N = " + this.node.getID() + " SEND C / R = " + counterMessage.getResourceID());
-
-                this.sendMessage(counterMessage);
-            } else if (request instanceof TokenRequest) {
-                if (!this.arrayToken[request.getResourceID()].contains((TokenRequest) request)) {
-
-                    System.out.println("N = " + this.node.getID() + " ADD REQ_T = " + request + " IN R = " + request.getResourceID());
-
-                    this.arrayToken[request.getResourceID()].addTokenRequest((TokenRequest) request);
+            if (request.getResourceID() == tokenMessage.getResourceID()) {
+                if (this.isObsoletedRequest(request)) {
+                    System.out.println("REQUETE OBSELETE!!! Req = " + request);
+                    continue;
                 }
-            }  // else LoanRequest.
+
+                if (request instanceof CounterRequest) {
+                    this.arrayToken[request.getResourceID()].putLastReqC(request.getSender().getID(), request.getRequestID());
+                    CounterMessage counterMessage = new CounterMessage(this.arrayToken[request.getResourceID()].incrementCounter(), request.getResourceID(), this.node, request.getSender());
+
+                    System.out.println("N = " + this.node.getID() + " SEND C / R = " + counterMessage.getResourceID());
+
+                    this.sendMessage(counterMessage);
+                } else if (request instanceof TokenRequest) {
+                    if (!this.arrayToken[request.getResourceID()].contains((TokenRequest) request)) {
+
+                        System.out.println("N = " + this.node.getID() + " ADD REQ_T = " + request + " IN R = " + request.getResourceID());
+
+                        this.arrayToken[request.getResourceID()].addTokenRequest((TokenRequest) request);
+                    }
+                }  // else LoanRequest.
+            }
         }
 
         if (this.currentRequestingCS != null) {
@@ -522,8 +524,8 @@ public class AlgoJL implements EDProtocol {
 
         System.out.print("N = " + this.node.getID() + " Token OWNED = ");
         System.out.print("[");
-        for (int i = 0; i < ownedToken.length; i++) {
-            System.out.print(" " + ownedToken[i].getResourceID() + " ");
+        for (Token value : ownedToken) {
+            System.out.print(" " + value.getResourceID() + " ");
         }
         System.out.println("]");
 
