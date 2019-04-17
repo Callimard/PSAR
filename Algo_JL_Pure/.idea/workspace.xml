@@ -5,8 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="13d549e3-25ed-4132-a767-6630d5403d61" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/peersim/AlgoJL.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/peersim/AlgoJL.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/config-algoJL.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/config-algoJL.txt" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -48,7 +47,7 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/peersim/AlgoJL.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="287">
@@ -71,11 +70,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/config-algoJL.txt">
           <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <caret column="12" selection-start-column="12" selection-end-column="14" />
+            <state relative-caret-position="17">
+              <caret line="1" column="30" lean-forward="true" selection-start-line="1" selection-start-column="30" selection-end-line="1" selection-end-column="30" />
             </state>
           </provider>
         </entry>
@@ -120,9 +119,9 @@
       <find>isHere</find>
       <find>IN_CS</find>
       <find>putLastReqC</find>
-      <find>FIN</find>
       <find>tokenRequestQueueEmpty</find>
       <find>resources</find>
+      <find>FIN</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -147,9 +146,9 @@
         <option value="$PROJECT_DIR$/src/common/message/Request.java" />
         <option value="$PROJECT_DIR$/src/common/message/Message.java" />
         <option value="$PROJECT_DIR$/src/peersim/RequestingCS.java" />
-        <option value="$PROJECT_DIR$/src/config-algoJL.txt" />
         <option value="$PROJECT_DIR$/src/common/util/Token.java" />
         <option value="$PROJECT_DIR$/src/peersim/AlgoJL.java" />
+        <option value="$PROJECT_DIR$/src/config-algoJL.txt" />
       </list>
     </option>
   </component>
@@ -281,12 +280,12 @@
       <workItem from="1555000179286" duration="2783000" />
       <workItem from="1555006605800" duration="4112000" />
       <workItem from="1555448512620" duration="2620000" />
-      <workItem from="1555530355615" duration="2796000" />
+      <workItem from="1555530355615" duration="4060000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="65055000" />
+    <option name="totallyTimeSpent" value="66319000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -311,8 +310,8 @@
       <window_info id="Favorites" order="7" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.3288854" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.32346064" />
-      <window_info active="true" anchor="bottom" id="Debug" order="3" visible="true" weight="0.3990647" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.32346064" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.3990647" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.32969603" />
@@ -798,13 +797,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/config-algoJL.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="12" selection-start-column="12" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$PROJECT_DIR$/librairies/peersim-1.0.5.jar!/peersim/edsim/EDSimulator.class">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="248">
@@ -852,6 +844,13 @@
             <element signature="e#31888#31889#0" expanded="true" />
             <element signature="e#31986#31987#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/config-algoJL.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="1" column="30" lean-forward="true" selection-start-line="1" selection-start-column="30" selection-end-line="1" selection-end-column="30" />
         </state>
       </provider>
     </entry>
