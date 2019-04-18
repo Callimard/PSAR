@@ -3,9 +3,12 @@ package peersim;
 import common.message.CounterMessage;
 import common.message.Message;
 import common.message.TokenMessage;
+import common.message.TokenRequest;
 import common.util.Token;
 import peersim.core.Node;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -41,6 +44,8 @@ public class RequestingCS {
      */
     private Set<Integer> tokenReceived;
 
+    private List<TokenRequest> listTokenRequestSend;
+
 
     // Constructors.
 
@@ -73,6 +78,8 @@ public class RequestingCS {
                 this.tokenReceived.add(resourceID);
             }
         }
+
+        this.listTokenRequestSend = new ArrayList<>();
     }
 
     // Methods.
@@ -193,7 +200,21 @@ public class RequestingCS {
         return this.resourceSet.contains(resourceID);
     }
 
+    public boolean addTokenRequestSend(TokenRequest tokenRequest) {
+        if (!this.listTokenRequestSend.contains(tokenRequest)) {
+            this.listTokenRequestSend.add(tokenRequest);
+            return true;
+        } else {
+            System.out.println("TOKEN_REQUEST DEJA ENREGISTREE.");
+            return false;
+        }
+    }
+
     // Getters and Setters.
+
+    public Set<Integer> getResourceSet() {
+        return this.resourceSet;
+    }
 
     public double getMyRequestMark() {
         return this.myRequestMark;
@@ -203,10 +224,8 @@ public class RequestingCS {
         this.myRequestMark = myRequestMark;
     }
 
-    // Getters and Setters.
-
-    public Set<Integer> getResourceSet() {
-        return this.resourceSet;
+    public List<TokenRequest> getListTokenRequestSend() {
+        return this.listTokenRequestSend;
     }
 
 }

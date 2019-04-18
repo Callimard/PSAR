@@ -1,20 +1,20 @@
-random.seed 5640
+random.seed 5641321
 simulation.endtime 10000000000
 
-network.size 3
+network.size 5
 
 protocol.transportPID UniformRandomTransport
-protocol.transportPID.mindelay 80
-protocol.transportPID.maxdelay 250
+protocol.transportPID.mindelay 5
+protocol.transportPID.maxdelay 10
 
 protocol.algoJL peersim.AlgoJL
 protocol.algoJL.tr transportPID
 protocol.algoJL.nb_resource 2
-protocol.algoJL.nb_cs 15
-protocol.algoJL.min_cs 5
-protocol.algoJL.max_cs 10
+protocol.algoJL.nb_cs 3
+protocol.algoJL.min_cs 250
+protocol.algoJL.max_cs 300
 
 init.algoJLInit peersim.InitJL
 init.algoJLInit.jl algoJL
-init.algoJLInit.min 5
-init.algoJLInit.max 10
+init.algoJLInit.min 250
+init.algoJLInit.max 300

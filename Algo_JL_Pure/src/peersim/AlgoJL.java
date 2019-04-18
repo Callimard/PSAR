@@ -343,15 +343,8 @@ public class AlgoJL implements EDProtocol {
 
             this.sendMessage(counterMessage);
         } else { // Si on a pas le jeton, on transmet.
-            if (this.dynamicTree[resourceID] != this.node) {
+            if (this.dynamicTree[resourceID] != this.node && counterRequest.isVisitedNode(this.dynamicTree[resourceID])) {
                 System.out.println("N = " + this.node.getID() + " ROUT / Counter R = " + resourceID + ":");
-
-                /*CounterRequest cR = new CounterRequest(resourceID, requestID, sender, this.dynamicTree[resourceID]);
-                cR.addAllVisitedNode(counterRequest.getVisitedNode());
-                this.listPendingRequest.add(cR);
-                this.sendMessage(cR);
-                 */
-
                 counterRequest.setReceiver(this.dynamicTree[resourceID]);
                 counterRequest.addVisitedNode(this.node);
 
@@ -385,7 +378,7 @@ public class AlgoJL implements EDProtocol {
         }
 
         if (this.getToken(resourceID).isHere()) {
-            if (this.state == State.WAIT_S || (this.currentRequestingCS != null && !this.currentRequestingCS.isTokenNeeded(resourceID)) || this.state == State.NOTHING) { // Si c'est une ressource dont on a pas besoin ou qu'on attend encore tout les compteurs.
+            if (this.state == State.NOTHING || this.state == State.WAIT_S || (this.currentRequestingCS != null && !this.currentRequestingCS.isTokenNeeded(resourceID))) { // Si c'est une ressource dont on a pas besoin ou qu'on attend encore tout les compteurs.
                 System.out.println("N = " + this.node.getID() + " SEND T / R = " + resourceID);
                 this.sendToken(resourceID, sender);
             } else {
@@ -408,14 +401,8 @@ public class AlgoJL implements EDProtocol {
             }
 
         } else { // Si on a pas le jeton, on transmet.
-            if (this.dynamicTree[tokenRequest.getResourceID()] != this.node) {
+            if (this.dynamicTree[resourceID] != this.node && tokenRequest.isVisitedNode(this.dynamicTree[resourceID])) {
                 System.out.println("N = " + this.node.getID() + " ROUT / Token R = " + resourceID + ":");
-
-               /*TokenRequest tR = new TokenRequest(tokenRequest.getMark(), tokenRequest.getResourceID(), tokenRequest.getRequestID(), tokenRequest.getSender(), this.dynamicTree[tokenRequest.getResourceID()]);
-                tR.addAllVisitedNode(tokenRequest.getVisitedNode());
-                this.listPendingRequest.add(tR);
-                this.sendMessage(tR);*/
-
                 tokenRequest.setReceiver(this.dynamicTree[resourceID]);
                 tokenRequest.addVisitedNode(this.node);
 
@@ -544,10 +531,18 @@ public class AlgoJL implements EDProtocol {
                     if (this.compareRequest(headTokenRequest, this.currentRequestingCS.getMyRequestMark())) {
                         headTokenRequest = token.nextTokenRequest();
 
+                        for (TokenRequest tokenRequestSend : this.currentRequestingCS.getListTokenRequestSend()) {
+                            if (tokenRequestSend.getResourceID() == headTokenRequest.getResourceID()) {
+                                token.addTokenRequest(tokenRequestSend);
+                                break;
+                            }
+                        }
+
                         System.out.println("N = " + this.node.getID() + " SEND T / R = " + token.getResourceID());
 
                         this.sendToken(headTokenRequest.getResourceID(), headTokenRequest.getSender());
                     }
+
                 }
             }
         }
@@ -618,6 +613,8 @@ public class AlgoJL implements EDProtocol {
                     TokenRequest tokenRequest = new TokenRequest(mark, resourceID, this.requestID, this.node, this.dynamicTree[resourceID]);
 
                     System.out.println("N = " + this.node.getID() + " SEND REQ_T / R = " + resourceID + ":");
+
+                    this.currentRequestingCS.addTokenRequestSend(tokenRequest);
 
                     this.sendMessage(tokenRequest);
                 }
