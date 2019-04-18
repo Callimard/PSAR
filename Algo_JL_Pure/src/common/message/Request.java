@@ -14,16 +14,22 @@ public class Request extends Message {
     // Constructors.
 
     /**
-     *
      * @param resourceID
      * @param requestID
      * @param sender
      * @param receiver
      */
-    public Request(int resourceID, long requestID, Node sender, Node receiver) {
+    public Request(int resourceID, int requestID, Node sender, Node receiver) {
         super(resourceID, sender, receiver);
 
-        this.requestID = resourceID;
+        this.requestID = requestID;
+    }
+
+    // Methods.
+
+    @Override
+    public String toString() {
+        return "[R = " + this.getClass().getSimpleName() + " Req_ID = " + this.requestID + " " + super.toString() + "]";
     }
 
     // Getters and Setters.

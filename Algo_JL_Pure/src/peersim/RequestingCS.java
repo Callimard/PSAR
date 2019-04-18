@@ -103,31 +103,31 @@ public class RequestingCS {
         long counter = counterMessage.getCounter();
         Node sender = counterMessage.getSender();
 
-           /* System.out.println("-------------------------------------------------------------------------");
+        System.out.println("-------------------------------------------------------------------------");
 
-            System.out.println("Node = " + this.parent.node.getID() + " Reception counter pour = " + resourceID);
-            System.out.println("SENDER = " + sender.getID());*/
+        System.out.println("Node = " + this.parent.getNode().getID() + " Reception counter pour = " + resourceID);
+        System.out.println("SENDER = " + sender.getID());
 
         boolean res = this.counterReceived.add(resourceID);
         if (res) {
 
-            /*System.out.println("Node = " + this.parent.node.getID() + " AJOUT POUR = " + resourceID);*/
+            System.out.println("Node = " + this.parent.getNode().getID() + " AJOUT POUR = " + resourceID);
 
             this.parent.setCounter(resourceID, counter);
             this.parent.setNodeLink(resourceID, sender);
 
-            /* System.out.println("-------------------------------------------------------------------------");*/
+            System.out.println("-------------------------------------------------------------------------");
         } else {
-                /*try {
-                    throw new Exception();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }*/
-            /*System.err.println("ATTENTION!!! Reception d'un COUNTER que l'on a deja recu.");*/
+            try {
+                throw new Exception();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            System.out.println("ATTENTION!!! Reception d'un COUNTER que l'on a deja recu.");
 
-               /* System.out.println("Node = " + this.parent.node.getID() + " DEJA RECU POUR = " + resourceID);
+            System.out.println("Node = " + this.parent.getNode().getID() + " DEJA RECU POUR = " + resourceID);
 
-                System.out.println("-------------------------------------------------------------------------");*/
+            System.out.println("-------------------------------------------------------------------------");
         }
     }
 
@@ -146,6 +146,7 @@ public class RequestingCS {
         if (res) {
             this.parent.updateToken(resourceID, token);
             this.parent.setNodeLink(resourceID, null);
+            this.parent.getArrayToken()[resourceID].setHere(true);
 
             if (this.isCounterNeeded(resourceID)) {
                 this.counterReceived.add(resourceID);

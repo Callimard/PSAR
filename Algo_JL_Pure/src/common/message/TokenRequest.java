@@ -24,27 +24,13 @@ public class TokenRequest extends Request {
      * @param sender
      * @param receiver
      */
-    public TokenRequest(double mark, int resourceID, long requestID, Node sender, Node receiver) {
+    public TokenRequest(double mark, int resourceID, int requestID, Node sender, Node receiver) {
         super(resourceID, requestID, sender, receiver);
 
         this.mark = mark;
     }
 
     // Methods.
-
-    @Override
-    public boolean equals(Object o) {
-        if (o == null)
-            return false;
-        if (o == this)
-            return true;
-        if (o instanceof TokenRequest) {
-            TokenRequest tR = (TokenRequest) o;
-
-            return tR.mark == this.mark && tR.getResourceID() == this.getResourceID() && tR.getRequestID() == this.getRequestID() && tR.getSender().equals(this.getSender());
-        } else
-            return false;
-    }
 
     // Getters and Setters.
 

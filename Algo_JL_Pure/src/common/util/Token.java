@@ -29,7 +29,7 @@ public class Token {
     /**
      * <p>Compteur qui est incrémenté à chaque fois que l'on veut voir sa valeur.</p>
      */
-    private long counter = 0;
+    private long counter = 1;
 
     /**
      * <p>La queue des requetes de compteur.</p>
@@ -45,12 +45,12 @@ public class Token {
     /**
      * <p>Sont initialement vide. Permet de savoir si une requete de compteur est obselete ou pas.</p>
      */
-    private Map<Node, Integer> lastReqC = new HashMap<>();
+    private Map<Long, Integer> lastReqC = new HashMap<>();
 
     /**
      * <p>Sont initialement vide. Permet de savoir si une requete de jeton est obselete ou pas.</p>
      */
-    private Map<Node, Integer> lastCS = new HashMap<>();
+    private Map<Long, Integer> lastCS = new HashMap<>();
 
     // Constructors.
 
@@ -160,27 +160,27 @@ public class Token {
     }
 
     /**
-     * @param node le noeud pour lequel on veut voir la derniere requete de compteur traite.
+     * @param nodeID le noeud pour lequel on veut voir la derniere requete de compteur traite.
      * @return le requeteID de la derniere requete de compteur traite par ce jeton pour ce noeud. Retourne null si le jeton n'a encore jamais traiter de requete de compteur pour ce noeud.
      */
-    public int getLastReqC(Node node) {
-        return this.lastReqC.get(node) == null ? -1 : this.lastReqC.get(node);
+    public int getLastReqC(long nodeID) {
+        return this.lastReqC.get(nodeID) == null ? -1 : this.lastReqC.get(nodeID);
     }
 
-    public void putLastReqC(Node node, int requestID) {
-        this.lastReqC.put(node, requestID);
+    public void putLastReqC(long nodeID, int requestID) {
+        this.lastReqC.put(nodeID, requestID);
     }
 
     /**
-     * @param node le noeud pour lequel on veut voir la derniere requete de jeton.
+     * @param nodeID le noeud pour lequel on veut voir la derniere requete de jeton.
      * @return le requeteID de la derniere requete de jeton traite par ce jeton pour ce noeud. Retourne null si le jeton n'a encore jamais traiter de requete de compteur pour ce noeud.
      */
-    public int getLastCS(Node node) {
-        return this.lastCS.get(node) == null ? -1 : this.lastCS.get(node);
+    public int getLastCS(long nodeID) {
+        return this.lastCS.get(nodeID) == null ? -1 : this.lastCS.get(nodeID);
     }
 
-    public void putLastCS(Node node, int requestID) {
-        this.lastCS.put(node, requestID);
+    public void putLastCS(long nodeID, int requestID) {
+        this.lastCS.put(nodeID, requestID);
     }
 
     @Override
@@ -225,17 +225,19 @@ public class Token {
                 this.addTokenRequest(tokenRequest);
             }
 
-            this.lastReqC.clear();
-            Set<Map.Entry<Node, Integer>> setReqC = this.lastReqC.entrySet();
-            for (Map.Entry<Node, Integer> entry : setReqC) {
-                this.lastReqC.put(entry.getKey(), entry.getValue());
-            }
+            //this.lastReqC.clear();
+            this.lastReqC.putAll(token.lastReqC);
+//            Set<Map.Entry<Node, Integer>> setReqC = token.lastReqC.entrySet();
+//            for (Map.Entry<Node, Integer> entry : setReqC) {
+//                this.lastReqC.put(entry.getKey(), entry.getValue());
+//            }
 
-            this.lastCS.clear();
-            Set<Map.Entry<Node, Integer>> setCS = this.lastCS.entrySet();
-            for (Map.Entry<Node, Integer> entry : setCS) {
-                this.lastCS.put(entry.getKey(), entry.getValue());
-            }
+            //this.lastCS.clear();
+            this.lastCS.putAll(token.lastCS);
+//            Set<Map.Entry<Node, Integer>> setCS = token.lastCS.entrySet();
+//            for (Map.Entry<Node, Integer> entry : setCS) {
+//                this.lastCS.put(entry.getKey(), entry.getValue());
+//            }
         } else {
             System.err.println("UPDATE DE TOKEN QUI NE GERE PAS LA MEME RESSOURCE!!!");
         }
@@ -261,6 +263,15 @@ public class Token {
     }
 
     public boolean isHere() {
+        if (this.isHere) {
+            System.out.println("LINK = " + this.parent.getNodeLink(resourceID) + " R = " + resourceID);
+            if (this.parent.getNodeLink(resourceID) != null)
+                try {
+                    throw new Exception();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+        }
         return this.isHere;
     }
 
