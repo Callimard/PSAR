@@ -1,7 +1,7 @@
 random.seed 65046510
 simulation.endtime 10000000000
 
-network.size 15
+network.size 3
 
 protocol.transportPID UniformRandomTransport
 protocol.transportPID.mindelay 5

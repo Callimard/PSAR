@@ -22,7 +22,7 @@ public class RequestingCS {
     private final AlgoJL parent;
 
     /**
-     * <p>La note de chaque requete de jeton envoye pour cette section critque. Utile pour comparer avec d'autres requete que l'on recevra plus tard -> {@link AlgoJL#sendMessage(Message)}.</p>
+     * <p>La note de chaque requete de jeton envoye pour cette section critque. Utile pour comparer avec d'autres requete que l'on recevra plus tard -> {@link AlgoJL#sendMessage(Message, boolean)}.</p>
      * <p>Pour eviter tout probleme si jamais on a pas encore calculer notre mark, initialisee a {@link Double#MAX_VALUE}</p>
      */
     private double myRequestMark = Double.MAX_VALUE;
