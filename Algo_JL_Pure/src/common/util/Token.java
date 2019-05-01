@@ -32,11 +32,6 @@ public class Token {
     private long counter = 1;
 
     /**
-     * <p>La queue des requetes de compteur.</p>
-     */
-    private List<CounterRequest> queueCounterRequest = new LinkedList<>();
-
-    /**
      * <p>La queue des requetes de resources. Si une requete est presente dans cette queue, c'est que le noeud qui a envoye la requete veut cette ressource.</p>
      * <p>Cette queue est triee dans l'ordre des requete prioritaire a moins prioritaire (Tout depend du vecteur de compteur de la requete).</p>
      */
@@ -85,16 +80,9 @@ public class Token {
      * @param counterRequest
      * @return true si la requete a ete ajoute.
      */
-    public boolean addCounterRequest(CounterRequest counterRequest) {
+   /* public boolean addCounterRequest(CounterRequest counterRequest) {
         return this.queueCounterRequest.add(counterRequest);
-    }
-
-    /**
-     * @return la prochaine requete de compteur et la retire de la queue, si la liste est vide, retourne null.
-     */
-    public CounterRequest nextCounterRequest() {
-        return this.queueCounterRequest.remove(0);
-    }
+    }*/
 
     /**
      * <p>Ajoute la requete de ressource dans la queue. Apres l'ajout, la queue est triee pour etre a jour et que la premiere valeur de la list (get(0))
@@ -189,7 +177,6 @@ public class Token {
 
         clone.counter = counter;
 
-        clone.queueCounterRequest.addAll(this.queueCounterRequest);
         clone.queueTokenRequest.addAll(this.queueTokenRequest);
         clone.lastReqC.putAll(this.lastReqC);
         clone.lastCS.putAll(this.lastCS);
@@ -209,20 +196,14 @@ public class Token {
             this.counter = token.counter;
             this.isHere = true;
 
-            if (!this.queueCounterRequest.isEmpty()) {
-                System.err.println("ATTENTION!!! COUNTER QUEUE PAS VIDE ET ON VA UPDATE -> PAS LOGIQUE.");
-            }
-            this.queueCounterRequest.clear();
-            for (CounterRequest counterRequest : token.queueCounterRequest) {
-                this.addCounterRequest(counterRequest);
-            }
-
-            if (!this.queueTokenRequest.isEmpty()) {
+            /*if (!this.queueTokenRequest.isEmpty()) {
                 System.err.println("ATTENTION!!! RESSOURCE QUEUE PAS VIDE ET ON VA UPDATE -> PAS LOGIQUE.");
             }
-            this.queueTokenRequest.clear();
+            this.queueTokenRequest.clear();*/
             for (TokenRequest tokenRequest : token.queueTokenRequest) {
-                this.addTokenRequest(tokenRequest);
+                if (!this.queueTokenRequest.contains(tokenRequest)) {
+                    this.addTokenRequest(tokenRequest);
+                }
             }
 
             //this.lastReqC.clear();
@@ -248,7 +229,6 @@ public class Token {
      * <p>Ne clear pas les map de lastReq et lastCS car elles sont toujours utile meme si on a plus le jeton pour voir les requete obselete.</p>
      */
     public void clearAllQueue() {
-        this.queueCounterRequest.clear();
         this.queueTokenRequest.clear();
     }
 
