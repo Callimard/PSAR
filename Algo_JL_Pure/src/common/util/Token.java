@@ -263,15 +263,6 @@ public class Token {
     }
 
     public boolean isHere() {
-        if (this.isHere) {
-            System.out.println("LINK = " + this.parent.getNodeLink(resourceID) + " R = " + resourceID);
-            if (this.parent.getNodeLink(resourceID) != null)
-                try {
-                    throw new Exception();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-        }
         return this.isHere;
     }
 

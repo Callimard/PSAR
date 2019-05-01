@@ -44,6 +44,9 @@ public class RequestingCS {
      */
     private Set<Integer> tokenReceived;
 
+    /**
+     * <p>Toutes les requete de token que l'on a envoyee pour netre en CS.</p>
+     */
     private List<TokenRequest> listTokenRequestSend;
 
 
