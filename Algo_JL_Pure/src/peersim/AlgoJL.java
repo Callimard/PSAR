@@ -422,7 +422,7 @@ public class AlgoJL implements EDProtocol {
     }
 
     private void receiveToken(TokenMessage tokenMessage) {
-        System.out.println("RcvT---------------------------------------------------------------------------------------");
+        System.out.println("RcvT--------------------------------------------------------------------------------------- State = " + this.getState());
 
         System.out.println("N = " + this.node.getID() + " R = " + tokenMessage.getResourceID() + " FROM " + tokenMessage.getSender().getID() + " FOR " + tokenMessage.getReceiver().getID());
 
@@ -436,7 +436,7 @@ public class AlgoJL implements EDProtocol {
         }
 
         if (this.getState() == State.WAIT_S && this.currentRequestingCS.allCounterAreReceived()) {
-            this.receivedAllCounter();
+            System.out.println("N = " + this.node.getID() + " PASS_CS ? " + this.receivedAllCounterNoPassCS());
         }
 
         System.out.println("N = " + this.node.getID() + " REQ_PENDING = " + this.listPendingRequest);
@@ -463,12 +463,6 @@ public class AlgoJL implements EDProtocol {
                         this.arrayToken[request.getResourceID()].addTokenRequest((TokenRequest) request);
                     }
                 }  // else LoanRequest.
-            }
-        }
-
-        if (this.currentRequestingCS != null) {
-            if (this.currentRequestingCS.allTokenAreReceived()) {
-                this.setInCS();
             }
         }
 
@@ -516,13 +510,18 @@ public class AlgoJL implements EDProtocol {
                         this.sendToken(headTokenRequest.getResourceID(), headTokenRequest.getSender());
                     }
                 } else {
-                    System.out.println("N = " + this.node.getID() + " OUUUUUCHHH stat = " + this.getState());
+                    System.out.println("N = " + this.node.getID() + " OUUUUUCHHH state = " + this.getState() + " R = " + tokenMessage.getToken().getResourceID() + " isRequired = " + this.currentRequestingCS.isTokenNeeded(tokenMessage.getToken().getResourceID()));
                 }
             } else {
                 System.out.println("N = " + this.node.getID() + " FOR R = " + token.getResourceID() + " QUEUE EMPTY");
             }
         }
 
+        if (this.currentRequestingCS != null) {
+            if (this.currentRequestingCS.allTokenAreReceived()) {
+                this.setInCS();
+            }
+        }
 
         System.out.println("---------------------------------------------------------------------------------------");
     }
@@ -594,6 +593,37 @@ public class AlgoJL implements EDProtocol {
                     this.sendMessage(tokenRequest);
                 }
             }
+        }
+    }
+
+    /**
+     * <p>Fait le traitement a faire lorsque tout les compteurs sont recu sans passé en CS si tout les token sont deja present sur le site.</p>
+     * <p>Renvoie true si le noeud peut passer en CS sinon false.</p>
+     * @return renvoie true si le noeud peut passer en CS sinon false.
+     */
+    private boolean receivedAllCounterNoPassCS() {
+        System.out.println("N = " + this.node.getID() + " " + this.getState() + " -> WAIT_CS NO_PASS_CS");
+        this.setState(State.WAIT_CS);
+
+        double mark = this.computeMark();
+        this.currentRequestingCS.setMyRequestMark(mark);
+
+        System.out.println("N = " + this.node.getID() + " Current_Mark = " + this.currentRequestingCS.getMyRequestMark() + " mark = " + mark);
+
+        if (!this.currentRequestingCS.allTokenAreReceived()) {
+            for (int resourceID : this.currentRequestingCS.getResourceSet()) {
+                TokenRequest tokenRequest = new TokenRequest(mark, resourceID, this.requestID, this.node, this.dynamicTree[resourceID]);
+                this.currentRequestingCS.addTokenRequestSend(tokenRequest);
+
+                if (!this.arrayToken[resourceID].isHere()) {
+                    System.out.println("N = " + this.node.getID() + " SEND REQ_T / R = " + resourceID + ":");
+
+                    this.sendMessage(tokenRequest);
+                }
+            }
+            return false;
+        } else {
+            return true;
         }
     }
 
