@@ -156,7 +156,12 @@ public class Token {
     }
 
     public void putLastReqC(long nodeID, int requestID) {
-        this.lastReqC.put(nodeID, requestID);
+        if (this.lastReqC.get(nodeID) != null) {
+            if (this.lastReqC.get(nodeID) < requestID)
+                this.lastReqC.put(nodeID, requestID);
+        } else {
+            this.lastReqC.put(nodeID, requestID);
+        }
     }
 
     /**
@@ -168,7 +173,12 @@ public class Token {
     }
 
     public void putLastCS(long nodeID, int requestID) {
-        this.lastCS.put(nodeID, requestID);
+        if (this.lastCS.get(nodeID) != null) {
+            if (this.lastCS.get(nodeID) < requestID)
+                this.lastCS.put(nodeID, requestID);
+        } else {
+            this.lastCS.put(nodeID, requestID);
+        }
     }
 
     @Override
