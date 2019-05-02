@@ -478,7 +478,7 @@ public class AlgoJL implements EDProtocol {
     private void receiveCounter(CounterMessage counterMessage) {
         System.out.println("RcvC---------------------------------------------------------------------------------------");
 
-        List<Message> buffer = new ArrayList<>();
+//        List<Message> buffer = new ArrayList<>();
 
         System.out.println("N = " + this.node.getID() + " R = " + counterMessage.getResourceID() + " FROM " + counterMessage.getSender().getID() + " FOR " + counterMessage.getReceiver().getID());
 
@@ -492,12 +492,13 @@ public class AlgoJL implements EDProtocol {
         this.currentRequestingCS.receiveCounter(counterMessage);
 
         if (this.currentRequestingCS.allCounterAreReceived()) {
-            this.receivedAllCounter(buffer);
+        	this.receivedAllCounter();
+//            this.receivedAllCounter(buffer);
         }
 
-        for (Message m : buffer) {
-            this.sendMessage(m, false);
-        }
+//        for (Message m : buffer) {
+//            this.sendMessage(m, false);
+//        }
 
         System.out.println("---------------------------------------------------------------------------------------");
     }
@@ -622,7 +623,7 @@ public class AlgoJL implements EDProtocol {
 
         // Genère un evenement qui lancera le relachement de la CS.
 
-        System.out.println("N = " + this.node.getID() + " IN_CS / R = " + this.currentRequestingCS.getResourceSet());
+        System.out.println("N = " + this.node.getID() + " SET_IN_CS / R = " + this.currentRequestingCS.getResourceSet());
 
         int delay = Util.generateRandom(this.MIN_CS, this.MAX_CS);
         EDSimulator.add(delay, new ReleaseMessage(-1, null, null), this.node, this.myPid);
@@ -708,7 +709,6 @@ public class AlgoJL implements EDProtocol {
                     System.out.println("N = " + this.node.getID() + " SEND REQ_T / R = " + resourceID + ":");
 
                     buffer.add(tokenRequest);
-                    /*this.sendMessage(tokenRequest, false);*/
                 }
             }
         }
@@ -764,7 +764,6 @@ public class AlgoJL implements EDProtocol {
                     System.out.println("N = " + this.node.getID() + " SEND REQ_T / R = " + resourceID + ":");
 
                     buffer.add(tokenRequest);
-                    /*this.sendMessage(tokenRequest, false);*/
                 }
             }
             return false;

@@ -1,11 +1,12 @@
 package common.util;
 
-import common.message.CounterRequest;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+
 import common.message.TokenRequest;
 import peersim.AlgoJL;
-import peersim.core.Node;
-
-import java.util.*;
 
 public class Token {
 
@@ -99,19 +100,6 @@ public class Token {
             } else {
                 return 1;
             }
-
-            /*if (o1.getMark() < o2.getMark()) {
-                return -1;
-            } else if (o1.getMark() > o2.getMark()) {
-                return 1;
-            } else {
-                if (o1.getNode() < o2.getNode()) {
-                    return -1;
-                } else {
-                    return 1;
-                }
-
-            }*/
         });
 
     }
@@ -206,29 +194,15 @@ public class Token {
             this.counter = token.counter;
             this.isHere = true;
 
-            /*if (!this.queueTokenRequest.isEmpty()) {
-                System.err.println("ATTENTION!!! RESSOURCE QUEUE PAS VIDE ET ON VA UPDATE -> PAS LOGIQUE.");
-            }
-            this.queueTokenRequest.clear();*/
             for (TokenRequest tokenRequest : token.queueTokenRequest) {
                 if (!this.queueTokenRequest.contains(tokenRequest)) {
                     this.addTokenRequest(tokenRequest);
                 }
             }
 
-            //this.lastReqC.clear();
             this.lastReqC.putAll(token.lastReqC);
-//            Set<Map.Entry<Node, Integer>> setReqC = token.lastReqC.entrySet();
-//            for (Map.Entry<Node, Integer> entry : setReqC) {
-//                this.lastReqC.put(entry.getKey(), entry.getValue());
-//            }
 
-            //this.lastCS.clear();
             this.lastCS.putAll(token.lastCS);
-//            Set<Map.Entry<Node, Integer>> setCS = token.lastCS.entrySet();
-//            for (Map.Entry<Node, Integer> entry : setCS) {
-//                this.lastCS.put(entry.getKey(), entry.getValue());
-//            }
         } else {
             System.err.println("UPDATE DE TOKEN QUI NE GERE PAS LA MEME RESSOURCE!!!");
         }
