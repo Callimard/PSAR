@@ -58,6 +58,10 @@ public abstract class Message {
         return this.visitedNode.add(visitedNode.getID());
     }
 
+    /**
+     * @param visitedNode
+     * @return true si le noeud en parametre est un noeud deja visite par le message.
+     */
     public boolean isVisitedNode(Node visitedNode) {
         return this.visitedNode.contains(visitedNode.getID());
     }

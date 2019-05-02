@@ -3,9 +3,12 @@ package peersim;
 import common.message.CounterMessage;
 import common.message.Message;
 import common.message.TokenMessage;
+import common.message.TokenRequest;
 import common.util.Token;
 import peersim.core.Node;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -19,7 +22,7 @@ public class RequestingCS {
     private final AlgoJL parent;
 
     /**
-     * <p>La note de chaque requete de jeton envoye pour cette section critque. Utile pour comparer avec d'autres requete que l'on recevra plus tard -> {@link AlgoJL#sendMessage(Message)}.</p>
+     * <p>La note de chaque requete de jeton envoye pour cette section critque. Utile pour comparer avec d'autres requete que l'on recevra plus tard -> {@link AlgoJL#sendMessage(Message, boolean)}.</p>
      * <p>Pour eviter tout probleme si jamais on a pas encore calculer notre mark, initialisee a {@link Double#MAX_VALUE}</p>
      */
     private double myRequestMark = Double.MAX_VALUE;
@@ -40,6 +43,11 @@ public class RequestingCS {
      * <p>Le set est directement mis a jour dans le constructeur. On regarde si certains jeton des ressource demandees ne sont pas deja present sur le noeud.</p>
      */
     private Set<Integer> tokenReceived;
+
+    /**
+     * <p>Toutes les requete de token que l'on a envoyee pour netre en CS.</p>
+     */
+    private List<TokenRequest> listTokenRequestSend;
 
 
     // Constructors.
@@ -73,6 +81,8 @@ public class RequestingCS {
                 this.tokenReceived.add(resourceID);
             }
         }
+
+        this.listTokenRequestSend = new ArrayList<>();
     }
 
     // Methods.
@@ -193,7 +203,21 @@ public class RequestingCS {
         return this.resourceSet.contains(resourceID);
     }
 
+    public boolean addTokenRequestSend(TokenRequest tokenRequest) {
+        if (!this.listTokenRequestSend.contains(tokenRequest)) {
+            this.listTokenRequestSend.add(tokenRequest);
+            return true;
+        } else {
+            System.out.println("TOKEN_REQUEST DEJA ENREGISTREE.");
+            return false;
+        }
+    }
+
     // Getters and Setters.
+
+    public Set<Integer> getResourceSet() {
+        return this.resourceSet;
+    }
 
     public double getMyRequestMark() {
         return this.myRequestMark;
@@ -203,10 +227,8 @@ public class RequestingCS {
         this.myRequestMark = myRequestMark;
     }
 
-    // Getters and Setters.
-
-    public Set<Integer> getResourceSet() {
-        return this.resourceSet;
+    public List<TokenRequest> getListTokenRequestSend() {
+        return this.listTokenRequestSend;
     }
 
 }
