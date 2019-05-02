@@ -16,5 +16,5 @@ protocol.algoJL.max_cs 10
 
 init.algoJLInit peersim.InitJL
 init.algoJLInit.jl algoJL
-init.algoJLInit.min 5
-init.algoJLInit.max 10
+init.algoJLInit.min 15
+init.algoJLInit.max 30
