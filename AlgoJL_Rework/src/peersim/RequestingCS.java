@@ -205,7 +205,7 @@ public class RequestingCS {
 
     // Getters and Setters.
 
-    public Set<Integer> getResourceSet() {
+    public Set<Integer> getResourceRequiredSet() {
         return this.resourceSet;
     }
 

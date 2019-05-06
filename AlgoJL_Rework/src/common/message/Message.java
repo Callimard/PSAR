@@ -47,7 +47,10 @@ public abstract class Message {
 
     @Override
     public String toString() {
-        return "[M = " + this.getClass().getSimpleName() + " Sender = " + this.sender.getID() + " Receiver = " + this.receiver.getID() + " R = " + this.resourceID + "]";
+        return "[M = " + this.getClass().getSimpleName()
+                + " Sender = " + this.sender.getID()
+                + " Receiver = " + this.receiver.getID()
+                + " R = " + this.resourceID + "]";
     }
 
     public boolean addAllVisitedNode(Set<Long> visitedNode) {

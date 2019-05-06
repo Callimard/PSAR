@@ -8,6 +8,7 @@ import peersim.core.CommonState;
 import peersim.core.Node;
 import peersim.edsim.EDProtocol;
 import peersim.edsim.EDSimulator;
+import peersim.transport.Transport;
 
 import java.util.*;
 
@@ -73,7 +74,7 @@ public class AlgoJL implements EDProtocol {
     private long[] counterVector;
 
     /**
-     * <p>Represente les jetons de chaque ressource. Les ressources sont presente ou non sur le site. Pour le savoir il faut appeler la methode {@link Token#isHere()}.</p>
+     * <p>Represente les jetons de chaque ressource. Les ressources sont presente ou non sur le site. Pour le savoir il faut appeler la methode {@link AlgoJL#hasToken(int)}.</p>
      */
     private Token[] arrayToken;
 
@@ -170,7 +171,39 @@ public class AlgoJL implements EDProtocol {
      * @param resources le set de ressources requises pour entrer en CS.
      */
     public void requestCS(Set<Integer> resources) {
-        System.out.println("ReqCS---------------------------------------------------------------------------------------");
+        System.out.println("N = " + this.node.getID() + " ReqCS---------------------------------------------------------------------------------------");
+
+        if (this.currentRequestingCS == null && this.state == State.NOTHING) {
+            this.currentRequestingCS = new RequestingCS(resources, this);
+            this.requestID++;
+
+            this.setState(State.WAIT_S);
+
+            if (!this.currentRequestingCS.allTokenAreReceived()) {
+                List<Message> buff = new ArrayList<>();
+                for (int resourceID : this.currentRequestingCS.getResourceRequiredSet()) {
+                    if (!this.hasToken(resourceID)) {
+                        Message counterRequest = new CounterRequest(resourceID, this.requestID, this.node, this.dynamicTree[resourceID]);
+                        buff.add(counterRequest);
+                    } else {
+                        if (this.dynamicTree[resourceID] != null)
+                            System.out.println("N = " + this.node.getID() + " PB -> ON A LE NOEUD MAIS DYNAMIC TREE PAS NULL -> " + this.dynamicTree[resourceID]);
+                    }
+                }
+
+                this.sendBuff(buff, false);
+            } else {
+                System.out.println("N = " + this.node.getID() + " JETON DEJA TOUS POSSEDES!!");
+                this.setInCS();
+            }
+        } else {
+            if (this.currentRequestingCS != null)
+                System.out.println("N = " + this.node.getID() + "PB -> ATTENTION!!! DEMANDE DE CS ALORS QU'IL Y EN A UNE DEJA EN COURS.");
+
+            if (this.state != State.NOTHING)
+                System.out.println("N = " + this.node.getID() + "PB -> ATTENTION!!! DEMANDE DE CS ALORS QUE L'ETAT N'EST PAS NOTHING.");
+        }
+
         System.out.println("---------------------------------------------------------------------------------------");
     }
 
@@ -178,7 +211,29 @@ public class AlgoJL implements EDProtocol {
      * <p>Relache la CS. Est appelee lorsque le message {@link ReleaseMessage} est recu.</p>
      */
     public void releaseCS() {
-        System.out.println("RelCS--------------------------------------------------------------------------------------");
+        System.out.println("N = " + this.node.getID() + " RelCS--------------------------------------------------------------------------------------");
+
+        this.setState(State.NOTHING);
+
+        System.out.println("N = " + this.node.getID() + " currentRequestingCS = " + this.currentRequestingCS);
+        Set<Integer> resourceRequired = this.currentRequestingCS.getResourceRequiredSet();
+        System.out.println("N = " + this.node.getID() + " Release_CS / R_required = " + resourceRequired);
+
+        // Contient que des TokenMessage que l'on cree pour envoyer les jetons.
+        List<Message> buff = new ArrayList<>();
+        for (int resourceID : resourceRequired) {
+            Token token = this.arrayToken[resourceID];
+            token.putLastCS(this.node.getID(), this.requestID);
+
+            if (!token.tokenRequestQueueEmpty()) {
+                buff.add(this.sendToken(resourceID, token.nextTokenRequest().getReceiver()));
+            }
+        }
+
+        this.currentRequestingCS = null;
+
+        this.sendBuff(buff, false);
+
         System.out.println("---------------------------------------------------------------------------------------");
     }
 
@@ -186,25 +241,80 @@ public class AlgoJL implements EDProtocol {
         int resourceID = counterRequest.getResourceID();
         int requestID = counterRequest.getRequestID();
         Node sender = counterRequest.getSender();
-        System.out.println("RcvREQ_C---------------------------------------------------------------------------------------");
+        System.out.println("N = " + this.node.getID() + " RcvREQ_C---------------------------------------------------------------------------------------");
         System.out.println("---------------------------------------------------------------------------------------");
     }
 
     private void receiveTokenRequest(TokenRequest tokenRequest) {
         int resourceID = tokenRequest.getResourceID();
         Node sender = tokenRequest.getSender();
-        System.out.println("RcvREQ_T---------------------------------------------------------------------------------------");
+        System.out.println("N = " + this.node.getID() + " RcvREQ_T---------------------------------------------------------------------------------------");
         System.out.println("---------------------------------------------------------------------------------------");
     }
 
     private void receiveCounter(CounterMessage counterMessage) {
-        System.out.println("RcvC---------------------------------------------------------------------------------------");
+        System.out.println("N = " + this.node.getID() + " RcvC---------------------------------------------------------------------------------------");
         System.out.println("---------------------------------------------------------------------------------------");
     }
 
     private void receiveToken(TokenMessage tokenMessage) {
-        System.out.println("RcvT--------------------------------------------------------------------------------------- State = " + this.getState());
+        System.out.println("N = " + this.node.getID() + " RcvT--------------------------------------------------------------------------------------- State = " + this.getState());
         System.out.println("---------------------------------------------------------------------------------------");
+    }
+
+    private void setInCS() {
+        this.setState(State.IN_CS);
+        System.out.println("N = " + this.node.getID() + " SET_IN_CS / R = " + this.currentRequestingCS.getResourceRequiredSet());
+
+        // Genère un evenement qui lancera le relachement de la CS.
+        int delay = Util.generateRandom(this.MIN_CS, this.MAX_CS);
+        EDSimulator.add(delay, new ReleaseMessage(-1, null, null), this.node, this.myPid);
+    }
+
+    private void sendBuff(List<Message> buff, boolean addInVisitedNode) {
+        for (Message message : buff) {
+            this.sendMessage(message, addInVisitedNode);
+        }
+    }
+
+    public Message sendToken(int resourceID, Node receiver) {
+        Message tokenMessage = new TokenMessage(this.arrayToken[resourceID], resourceID, this.node, receiver);
+        this.setNodeLink(resourceID, receiver);
+        this.arrayToken[resourceID] = null;
+
+        return tokenMessage;
+    }
+
+    /**
+     * <p>Envoie un message. (Toutes les infos comme a qui doit etre envoye le message sont dans le message).</p>
+     *
+     * @param message le message a envoyer
+     */
+    public void sendMessage(Message message, boolean addInVisitedNode) {
+        Transport tr = (Transport) this.node.getProtocol(this.transportPID);
+
+        System.out.println("N = " + this.node.getID() + " SEND " + message);
+
+        if (addInVisitedNode)
+            message.addVisitedNode(this.node);
+
+        tr.send(message.getSender(), message.getReceiver(), message, this.myPid);
+    }
+
+    /**
+     * <p>Retourne la moyenne du vecteur de compteurs.</p>
+     *
+     * @return la valeur de la note des requete de jetons courant en se basant sur le vecteur de compteur.
+     * @see AlgoJL#counterVector
+     */
+    public double computeMark() {
+        double sum = 0.0;
+
+        for (long counter : this.counterVector) {
+            sum += (double) counter;
+        }
+
+        return sum / ((double) this.counterVector.length);
     }
 
     @Override
