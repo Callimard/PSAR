@@ -119,10 +119,8 @@ public class RequestingCS {
         boolean res = this.counterReceived.add(resourceID);
         if (res) {
             System.out.println("Node = " + this.parent.getNode().getID() + " AJOUT POUR = " + resourceID);
-
             this.parent.setCounter(resourceID, counter);
             this.parent.setNodeLink(resourceID, sender);
-
             System.out.println("-------------------------------------------------------------------------");
         } else {
             try {
@@ -130,10 +128,8 @@ public class RequestingCS {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            System.out.println("ATTENTION!!! Reception d'un COUNTER que l'on a deja recu.");
-
-            System.out.println("N = " + this.parent.getNode().getID() + "PB -> DEJA RECU POUR = " + resourceID);
-
+            System.out.println("PB - > ATTENTION!!! Reception d'un COUNTER que l'on a deja recu.");
+            System.out.println("N = " + this.parent.getNode().getID() + " PB -> DEJA RECU POUR = " + resourceID);
             System.out.println("-------------------------------------------------------------------------");
         }
     }
@@ -143,13 +139,12 @@ public class RequestingCS {
      * <p>Ne fait aucun traitement qui aurait un rapport avec le fait que toutes les ressources ont ete recues. Apres avoir appele cette methode,
      * il faut appeler la mehtode {@link RequestingCS#allTokenAreReceived()} pour savoir si tous les jetons sont recu et ensuite effectuer le traitement approprie.</p>
      *
-     * @param tokenMessage le message de jeton que l'on vient de recevoir
+     * @param token le jeton que l'on vient de recevoir
      */
-    public void receiveToken(TokenMessage tokenMessage) {
-        int resourceID = tokenMessage.getResourceID();
-        Token token = tokenMessage.getToken();
+    public void receiveToken(Token token) {
+        int resourceID = token.getResourceID();
 
-        boolean res = this.tokenReceived.add(tokenMessage.getResourceID());
+        boolean res = this.tokenReceived.add(token.getResourceID());
         if (res) {
             this.parent.tokenArrived(token);
             this.parent.setNodeLink(resourceID, null);
@@ -161,6 +156,10 @@ public class RequestingCS {
         } else {
             System.err.println("N = " + this.parent.getNode().getID() + "PB - > ATTENTION!!! Reception d'un TOKEN que l'on a deja recu.");
         }
+    }
+
+    public void removeTokenReceived(int resourceID) {
+        this.tokenReceived.remove(resourceID);
     }
 
     /**
@@ -201,6 +200,16 @@ public class RequestingCS {
             System.out.println("TOKEN_REQUEST DEJA ENREGISTREE.");
             return false;
         }
+    }
+
+    public TokenRequest getTokenRequestSend(int resourceID) {
+        for (TokenRequest tokenRequest : this.listTokenRequestSend) {
+            if (tokenRequest.getResourceID() == resourceID) {
+                return tokenRequest;
+            }
+        }
+
+        return null;
     }
 
     // Getters and Setters.

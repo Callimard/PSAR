@@ -48,7 +48,6 @@ public class Token {
 
     public Token(AlgoJL parent, int resourceID) {
         this.parent = parent;
-
         this.resourceID = resourceID;
     }
 
@@ -155,14 +154,6 @@ public class Token {
         } else {
             this.lastCS.put(nodeID, requestID);
         }
-    }
-
-    /**
-     * <p>Vide toutes les queues. Cette methode est appeler lorsque le token est envoye a un autre noeud. Le noeud est d'abord clone puis on le clear pour etre coherent.</p>
-     * <p>Ne clear pas les map de lastReq et lastCS car elles sont toujours utile meme si on a plus le jeton pour voir les requete obselete.</p>
-     */
-    public void clearAllQueue() {
-        this.queueTokenRequest.clear();
     }
 
     // Getters and Setters.

@@ -517,7 +517,7 @@ public class AlgoJL implements EDProtocol {
         if (this.currentRequestingCS != null) {
             System.out.println("N = " + this.node.getID() + " R = " + tokenMessage.getResourceID() + " RECEIVE TOKEN.");
             this.currentRequestingCS.receiveToken(tokenMessage);
-        }
+        } // TODO Manque la partie ou on est pas en attente de token mais qu'on le recoi quand meme.
 
         if (this.getState() == State.WAIT_S && this.currentRequestingCS.allCounterAreReceived()) {
         	System.out.println("N = " + this.node.getID() + " PASS_CS ? " + this.receivedAllCounterNoPassCS());
