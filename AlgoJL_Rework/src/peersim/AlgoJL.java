@@ -362,7 +362,7 @@ public class AlgoJL implements EDProtocol {
 
         this.processUpdate(tokenMessage.getToken(), buff);
 
-        if (this.currentRequestingCS.allTokenAreReceived()) {
+        if (this.currentRequestingCS != null && this.currentRequestingCS.allTokenAreReceived()) {
             this.setInCS();
         } else {
             if (this.getState() == State.WAIT_S && this.currentRequestingCS.allCounterAreReceived()) {

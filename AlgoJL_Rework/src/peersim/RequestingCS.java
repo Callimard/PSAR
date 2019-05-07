@@ -124,11 +124,10 @@ public class RequestingCS {
             System.out.println("-------------------------------------------------------------------------");
         } else {
             try {
-                throw new Exception();
+                throw new Exception("PB - > ATTENTION!!! Reception d'un COUNTER que l'on a deja recu.");
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            System.out.println("PB - > ATTENTION!!! Reception d'un COUNTER que l'on a deja recu.");
             System.out.println("N = " + this.parent.getNode().getID() + " PB -> DEJA RECU POUR = " + resourceID);
             System.out.println("-------------------------------------------------------------------------");
         }
