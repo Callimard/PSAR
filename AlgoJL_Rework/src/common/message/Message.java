@@ -39,8 +39,10 @@ public abstract class Message {
      */
     protected Message(int resourceID, Node sender, Node receiver) {
 
-        assert sender != null : "Sender null";
-        assert receiver != null : "Receiver null";
+        if (!this.getClass().equals(BeginMessage.class) && !this.getClass().equals(ReleaseMessage.class)) {
+            assert sender != null : "Sender null Message class = " + this.getClass();
+            assert receiver != null : "Receiver null Message class = " + this.getClass();
+        }
 
         this.resourceID = resourceID;
         this.sender = sender;
