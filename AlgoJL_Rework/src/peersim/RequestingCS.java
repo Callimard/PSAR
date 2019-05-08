@@ -117,6 +117,9 @@ public class RequestingCS {
         System.out.println("SENDER = " + sender.getID());
 
         boolean res = this.counterReceived.add(resourceID);
+
+        assert res : "Sender = " + sender.getID() + " N = " + this.parent.getNode().getID();
+
         if (res) {
             System.out.println("Node = " + this.parent.getNode().getID() + " AJOUT POUR = " + resourceID);
             this.parent.setCounter(resourceID, counter);
@@ -150,6 +153,7 @@ public class RequestingCS {
 
             if (this.isCounterNeeded(resourceID)) {
                 this.counterReceived.add(resourceID);
+                this.parent.getArrayToken()[resourceID].putLastReqC(this.parent.getNode().getID(), this.parent.getRequestID());
                 this.parent.setCounter(resourceID, this.parent.getToken(resourceID).incrementCounter());
             }
         } else {

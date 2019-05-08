@@ -79,6 +79,9 @@ public class Token {
      * @param tokenRequest
      */
     public void addTokenRequest(TokenRequest tokenRequest) {
+
+        System.out.println("N = " + this.parent.getNode().getID() + " ADD " + tokenRequest.getSender().getID() + " tokenRequest = " + tokenRequest);
+
         this.queueTokenRequest.add(tokenRequest);
 
         this.queueTokenRequest.sort((TokenRequest o1, TokenRequest o2) -> {

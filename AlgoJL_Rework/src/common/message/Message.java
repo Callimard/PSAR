@@ -38,6 +38,10 @@ public abstract class Message {
      * @param receiver
      */
     protected Message(int resourceID, Node sender, Node receiver) {
+
+        assert sender != null : "Sender null";
+        assert receiver != null : "Receiver null";
+
         this.resourceID = resourceID;
         this.sender = sender;
         this.receiver = receiver;

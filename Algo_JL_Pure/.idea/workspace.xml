@@ -6,9 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="13d549e3-25ed-4132-a767-6630d5403d61" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/../AlgoJL_Rework/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../AlgoJL_Rework/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../AlgoJL_Rework/out/production/AlgoJL_Rework/peersim/AlgoJL.class" beforeDir="false" afterPath="$PROJECT_DIR$/../AlgoJL_Rework/out/production/AlgoJL_Rework/peersim/AlgoJL.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../AlgoJL_Rework/src/peersim/AlgoJL.java" beforeDir="false" afterPath="$PROJECT_DIR$/../AlgoJL_Rework/src/peersim/AlgoJL.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../AlgoJL_Rework/src/peersim/RequestingCS.java" beforeDir="false" afterPath="$PROJECT_DIR$/../AlgoJL_Rework/src/peersim/RequestingCS.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -40,7 +38,7 @@
         <entry file="file://$PROJECT_DIR$/src/peersim/AlgoJL.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="833">
-              <caret line="280" column="8" lean-forward="true" selection-start-line="280" selection-start-column="8" selection-end-line="285" selection-end-column="9" />
+              <caret line="280" column="8" selection-start-line="280" selection-start-column="8" selection-end-line="285" selection-end-column="9" />
             </state>
           </provider>
         </entry>
@@ -48,7 +46,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/peersim/RequestingCS.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="408">
+            <state relative-caret-position="374">
               <caret line="32" column="31" selection-start-line="32" selection-start-column="31" selection-end-line="32" selection-end-column="31" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -62,8 +60,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/common/message/Message.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="62">
-              <caret line="14" lean-forward="true" selection-start-line="14" selection-end-line="14" />
+            <state relative-caret-position="187">
+              <caret line="14" selection-start-line="14" selection-end-line="14" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#2099#2100#0" expanded="true" />
@@ -169,59 +167,14 @@
     <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
     </navigator>
-    <panes>
-      <pane id="ProjectPane">
-        <subPane>
-          <expand>
-            <path>
-              <item name="Algo_JL_Pure" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Algo_JL_Pure" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Algo_JL_Pure" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Algo_JL_Pure" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Algo_JL_Pure" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Algo_JL_Pure" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="common" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Algo_JL_Pure" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Algo_JL_Pure" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="common" type="462c0819:PsiDirectoryNode" />
-              <item name="message" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Algo_JL_Pure" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Algo_JL_Pure" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="common" type="462c0819:PsiDirectoryNode" />
-              <item name="util" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Algo_JL_Pure" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Algo_JL_Pure" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="peersim" type="462c0819:PsiDirectoryNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
-      <pane id="Scope" />
-      <pane id="PackagesPane" />
-    </panes>
+    <panes />
   </component>
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1554904923554" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../AlgoJL_Rework" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
@@ -288,12 +241,13 @@
       <workItem from="1556705756432" duration="11898000" />
       <workItem from="1556730612882" duration="10006000" />
       <workItem from="1557183303067" duration="2228000" />
-      <workItem from="1557250957048" duration="5933000" />
+      <workItem from="1557250957048" duration="5967000" />
+      <workItem from="1557344904176" duration="605000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="98519000" />
+    <option name="totallyTimeSpent" value="99158000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -306,7 +260,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="1273" y="0" width="1294" height="1407" extended-state="0" />
-    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" sideWeight="0.4966518" weight="0.20340356" />
       <window_info id="Structure" order="1" sideWeight="0.5011161" side_tool="true" weight="0.3298217" />
@@ -571,28 +524,16 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/config-algoJL.txt">
+    <entry file="file://$PROJECT_DIR$/src/peersim/AlgoJL.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="3" column="14" selection-start-line="3" selection-start-column="14" selection-end-line="3" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/common/message/Message.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="62">
-          <caret line="14" lean-forward="true" selection-start-line="14" selection-end-line="14" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#2099#2100#0" expanded="true" />
-            <element signature="e#2139#2140#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="833">
+          <caret line="280" column="8" selection-start-line="280" selection-start-column="8" selection-end-line="285" selection-end-column="9" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/peersim/RequestingCS.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="408">
+        <state relative-caret-position="374">
           <caret line="32" column="31" selection-start-line="32" selection-start-column="31" selection-end-line="32" selection-end-column="31" />
           <folding>
             <element signature="imports" expanded="true" />
@@ -602,10 +543,22 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/peersim/AlgoJL.java">
+    <entry file="file://$PROJECT_DIR$/src/common/message/Message.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="833">
-          <caret line="280" column="8" lean-forward="true" selection-start-line="280" selection-start-column="8" selection-end-line="285" selection-end-column="9" />
+        <state relative-caret-position="187">
+          <caret line="14" selection-start-line="14" selection-end-line="14" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#2099#2100#0" expanded="true" />
+            <element signature="e#2139#2140#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/config-algoJL.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="51">
+          <caret line="3" column="14" selection-start-line="3" selection-start-column="14" selection-end-line="3" selection-end-column="14" />
         </state>
       </provider>
     </entry>
