@@ -14,11 +14,6 @@ public class Token {
     // Variables.
 
     /**
-     * <p>Noeud parent. (Ici on represente le noeud par son protocole AlgoJL).</p>
-     */
-    private final AlgoJL parent;
-
-    /**
      * <p>Id de la ressource. Si un noeud veut la ressource, il utilisera cet resourceID pour l'identifier.</p>
      */
     private final int resourceID;
@@ -46,8 +41,7 @@ public class Token {
 
     // Constructors.
 
-    public Token(AlgoJL parent, int resourceID) {
-        this.parent = parent;
+    public Token(int resourceID) {
         this.resourceID = resourceID;
     }
 
@@ -80,7 +74,7 @@ public class Token {
      */
     public void addTokenRequest(TokenRequest tokenRequest) {
 
-        System.out.println("N = " + this.parent.getNode().getID() + " ADD " + tokenRequest.getSender().getID() + " tokenRequest = " + tokenRequest);
+        System.out.println("ADD FOR " + tokenRequest.getSender().getID() + " tokenRequest = " + tokenRequest);
 
         this.queueTokenRequest.add(tokenRequest);
 
@@ -99,7 +93,11 @@ public class Token {
      */
     public TokenRequest nextTokenRequest() {
         if (!this.queueTokenRequest.isEmpty()) {
-            return this.queueTokenRequest.remove(0);
+            TokenRequest tokenRequest = this.queueTokenRequest.remove(0);
+
+            System.out.println("DEQUE FOR " + tokenRequest.getSender().getID() + " tokenRequest = " + tokenRequest);
+
+            return tokenRequest;
         } else
             return null;
     }
@@ -160,10 +158,6 @@ public class Token {
     }
 
     // Getters and Setters.
-
-    public AlgoJL getParent() {
-        return this.parent;
-    }
 
     public int getResourceID() {
         return this.resourceID;

@@ -215,6 +215,8 @@ public class AlgoJL implements EDProtocol {
 
         this.setState(State.NOTHING);
 
+        BigObserver.BIG_OBERVER.releaseCS(this.node.getID());
+
         System.out.println("N = " + this.node.getID() + " currentRequestingCS = " + this.currentRequestingCS);
         Set<Integer> resourceRequired = this.currentRequestingCS.getResourceRequiredSet();
         System.out.println("N = " + this.node.getID() + " R_CS / R_required = " + resourceRequired);
@@ -298,7 +300,7 @@ public class AlgoJL implements EDProtocol {
         List<Message> buff = new ArrayList<>();
         List<Message> buffTrue = new ArrayList<>();
 
-        System.out.println("N = " + this.node.getID() + " RcvREQ_T--------------------------------------------------------------------------------------- Sender = " + sender.getID());
+        System.out.println("N = " + this.node.getID() + " RcvREQ_T--------------------------------------------------------------------------------------- Sender = " + sender.getID() + " State = " + this.getState());
 
         if (this.listPendingRequest.contains(tokenRequest) || tokenRequest.isVisitedNode(this.node) || (this.hasToken(resourceID) && this.arrayToken[resourceID].getLastCS(tokenRequest.getSender().getID()) >= requestID)) {
             System.out.println("Contains = " + this.listPendingRequest.contains(tokenRequest));
@@ -415,6 +417,8 @@ public class AlgoJL implements EDProtocol {
         this.setState(State.IN_CS);
         System.out.println("N = " + this.node.getID() + " SET_IN_CS / R = " + this.currentRequestingCS.getResourceRequiredSet());
 
+        BigObserver.BIG_OBERVER.setInCS(this.node.getID(), this.currentRequestingCS.getResourceRequiredSet());
+
         // Genère un evenement qui lancera le relachement de la CS.
         int delay = Util.generateRandom(this.MIN_CS, this.MAX_CS);
         EDSimulator.add(delay, new ReleaseMessage(-1, null, null), this.node, this.myPid);
@@ -505,8 +509,10 @@ public class AlgoJL implements EDProtocol {
                     System.out.println("N = " + this.node.getID() + " SEND C / R = " + tokenMessage.getResourceID());
                     buff.add(new CounterMessage(this.arrayToken[tokenMessage.getResourceID()].incrementCounter(), tokenMessage.getResourceID(), this.node, request.getSender()));
                 } else if (request instanceof TokenRequest) {
-                    if (!this.arrayToken[tokenMessage.getResourceID()].contains((TokenRequest) request)) {
-                        this.arrayToken[tokenMessage.getResourceID()].addTokenRequest((TokenRequest) request);
+                    if (request.getSender().getID() != this.node.getID()) {
+                        if (!this.arrayToken[tokenMessage.getResourceID()].contains((TokenRequest) request)) {
+                            this.arrayToken[tokenMessage.getResourceID()].addTokenRequest((TokenRequest) request);
+                        }
                     }
                 } else {
                     System.out.println("N = " + this.node.getID() + " IMPOSSIBLE!!!!!!!!!!!!!!!!!!");
@@ -637,7 +643,7 @@ public class AlgoJL implements EDProtocol {
      */
     public void setInitialNode() {
         for (int i = 0; i < this.arrayToken.length; i++) {
-            this.arrayToken[i] = new Token(this, i);
+            this.arrayToken[i] = new Token(i);
         }
     }
 
