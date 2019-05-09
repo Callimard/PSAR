@@ -342,8 +342,10 @@ public class AlgoJL implements EDProtocol {
                         this.arrayToken[resourceID].addTokenRequest(this.currentRequestingCS.getTokenRequestSend(resourceID));
                         buff.add(this.sendToken(resourceID, sender));
                     } else {
-                        System.out.println("N = " + this.node.getID() + " ICI state -> " + this.getState());
-                        this.arrayToken[resourceID].addTokenRequest(tokenRequest);
+                        if (sender.getID() != this.node.getID()) {
+                            System.out.println("N = " + this.node.getID() + " ICI state -> " + this.getState());
+                            this.arrayToken[resourceID].addTokenRequest(tokenRequest);
+                        }
                     }
                 }
             }
@@ -472,7 +474,7 @@ public class AlgoJL implements EDProtocol {
         this.setNodeLink(resourceID, receiver);
         this.arrayToken[resourceID] = null;
 
-        BigObserver.BIG_OBERVER.displayArrayToken();
+        /*BigObserver.BIG_OBERVER.displayArrayToken();*/
 
         return tokenMessage;
     }
