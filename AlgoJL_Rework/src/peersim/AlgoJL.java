@@ -173,6 +173,8 @@ public class AlgoJL implements EDProtocol {
     public void requestCS(Set<Integer> resources) {
         System.out.println("N = " + this.node.getID() + " ReqCS---------------------------------------------------------------------------------------");
 
+        /*BigObserver.BIG_OBERVER.displayArrayToken();*/
+
         if (this.currentRequestingCS == null && this.state == State.NOTHING) {
             this.currentRequestingCS = new RequestingCS(resources, this);
             this.requestID++;
@@ -204,6 +206,8 @@ public class AlgoJL implements EDProtocol {
                 System.out.println("N = " + this.node.getID() + "PB -> ATTENTION!!! DEMANDE DE CS ALORS QUE L'ETAT N'EST PAS NOTHING.");
         }
 
+        /*BigObserver.BIG_OBERVER.displayArrayToken();*/
+
         System.out.println("---------------------------------------------------------------------------------------");
     }
 
@@ -212,6 +216,8 @@ public class AlgoJL implements EDProtocol {
      */
     public void releaseCS() {
         System.out.println("N = " + this.node.getID() + " RelCS--------------------------------------------------------------------------------------");
+
+        /*BigObserver.BIG_OBERVER.displayArrayToken();*/
 
         this.setState(State.NOTHING);
 
@@ -246,6 +252,8 @@ public class AlgoJL implements EDProtocol {
             EDSimulator.add(delay, new BeginMessage(-1, null, null), this.node, this.myPid);
         }
 
+        /*BigObserver.BIG_OBERVER.displayArrayToken();*/
+
         System.out.println("---------------------------------------------------------------------------------------");
     }
 
@@ -257,7 +265,11 @@ public class AlgoJL implements EDProtocol {
         List<Message> buff = new ArrayList<>();
         List<Message> buffTrue = new ArrayList<>();
 
-        System.out.println("N = " + this.node.getID() + " RcvREQ_C--------------------------------------------------------------------------------------- Sender = " + sender.getID());
+        System.out.println("N = " + this.node.getID() + " RcvREQ_C--------------------------------------------------------------------------------------- Sender = " + sender.getID() + " State = " + this.getState());
+
+        /*BigObserver.BIG_OBERVER.displayArrayToken();*/
+
+        System.out.println("N = " + this.node.getID() + " RECV " + counterRequest);
 
         if (this.listPendingRequest.contains(counterRequest) || counterRequest.isVisitedNode(this.node) || (this.hasToken(resourceID) && this.arrayToken[resourceID].getLastReqC(counterRequest.getSender().getID()) >= requestID)) {
             System.out.println("Contains = " + this.listPendingRequest.contains(counterRequest));
@@ -271,7 +283,7 @@ public class AlgoJL implements EDProtocol {
         assert ((sender.getID() != this.node.getID()) || ((sender.getID() == this.node.getID()) && !counterRequest.isVisitedNode(this.node))) : "Sender = " + sender.getID() + " N = " + this.getNode().getID() + " VisitedNode = " + counterRequest.getVisitedNode() + " Message envoye a nous meme.";
 
         if (this.hasToken(resourceID)) {
-            if (this.getState() == State.WAIT_S || this.getState() == State.NOTHING || (this.currentRequestingCS != null && !this.currentRequestingCS.isTokenNeeded(resourceID))) { // Si on a pas besoin de ce token.
+            if (/*this.getState() == State.WAIT_S || */this.getState() == State.NOTHING || (this.currentRequestingCS != null && !this.currentRequestingCS.isTokenNeeded(resourceID))) { // Si on a pas besoin de ce token.
                 System.out.println("N = " + this.node.getID() + " SEND T / R = " + resourceID);
                 buff.add(this.sendToken(resourceID, sender));
             } else {
@@ -289,6 +301,8 @@ public class AlgoJL implements EDProtocol {
         this.sendBuff(buff, false);
         this.sendBuff(buffTrue, true);
 
+        /*BigObserver.BIG_OBERVER.displayArrayToken();*/
+
         System.out.println("---------------------------------------------------------------------------------------");
     }
 
@@ -301,6 +315,10 @@ public class AlgoJL implements EDProtocol {
         List<Message> buffTrue = new ArrayList<>();
 
         System.out.println("N = " + this.node.getID() + " RcvREQ_T--------------------------------------------------------------------------------------- Sender = " + sender.getID() + " State = " + this.getState());
+
+        /*BigObserver.BIG_OBERVER.displayArrayToken();*/
+
+        System.out.println("N = " + this.node.getID() + " RECV " + tokenRequest);
 
         if (this.listPendingRequest.contains(tokenRequest) || tokenRequest.isVisitedNode(this.node) || (this.hasToken(resourceID) && this.arrayToken[resourceID].getLastCS(tokenRequest.getSender().getID()) >= requestID)) {
             System.out.println("Contains = " + this.listPendingRequest.contains(tokenRequest));
@@ -339,6 +357,8 @@ public class AlgoJL implements EDProtocol {
         this.sendBuff(buff, false);
         this.sendBuff(buffTrue, true);
 
+        /*BigObserver.BIG_OBERVER.displayArrayToken();*/
+
         System.out.println("---------------------------------------------------------------------------------------");
     }
 
@@ -346,8 +366,10 @@ public class AlgoJL implements EDProtocol {
         int resourceID = counterMessage.getResourceID();
         Node sender = counterMessage.getSender();
 
-        System.out.println("N = " + this.node.getID() + " RcvC--------------------------------------------------------------------------------------- Sender = " + sender.getID());
+        System.out.println("N = " + this.node.getID() + " RcvC--------------------------------------------------------------------------------------- Sender = " + sender.getID() + " State = " + this.getState());
         System.out.println("R = " + resourceID + " counter = " + counterMessage.getCounter());
+
+        /*BigObserver.BIG_OBERVER.displayArrayToken();*/
 
         assert ((sender.getID() != this.node.getID()) || ((sender.getID() == this.node.getID()) && !counterMessage.isVisitedNode(this.node))) : "Sender = " + sender.getID() + " N = " + this.getNode().getID() + " VisitedNode = " + counterMessage.getVisitedNode() + " Message envoye a nous meme.";
 
@@ -356,6 +378,8 @@ public class AlgoJL implements EDProtocol {
         if (this.currentRequestingCS.allCounterAreReceived()) {
             this.processCounterNeededEmpty();
         }
+
+        /*BigObserver.BIG_OBERVER.displayArrayToken();*/
 
         System.out.println("---------------------------------------------------------------------------------------");
     }
@@ -366,6 +390,10 @@ public class AlgoJL implements EDProtocol {
         List<Message> buff = new ArrayList<>();
 
         System.out.println("N = " + this.node.getID() + " RcvT--------------------------------------------------------------------------------------- Sender = " + sender.getID() + " State = " + this.getState());
+
+        System.out.println("N = " + this.node.getID() + " RecvT = " + tokenMessage.getToken().getResourceID());
+
+        /*BigObserver.BIG_OBERVER.displayArrayToken();*/
 
         assert ((sender.getID() != this.node.getID()) || ((sender.getID() == this.node.getID()) && !tokenMessage.isVisitedNode(this.node))) : "Sender = " + sender.getID() + " N = " + this.getNode().getID() + " VisitedNode = " + tokenMessage.getVisitedNode() + " Message envoye a nous meme.";
 
@@ -410,10 +438,14 @@ public class AlgoJL implements EDProtocol {
 
         this.sendBuff(buff, false);
 
+        /*BigObserver.BIG_OBERVER.displayArrayToken();*/
+
         System.out.println("---------------------------------------------------------------------------------------");
     }
 
     private void setInCS() {
+        /*BigObserver.BIG_OBERVER.displayArrayToken();*/
+
         this.setState(State.IN_CS);
         System.out.println("N = " + this.node.getID() + " SET_IN_CS / R = " + this.currentRequestingCS.getResourceRequiredSet());
 
@@ -439,6 +471,8 @@ public class AlgoJL implements EDProtocol {
 
         this.setNodeLink(resourceID, receiver);
         this.arrayToken[resourceID] = null;
+
+        BigObserver.BIG_OBERVER.displayArrayToken();
 
         return tokenMessage;
     }
@@ -621,6 +655,8 @@ public class AlgoJL implements EDProtocol {
         if (this.node == null) {
             // IMPORTANT
             this.node = node;
+
+            BigObserver.BIG_OBERVER.addAlgoJL(this);
         }
     }
 

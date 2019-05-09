@@ -1,8 +1,8 @@
 package peersim;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+import common.util.Token;
+
+import java.util.*;
 
 public class BigObserver {
 
@@ -13,6 +13,8 @@ public class BigObserver {
     // Variables.
 
     private Map<Long, Set<Integer>> mapNodeCSResource = new HashMap<>();
+
+    private List<AlgoJL> listAlgoJL = new ArrayList<>();
 
     // Methods.
 
@@ -50,5 +52,27 @@ public class BigObserver {
         this.mapNodeCSResource.remove(nodeID);
 
         System.out.println("---------------------------------------------------------------------------------------");
+    }
+
+    public void displayArrayToken() {
+        System.out.println("Observer---------------------------------------------------------------------------------------");
+
+        for (AlgoJL algoJL : this.listAlgoJL) {
+            Token array[] = algoJL.getArrayToken();
+
+            System.out.print("N = " + algoJL.getNode().getID() + " [");
+            for (int i = 0; i < array.length; i++) {
+                System.out.print(" " + (array[i] != null ? 1 : 0) + " ");
+            }
+            System.out.println("]");
+        }
+
+        System.out.println("---------------------------------------------------------------------------------------");
+    }
+
+    public void addAlgoJL(AlgoJL algoJL) {
+        if (!this.listAlgoJL.contains(algoJL) && algoJL.getNode().getID() >= 0) {
+            this.listAlgoJL.add(algoJL);
+        }
     }
 }
