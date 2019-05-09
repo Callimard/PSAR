@@ -39,10 +39,10 @@ public abstract class Message {
      */
     protected Message(int resourceID, Node sender, Node receiver) {
 
-        if (!this.getClass().equals(BeginMessage.class) && !this.getClass().equals(ReleaseMessage.class)) {
-            assert sender != null : "Sender null Message class = " + this.getClass();
-            assert receiver != null : "Receiver null Message class = " + this.getClass();
-        }
+//        if (!this.getClass().equals(BeginMessage.class) && !this.getClass().equals(ReleaseMessage.class)) {
+//            assert sender != null : "Sender null Message class = " + this.getClass();
+//            assert receiver != null : "Receiver null Message class = " + this.getClass();
+//        }
 
         this.resourceID = resourceID;
         this.sender = sender;
@@ -54,8 +54,8 @@ public abstract class Message {
     @Override
     public String toString() {
         return "[M = " + this.getClass().getSimpleName()
-                + " Sender = " + this.sender.getID()
-                + " Receiver = " + this.receiver.getID()
+                + " Sender = " + (this.sender != null ? this.sender.getID() : null)
+                + " Receiver = " + (this.receiver != null ? this.receiver.getID() : null)
                 + " R = " + this.resourceID + "]";
     }
 
