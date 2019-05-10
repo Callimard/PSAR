@@ -1,0 +1,7 @@
+Modifs :
+
+- Ajout du traitement de l'évènement "LoanRequest" avec fonction receiveLoanRequest
+- Début implem "receiveLoanRequest"
+- TODO : req obsolète (l.196 pseudo code)
+- Ajout compareRequest(Loan)
+- Implémentation canLend

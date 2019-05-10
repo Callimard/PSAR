@@ -12,6 +12,8 @@ import peersim.transport.Transport;
 
 import java.util.*;
 
+import javax.print.attribute.SetOfIntegerSyntax;
+
 public class AlgoJL implements EDProtocol {
 
 	// Constants.
@@ -138,13 +140,16 @@ public class AlgoJL implements EDProtocol {
 	private List<Request> listPendingRequest;
 
 	/**
-	 * <p>Set de ressource pretee.</p>
+	 * <p>
+	 * Set de ressource pretee.
+	 * </p>
 	 */
-	private Set<Integer> setLentResources = new TreeSet<>();
-	
-	
+	private Set<Integer> lentResources = new TreeSet<>();
+
 	/**
-	 * <p>Au moins une demande de loan a ete faite.</p>
+	 * <p>
+	 * Au moins une demande de loan a ete faite.
+	 * </p>
 	 */
 	private boolean loanAsked = false;
 
@@ -419,7 +424,7 @@ public class AlgoJL implements EDProtocol {
 					"(this.hasToken(resourceID) && this.arrayToken[resourceID].getLastReqC(counterRequest.getSender().getID()) >= requestID) = "
 							+ (this.hasToken(resourceID) && this.arrayToken[resourceID]
 									.getLastReqC(tokenRequest.getSender().getID()) >= requestID));
-			System.out.println("REQUETE COUNTER OBSELETE!!! Req = " + tokenRequest);
+			System.out.println("REQUETE TOKEN OBSELETE!!! Req = " + tokenRequest);
 			System.out
 					.println("---------------------------------------------------------------------------------------");
 			return;
@@ -465,6 +470,23 @@ public class AlgoJL implements EDProtocol {
 		/* BigObserver.BIG_OBERVER.displayArrayToken(); */
 
 		System.out.println("---------------------------------------------------------------------------------------");
+	}
+
+	private void receiveLoanRequest(LoanRequest loanRequest) {
+		int resourceID = loanRequest.getResourceID();
+		int requestID = loanRequest.getRequestID();
+		Node sender = loanRequest.getSender();
+
+		// ***********************************************
+		// TODO : if (is obsolete) 
+		// ***********************************************
+			
+		if (canLend(loanRequest)) {
+			lentResources.addAll(loanRequest.getMissingResource());
+			for (int resource : this.lentResources) {
+				// TODO
+			}
+		}
 	}
 
 	private void receiveCounter(CounterMessage counterMessage) {
@@ -646,6 +668,19 @@ public class AlgoJL implements EDProtocol {
 				&& tokenRequestReceived.getSender().getID() < this.getNode().getID());
 	}
 
+	/**
+	 * @param loanRequestReceived la requete que l'on a recue et que l'on va
+	 *                             comparer a notre note
+	 * @param myRequestMark        la note de nos requete de jeton courantes.
+	 * @return true si la requete de jeton recue est plus prioritaire que la requete
+	 *         que nous avons envoye pour la demande de CS courante, sinon false.
+	 */
+	public boolean compareRequest(LoanRequest loanRequestReceived, double myRequestMark) {
+
+		return loanRequestReceived.getMark() < myRequestMark || ((loanRequestReceived.getMark() == myRequestMark)
+				&& loanRequestReceived.getSender().getID() < this.getNode().getID());
+	}
+	
 	private void processUpdate(TokenMessage tokenMessage, List<Message> buff) {
 
 		assert this.currentRequestingCS != null : "Sender = " + tokenMessage.getSender().getID() + " N = "
@@ -751,6 +786,50 @@ public class AlgoJL implements EDProtocol {
 		return tokenArray;
 	}
 
+	public List<Integer> getListOwnedToken() {
+		List<Integer> owned = new LinkedList<Integer>();
+		for (int i = 0; i < this.arrayToken.length; i++) {
+			if (this.arrayToken[i] != null)
+				owned.add(i);
+		}
+		return owned;
+	}
+
+	/**
+	 * Fonction permettant de savoir si un noeud peut preter des ressources. Cela
+	 * n'est possible que lorsque le noeud possède toutes les ressources demandees,
+	 * qu'il n'en a aucune deja pretee, et qu'il n'est pas en section critique.
+	 * 
+	 * @param loanRequest la requete contenant les ressources demandees
+	 * @return <code>true</code> si le noeud peut preter des ressources,
+	 *         <code>false</code> sinon
+	 */
+	public boolean canLend(LoanRequest loanRequest) {
+		List<Integer> ownedResources = this.getListOwnedToken();
+		Set<Integer> missingResources = loanRequest.getMissingResource();
+		boolean lentRessources = false;
+		int index;
+
+		/* boucle verifiant si une ressource a deja ete pretee */
+		for (int i = 0; i < ownedResources.size(); i++) {
+			index = ownedResources.get(i);
+			if (arrayToken[index].getLenderNode() == null)
+				lentRessources = true;
+		}
+
+		if (ownedResources.containsAll(missingResources) && !lentRessources && lentResources.isEmpty()
+				&& this.getState() != State.IN_CS) {
+			if (this.getState() == State.WAIT_CS) {
+				if  (this.loanAsked == false || compareRequest(loanRequest, this.currentRequestingCS.getMyRequestMark())) {
+					return true;
+				}
+				return false;
+			}
+			return true;
+		}
+		return false;
+	}
+
 	@Override
 	public void processEvent(Node node, int i, Object o) {
 		if (i == this.myPid) {
@@ -768,7 +847,7 @@ public class AlgoJL implements EDProtocol {
 				Set<Integer> setResource = this.listSetRequestCS.get(this.iteListSetRequestCS);
 				this.requestCS(setResource);
 			} else if (o instanceof LoanRequest) {
-				// TODO
+				receiveLoanRequest((LoanRequest) o);
 			} else {
 				throw new RuntimeException("Mauvais event");
 			}
@@ -904,10 +983,10 @@ public class AlgoJL implements EDProtocol {
 		this.loanAsked = loanAsked;
 	}
 
-	public Set<Integer> getSetLentResources() {
-		return setLentResources;
+	public Set<Integer> getLentResources() {
+		return lentResources;
 	}
-	
+
 	// Public enum.
 
 	public enum State {
