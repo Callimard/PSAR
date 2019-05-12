@@ -566,6 +566,15 @@ public class AlgoJL implements EDProtocol {
         if (this.currentRequestingCS != null && this.currentRequestingCS.allTokenAreReceived()) {
             this.setInCS();
         } else {
+
+            List<Integer> listOwned = this.getListOwnedToken();
+            for (int resource : listOwned) {
+                if (this.arrayToken[resource].getLenderNode() != null) {
+                    buff.add(this.sendToken(resource, this.arrayToken[resource].getLenderNode()));
+                    this.loanAsked = false;
+                }
+            }
+
             if (this.getState() == State.WAIT_S && this.currentRequestingCS.allCounterAreReceived()) {
                 this.processCounterNeededEmpty();
             }
@@ -597,6 +606,17 @@ public class AlgoJL implements EDProtocol {
                     } else {
                         System.out.println(
                                 "N = " + this.node.getID() + "PB -> TOTALEMENT IMPOSSIBLE!!! state = " + this.state);
+                    }
+                }
+            }
+
+            listOwned = this.getListOwnedToken();
+            for (int resource : listOwned) {
+                if (!this.arrayToken[resource].loanRequestQueueEmpty()) {
+                    Set<LoanRequest> copyLoanRequest = this.arrayToken[resource].copyLoanRequestQueue();
+                    this.arrayToken[resource].clearLoanRequestQueue();
+                    for (LoanRequest loanRequest : copyLoanRequest) {
+                        this.processRequestLoan(loanRequest, buff);
                     }
                 }
             }

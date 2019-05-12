@@ -1,12 +1,9 @@
 package common.util;
 
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import common.message.LoanRequest;
+import common.message.Request;
 import common.message.TokenRequest;
 import peersim.core.Node;
 
@@ -235,11 +232,19 @@ public class Token {
             return null;
     }
 
+    public void clearLoanRequestQueue() {
+        this.queueLoanRequest.clear();
+    }
+
     /**
      * @return true si la queue des requete de jeton est vide, sinon false.
      */
     public boolean loanRequestQueueEmpty() {
         return this.queueLoanRequest.isEmpty();
+    }
+
+    public Set<LoanRequest> copyLoanRequestQueue() {
+        return new TreeSet<>(this.queueLoanRequest);
     }
 
     public boolean contains(LoanRequest loanRequest) {
