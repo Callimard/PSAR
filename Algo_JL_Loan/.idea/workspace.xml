@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="308dcfc9-abd2-44cd-8fbf-8471ec30fabc" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../AlgoJL_Rework/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../AlgoJL_Rework/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/common/util/Token.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/util/Token.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/peersim/AlgoJL.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/peersim/AlgoJL.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/classes/" />
@@ -13,26 +13,55 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="DockManager">
+    <window id="1">
+      <content type="file-editors">
+        <state>
+          <leaf>
+            <file pinned="false" current-in-tab="true">
+              <entry file="file://$PROJECT_DIR$/src/common/util/Token.java">
+                <provider selected="true" editor-type-id="text-editor">
+                  <state relative-caret-position="1014">
+                    <caret line="298" column="10" selection-start-line="298" selection-start-column="8" selection-end-line="302" selection-end-column="68" />
+                    <folding>
+                      <element signature="e#3848#3849#0" expanded="true" />
+                      <element signature="e#3907#3908#0" expanded="true" />
+                      <element signature="e#6851#6852#0" expanded="true" />
+                      <element signature="e#6973#6974#0" expanded="true" />
+                      <element signature="e#7439#7440#0" expanded="true" />
+                      <element signature="e#8165#8166#0" expanded="true" />
+                      <element signature="e#8556#8557#0" expanded="true" />
+                      <element signature="e#8624#8625#0" expanded="true" />
+                    </folding>
+                  </state>
+                </provider>
+              </entry>
+            </file>
+          </leaf>
+        </state>
+      </content>
+    </window>
+  </component>
   <component name="FileEditorManager">
     <leaf>
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/peersim/AlgoJL.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="775">
-              <caret line="828" column="14" selection-start-line="828" selection-start-column="14" selection-end-line="828" selection-end-column="14" />
+            <state relative-caret-position="768">
+              <caret line="316" column="44" selection-start-line="316" selection-start-column="44" selection-end-line="316" selection-end-column="44" />
               <folding>
-                <element signature="e#36704#36705#0" expanded="true" />
-                <element signature="e#36794#36795#0" expanded="true" />
-                <element signature="e#36866#36867#0" expanded="true" />
-                <element signature="e#36982#36983#0" expanded="true" />
-                <element signature="e#37077#37078#0" expanded="true" />
-                <element signature="e#37153#37154#0" expanded="true" />
-                <element signature="e#37217#37218#0" expanded="true" />
-                <element signature="e#37292#37293#0" expanded="true" />
-                <element signature="e#37362#37363#0" expanded="true" />
-                <element signature="e#37430#37431#0" expanded="true" />
-                <element signature="e#37523#37524#0" expanded="true" />
-                <element signature="e#37605#37606#0" expanded="true" />
+                <element signature="e#40238#40239#0" expanded="true" />
+                <element signature="e#40328#40329#0" expanded="true" />
+                <element signature="e#40400#40401#0" expanded="true" />
+                <element signature="e#40516#40517#0" expanded="true" />
+                <element signature="e#40611#40612#0" expanded="true" />
+                <element signature="e#40687#40688#0" expanded="true" />
+                <element signature="e#40751#40752#0" expanded="true" />
+                <element signature="e#40826#40827#0" expanded="true" />
+                <element signature="e#40896#40897#0" expanded="true" />
+                <element signature="e#40964#40965#0" expanded="true" />
+                <element signature="e#41057#41058#0" expanded="true" />
+                <element signature="e#41139#41140#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -43,6 +72,8 @@
   <component name="FindInProjectRecents">
     <findStrings>
       <find>canLen</find>
+      <find>canL</find>
+      <find>processU</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -51,18 +82,8 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
+        <option value="$PROJECT_DIR$/src/common/util/Token.java" />
         <option value="$PROJECT_DIR$/src/peersim/AlgoJL.java" />
-      </list>
-    </option>
-  </component>
-  <component name="ProjectConfigurationFiles">
-    <option name="files">
-      <list>
-        <option value="$PROJECT_DIR$/AlgoJL_Loan.iml" />
-        <option value="$PROJECT_DIR$/.idea/misc.xml" />
-        <option value="$PROJECT_DIR$/.idea/vcs.xml" />
-        <option value="$PROJECT_DIR$/.idea/modules.xml" />
-        <option value="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" />
       </list>
     </option>
   </component>
@@ -100,7 +121,7 @@
               <item name="Algo_JL_Loan" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="common" type="462c0819:PsiDirectoryNode" />
-              <item name="message" type="462c0819:PsiDirectoryNode" />
+              <item name="util" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="AlgoJL_Loan" type="b2602c69:ProjectViewProjectNode" />
@@ -117,11 +138,17 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
+    <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
+    <property name="settings.editor.selected.configurable" value="preferences.keymap" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -145,12 +172,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1557693054552</updated>
-      <workItem from="1557693057156" duration="942000" />
+      <workItem from="1557693057156" duration="6238000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="942000" />
+    <option name="totallyTimeSpent" value="6238000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="2576" height="1416" extended-state="6" />
@@ -162,7 +189,7 @@
       <window_info id="UI Designer" />
       <window_info id="Capture Tool" />
       <window_info id="Learn" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.11049285" />
+      <window_info content_ui="combo" id="Project" order="0" weight="0.22528364" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Docker" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" />
@@ -191,23 +218,40 @@
     <option name="version" value="1" />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/src/common/util/Token.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1014">
+          <caret line="298" column="10" selection-start-line="298" selection-start-column="8" selection-end-line="302" selection-end-column="68" />
+          <folding>
+            <element signature="e#3848#3849#0" expanded="true" />
+            <element signature="e#3907#3908#0" expanded="true" />
+            <element signature="e#6851#6852#0" expanded="true" />
+            <element signature="e#6973#6974#0" expanded="true" />
+            <element signature="e#7439#7440#0" expanded="true" />
+            <element signature="e#8165#8166#0" expanded="true" />
+            <element signature="e#8556#8557#0" expanded="true" />
+            <element signature="e#8624#8625#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/peersim/AlgoJL.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="775">
-          <caret line="828" column="14" selection-start-line="828" selection-start-column="14" selection-end-line="828" selection-end-column="14" />
+        <state relative-caret-position="768">
+          <caret line="316" column="44" selection-start-line="316" selection-start-column="44" selection-end-line="316" selection-end-column="44" />
           <folding>
-            <element signature="e#36704#36705#0" expanded="true" />
-            <element signature="e#36794#36795#0" expanded="true" />
-            <element signature="e#36866#36867#0" expanded="true" />
-            <element signature="e#36982#36983#0" expanded="true" />
-            <element signature="e#37077#37078#0" expanded="true" />
-            <element signature="e#37153#37154#0" expanded="true" />
-            <element signature="e#37217#37218#0" expanded="true" />
-            <element signature="e#37292#37293#0" expanded="true" />
-            <element signature="e#37362#37363#0" expanded="true" />
-            <element signature="e#37430#37431#0" expanded="true" />
-            <element signature="e#37523#37524#0" expanded="true" />
-            <element signature="e#37605#37606#0" expanded="true" />
+            <element signature="e#40238#40239#0" expanded="true" />
+            <element signature="e#40328#40329#0" expanded="true" />
+            <element signature="e#40400#40401#0" expanded="true" />
+            <element signature="e#40516#40517#0" expanded="true" />
+            <element signature="e#40611#40612#0" expanded="true" />
+            <element signature="e#40687#40688#0" expanded="true" />
+            <element signature="e#40751#40752#0" expanded="true" />
+            <element signature="e#40826#40827#0" expanded="true" />
+            <element signature="e#40896#40897#0" expanded="true" />
+            <element signature="e#40964#40965#0" expanded="true" />
+            <element signature="e#41057#41058#0" expanded="true" />
+            <element signature="e#41139#41140#0" expanded="true" />
           </folding>
         </state>
       </provider>
