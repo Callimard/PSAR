@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="96123ab2-4414-4d4e-9282-6fd5dbd01b66" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/src/config-algoJL.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/config-algoJL.txt" afterDir="false" />
-    </list>
+    <list default="true" id="96123ab2-4414-4d4e-9282-6fd5dbd01b66" name="Default Changelist" comment="" />
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -16,10 +14,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/peersim/AlgoJL.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3366">
+            <state relative-caret-position="1303">
               <caret line="208" column="51" selection-start-line="208" selection-start-column="34" selection-end-line="208" selection-end-column="51" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -42,15 +40,6 @@
                 <element signature="e#31855#31856#0" expanded="true" />
                 <element signature="e#31892#31893#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/config-algoJL.txt">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="323">
-              <caret line="19" column="22" lean-forward="true" selection-start-line="19" selection-start-column="22" selection-end-line="19" selection-end-column="22" />
             </state>
           </provider>
         </entry>
@@ -134,6 +123,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
+      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -180,15 +171,13 @@
           <select />
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../Algo_JL_Loan" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
@@ -260,17 +249,17 @@
       <workItem from="1557430705169" duration="687000" />
       <workItem from="1557431520859" duration="94000" />
       <workItem from="1557431630510" duration="237000" />
+      <workItem from="1557693034068" duration="22000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="24777000" />
+    <option name="totallyTimeSpent" value="24799000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="2576" height="1416" extended-state="6" />
-    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.08227345" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.082670905" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Designer" order="2" />
       <window_info id="Image Layers" order="3" />
@@ -455,9 +444,16 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/log.txt" />
+    <entry file="file://$PROJECT_DIR$/src/config-algoJL.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="323">
+          <caret line="19" column="21" selection-start-line="19" selection-start-column="21" selection-end-line="19" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/peersim/AlgoJL.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3366">
+        <state relative-caret-position="1303">
           <caret line="208" column="51" selection-start-line="208" selection-start-column="34" selection-end-line="208" selection-end-column="51" />
           <folding>
             <element signature="imports" expanded="true" />
@@ -480,13 +476,6 @@
             <element signature="e#31855#31856#0" expanded="true" />
             <element signature="e#31892#31893#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/config-algoJL.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="19" column="22" lean-forward="true" selection-start-line="19" selection-start-column="22" selection-end-line="19" selection-end-column="22" />
         </state>
       </provider>
     </entry>
