@@ -217,6 +217,18 @@ public class RequestingCS {
 
     // Getters and Setters.
 
+    public Set<Integer> getMissingResource() {
+        Set<Integer> missingResource = new TreeSet<>();
+
+        for (int resource : this.resourceSet) {
+            if (!this.tokenReceived.contains(resource)) {
+                missingResource.add(resource);
+            }
+        }
+
+        return missingResource;
+    }
+
     public Set<Integer> getResourceRequiredSet() {
         return this.resourceSet;
     }

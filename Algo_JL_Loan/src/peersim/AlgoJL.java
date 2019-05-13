@@ -622,6 +622,13 @@ public class AlgoJL implements EDProtocol {
             }
         }
 
+        if (/*this.currentRequestingCS.getMissingResource().size() == this.givenThreshold &&*/ this.state == State.WAIT_CS && !this.loanAsked) {
+            this.loanAsked = true;
+            for (int resourceMissing : this.currentRequestingCS.getMissingResource()) {
+                buff.add(new LoanRequest(this.currentRequestingCS.getMyRequestMark(), this.currentRequestingCS.getMissingResource(), resourceMissing, this.requestID, this.node, this.dynamicTree[resourceMissing]));
+            }
+        }
+
         this.sendBuff(buff, false);
 
         /* BigObserver.BIG_OBERVER.displayArrayToken(); */
