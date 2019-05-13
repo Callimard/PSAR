@@ -9,7 +9,7 @@ protocol.transportPID.maxdelay 2
 
 protocol.algoJL peersim.AlgoJL
 protocol.algoJL.tr transportPID
-protocol.algoJL.nb_resource 250
+protocol.algoJL.nb_resource 7
 protocol.algoJL.nbCS 10
 protocol.algoJL.min_cs 3
 protocol.algoJL.max_cs 5

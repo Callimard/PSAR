@@ -613,10 +613,11 @@ public class AlgoJL implements EDProtocol {
             listOwned = this.getListOwnedToken();
             for (int resource : listOwned) {
                 if (!this.arrayToken[resource].loanRequestQueueEmpty()) {
-                    Set<LoanRequest> copyLoanRequest = this.arrayToken[resource].copyLoanRequestQueue();
+                    List<LoanRequest> copyLoanRequest = this.arrayToken[resource].copyLoanRequestQueue();
                     this.arrayToken[resource].clearLoanRequestQueue();
                     for (LoanRequest loanRequest : copyLoanRequest) {
-                        this.processRequestLoan(loanRequest, buff);
+                        if (this.hasToken(loanRequest.getResourceID()))
+                            this.processRequestLoan(loanRequest, buff);
                     }
                 }
             }
@@ -737,10 +738,16 @@ public class AlgoJL implements EDProtocol {
 
     private void processUpdate(TokenMessage tokenMessage, List<Message> buff) {
 
-        assert this.currentRequestingCS != null : "Sender = " + tokenMessage.getSender().getID() + " N = "
-                + this.getNode().getID() + " Reception de T = " + tokenMessage.getResourceID() + " Sans demande de CS";
+        /*assert this.currentRequestingCS != null : "Sender = " + tokenMessage.getSender().getID() + " N = "
+                + this.getNode().getID() + " Reception de T = " + tokenMessage.getResourceID() + " Sans demande de CS";*/
 
-        this.currentRequestingCS.receiveToken(tokenMessage.getToken());
+        if (this.currentRequestingCS != null) {
+            this.currentRequestingCS.receiveToken(tokenMessage.getToken());
+        } else {
+            System.out.println("N = " + this.node.getID() + " Reception Token alors qu'on demande pas de CS.");
+            this.tokenArrived(tokenMessage.getToken());
+            this.setNodeLink(tokenMessage.getToken().getResourceID(), null);
+        }
 
         // Remove si elle est dedans.
         this.lentResources.remove(tokenMessage.getResourceID());
@@ -841,7 +848,7 @@ public class AlgoJL implements EDProtocol {
             return this.arrayToken[request.getResourceID()].getLastCS(request.getSender().getID()) >= request
                     .getRequestID();
         } else {
-            return false; /*this.arrayToken[request.getResourceID()].contains((LoanRequest) request);*/ // Condition a verifier.
+            return request.getSender().getID() != this.node.getID(); /*this.arrayToken[request.getResourceID()].contains((LoanRequest) request);*/ // Condition a verifier.
         }
     }
 

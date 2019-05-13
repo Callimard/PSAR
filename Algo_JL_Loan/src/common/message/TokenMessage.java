@@ -28,6 +28,7 @@ public class TokenMessage extends Message {
     public TokenMessage(Token token, int resourceID, Node sender, Node receiver) {
         super(resourceID, sender, receiver);
 
+        assert token != null : "Token null";
         assert token.getResourceID() == resourceID;
 
         this.token = token;

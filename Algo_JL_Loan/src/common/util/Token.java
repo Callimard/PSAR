@@ -190,7 +190,6 @@ public class Token {
      * @param loanRequest
      */
     public void addLoanRequest(LoanRequest loanRequest) {
-
         System.out.println("ADD FOR " + loanRequest.getSender().getID() + " loanRequest = " + loanRequest);
 
         this.queueLoanRequest.add(loanRequest);
@@ -243,8 +242,8 @@ public class Token {
         return this.queueLoanRequest.isEmpty();
     }
 
-    public Set<LoanRequest> copyLoanRequestQueue() {
-        return new TreeSet<>(this.queueLoanRequest);
+    public List<LoanRequest> copyLoanRequestQueue() {
+        return new ArrayList<>(this.queueLoanRequest);
     }
 
     public boolean contains(LoanRequest loanRequest) {
