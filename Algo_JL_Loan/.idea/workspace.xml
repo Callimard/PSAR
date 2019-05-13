@@ -2,11 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="308dcfc9-abd2-44cd-8fbf-8471ec30fabc" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/common/message/TokenMessage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/message/TokenMessage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/common/util/Token.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/util/Token.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/config-algoJL.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/config-algoJL.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/peersim/AlgoJL.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/peersim/AlgoJL.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/classes/" />
     <ignored path="$PROJECT_DIR$/bin/" />
@@ -62,7 +58,7 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/peersim/AlgoJL.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="394">
@@ -98,10 +94,19 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/peersim/BigObserver.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="68">
+              <caret line="6" column="13" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/config-algoJL.txt">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="187">
-              <caret line="11" column="29" selection-start-line="11" selection-start-column="29" selection-end-line="11" selection-end-column="29" />
+              <caret line="11" column="31" selection-start-line="11" selection-start-column="31" selection-end-line="11" selection-end-column="31" />
             </state>
           </provider>
         </entry>
@@ -123,6 +128,7 @@
       <find>canL</find>
       <find>processU</find>
       <find>addLoanRequest</find>
+      <find>FIN</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -132,10 +138,10 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/src/peersim/RequestingCS.java" />
-        <option value="$PROJECT_DIR$/src/config-algoJL.txt" />
         <option value="$PROJECT_DIR$/src/common/message/TokenMessage.java" />
         <option value="$PROJECT_DIR$/src/common/util/Token.java" />
         <option value="$PROJECT_DIR$/src/peersim/AlgoJL.java" />
+        <option value="$PROJECT_DIR$/src/config-algoJL.txt" />
       </list>
     </option>
   </component>
@@ -216,6 +222,7 @@
   </component>
   <component name="RunManager">
     <configuration name="peersim_Loan" type="Application" factoryName="Application">
+      <output_file path="$PROJECT_DIR$/../../Vrac/log.txt" is_save="true" />
       <option name="MAIN_CLASS_NAME" value="peersim.Simulator" />
       <module name="AlgoJL_Loan" />
       <option name="PROGRAM_PARAMETERS" value="src/config-algoJL.txt" />
@@ -237,18 +244,18 @@
       <updated>1557693054552</updated>
       <workItem from="1557693057156" duration="6956000" />
       <workItem from="1557742278960" duration="903000" />
-      <workItem from="1557765582545" duration="1421000" />
+      <workItem from="1557765582545" duration="2137000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="9280000" />
+    <option name="totallyTimeSpent" value="9996000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="0" width="1294" height="1407" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" weight="0.22852512" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.22852512" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Designer" order="2" />
       <window_info id="Image Layers" order="3" />
@@ -291,40 +298,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/config-algoJL.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="11" column="29" selection-start-line="11" selection-start-column="29" selection-end-line="11" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/common/message/TokenMessage.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="493">
           <caret line="30" column="8" selection-start-line="30" selection-start-column="8" selection-end-line="30" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/common/util/Token.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="385">
-          <caret line="191" column="30" selection-start-line="191" selection-start-column="16" selection-end-line="191" selection-end-column="30" />
-          <folding>
-            <element signature="e#6807#6808#0" expanded="true" />
-            <element signature="e#6861#6862#0" expanded="true" />
-            <element signature="e#6915#6916#0" expanded="true" />
-            <element signature="e#6974#6975#0" expanded="true" />
-            <element signature="e#7030#7031#0" expanded="true" />
-            <element signature="e#7096#7097#0" expanded="true" />
-            <element signature="e#7473#7474#0" expanded="true" />
-            <element signature="e#7562#7563#0" expanded="true" />
-            <element signature="e#8203#8204#0" expanded="true" />
-            <element signature="e#8288#8289#0" expanded="true" />
-            <element signature="e#8641#8642#0" expanded="true" />
-            <element signature="e#8679#8680#0" expanded="true" />
-            <element signature="e#8714#8715#0" expanded="true" />
-            <element signature="e#8747#8748#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -357,6 +334,43 @@
             <element signature="e#42461#42462#0" expanded="true" />
             <element signature="e#42507#42508#0" expanded="true" />
             <element signature="e#42543#42544#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/peersim/BigObserver.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="6" column="13" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/config-algoJL.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="11" column="31" selection-start-line="11" selection-start-column="31" selection-end-line="11" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/common/util/Token.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="385">
+          <caret line="191" column="30" selection-start-line="191" selection-start-column="16" selection-end-line="191" selection-end-column="30" />
+          <folding>
+            <element signature="e#6807#6808#0" expanded="true" />
+            <element signature="e#6861#6862#0" expanded="true" />
+            <element signature="e#6915#6916#0" expanded="true" />
+            <element signature="e#6974#6975#0" expanded="true" />
+            <element signature="e#7030#7031#0" expanded="true" />
+            <element signature="e#7096#7097#0" expanded="true" />
+            <element signature="e#7473#7474#0" expanded="true" />
+            <element signature="e#7562#7563#0" expanded="true" />
+            <element signature="e#8203#8204#0" expanded="true" />
+            <element signature="e#8288#8289#0" expanded="true" />
+            <element signature="e#8641#8642#0" expanded="true" />
+            <element signature="e#8679#8680#0" expanded="true" />
+            <element signature="e#8714#8715#0" expanded="true" />
+            <element signature="e#8747#8748#0" expanded="true" />
           </folding>
         </state>
       </provider>
