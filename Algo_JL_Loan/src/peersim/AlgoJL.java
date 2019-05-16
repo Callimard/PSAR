@@ -61,6 +61,11 @@ public class AlgoJL implements EDProtocol {
     private int nbCS;
 
     /**
+     * <p>Le nombre maximal de ressource que l'on a le droit de demander.</p>
+     */
+    private int nbMaxResourceAsked;
+
+    /**
      * <p>
      * Permet de recuperer le la requete CS courante, doit etre incremente à chaque
      * fin de CS.
@@ -158,7 +163,7 @@ public class AlgoJL implements EDProtocol {
     public AlgoJL(String prefix) {
         this(Configuration.getPid(prefix + ".tr"), Configuration.getInt(prefix + ".nb_resource"),
                 Configuration.lookupPid(prefix.split("\\.")[prefix.split("\\.").length - 1]),
-                Configuration.getInt(prefix + ".nbCS"), Configuration.getInt(prefix + ".min_cs"),
+                Configuration.getInt(prefix + ".nbCS"), Configuration.getInt(prefix + ".nb_max_r_asked"), Configuration.getInt(prefix + ".min_cs"),
                 Configuration.getInt(prefix + ".max_cs"));
     }
 
@@ -170,7 +175,7 @@ public class AlgoJL implements EDProtocol {
      * @param min_cs
      * @param max_cs
      */
-    private AlgoJL(int transportPID, int nbResource, int myPid, int nbCS, int min_cs, int max_cs) {
+    private AlgoJL(int transportPID, int nbResource, int myPid, int nbCS, int nbMaxResourceAsked, int min_cs, int max_cs) {
         this.MIN_CS = min_cs;
         this.MAX_CS = max_cs;
 
@@ -190,35 +195,39 @@ public class AlgoJL implements EDProtocol {
         }
 
         this.listPendingRequest = new LinkedList<>();
-        this.listSetRequestCS = new ArrayList<>();
 
         this.nbCS = nbCS;
-        // On cree les set de resources de chaque Requete CS.
-        for (int i = 0; i < this.nbCS; i++) {
-            Set<Integer> setResources = new TreeSet<Integer>();
+        if (!this.isInfinite()) {
+            this.listSetRequestCS = new ArrayList<>();
+            // On cree les set de resources de chaque Requete CS.
+            for (int i = 0; i < this.nbCS; i++) {
+                Set<Integer> setResources = new TreeSet<Integer>();
 
-            int nbRes = Util.generateRandom(1, this.nbResource);
+                int nbRes = Util.generateRandom(1, this.nbResource);
 
-            int j = 0;
+                int j = 0;
 
-            while (j < nbRes) {
-                int generate = CommonState.r.nextInt(this.nbResource);
+                while (j < nbRes) {
+                    int generate = CommonState.r.nextInt(this.nbResource);
 
-                if (setResources.add(generate)) {
-                    j++;
+                    if (setResources.add(generate)) {
+                        j++;
+                    }
                 }
+
+                this.listSetRequestCS.add(setResources);
             }
-
-            this.listSetRequestCS.add(setResources);
         }
 
-        System.out.println("----------------------------------------------------------------------");
+        this.nbMaxResourceAsked = nbMaxResourceAsked;
 
-        for (int i = 0; i < this.listSetRequestCS.size(); i++) {
-            System.out.println(this.listSetRequestCS.get(i));
+        if (!this.isInfinite()) {
+            System.out.println("----------------------------------------------------------------------");
+            for (int i = 0; i < this.listSetRequestCS.size(); i++) {
+                System.out.println(this.listSetRequestCS.get(i));
+            }
+            System.out.println("----------------------------------------------------------------------");
         }
-
-        System.out.println("----------------------------------------------------------------------");
     }
 
     // Methods.
@@ -237,6 +246,8 @@ public class AlgoJL implements EDProtocol {
                 + " ReqCS---------------------------------------------------------------------------------------");
 
         /* BigObserver.BIG_OBERVER.displayArrayToken(); */
+
+        System.out.println("SetResource = " + resources);
 
         if (this.currentRequestingCS == null && this.state == State.NOTHING) {
             this.currentRequestingCS = new RequestingCS(resources, this);
@@ -323,10 +334,15 @@ public class AlgoJL implements EDProtocol {
 
         this.sendBuff(buff, false);
 
-        this.iteListSetRequestCS++;
+        if (!this.isInfinite()) {
+            this.iteListSetRequestCS++;
 
-        if (this.iteListSetRequestCS >= this.nbCS) {
-            System.out.println("N = " + this.node.getID() + " FIN DU NOEUD!!!!!!!!!!");
+            if (this.iteListSetRequestCS >= this.nbCS) {
+                System.out.println("N = " + this.node.getID() + " FIN DU NOEUD!!!!!!!!!!");
+            } else {
+                int delay = Util.generateRandom(this.MIN_CS, this.MAX_CS);
+                EDSimulator.add(delay, new BeginMessage(-1, null, null), this.node, this.myPid);
+            }
         } else {
             int delay = Util.generateRandom(this.MIN_CS, this.MAX_CS);
             EDSimulator.add(delay, new BeginMessage(-1, null, null), this.node, this.myPid);
@@ -934,7 +950,21 @@ public class AlgoJL implements EDProtocol {
             } else if (o instanceof ReleaseMessage) {
                 this.releaseCS();
             } else if (o instanceof BeginMessage) {
-                Set<Integer> setResource = this.listSetRequestCS.get(this.iteListSetRequestCS);
+                Set<Integer> setResource = null;
+                if (!this.isInfinite()) {
+                    setResource = this.listSetRequestCS.get(this.iteListSetRequestCS);
+                } else {
+                    setResource = new TreeSet<>();
+                    int nbRes = Util.generateRandom(1, this.nbMaxResourceAsked + 1);
+                    int j = 0;
+                    while (j < nbRes) {
+                        int generate = CommonState.r.nextInt(this.nbResource);
+
+                        if (setResource.add(generate)) {
+                            j++;
+                        }
+                    }
+                }
                 this.requestCS(setResource);
             } else if (o instanceof LoanRequest) {
                 this.receiveLoanRequest((LoanRequest) o);
@@ -948,7 +978,7 @@ public class AlgoJL implements EDProtocol {
 
     @Override
     public Object clone() {
-        return new AlgoJL(this.transportPID, this.nbResource, this.myPid, this.nbCS, this.MIN_CS, this.MAX_CS);
+        return new AlgoJL(this.transportPID, this.nbResource, this.myPid, this.nbCS, this.nbMaxResourceAsked, this.MIN_CS, this.MAX_CS);
     }
 
     /**
@@ -1075,6 +1105,10 @@ public class AlgoJL implements EDProtocol {
 
     public Set<Integer> getLentResources() {
         return lentResources;
+    }
+
+    public boolean isInfinite() {
+        return this.nbCS <= 0;
     }
 
     // Public enum.
