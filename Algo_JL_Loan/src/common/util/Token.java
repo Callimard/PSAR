@@ -111,7 +111,7 @@ public class Token {
      */
     public void addTokenRequest(TokenRequest tokenRequest) {
 
-        System.out.println("ADD FOR " + tokenRequest.getSender().getID() + " tokenRequest = " + tokenRequest);
+        /*System.out.println("ADD FOR " + tokenRequest.getSender().getID() + " tokenRequest = " + tokenRequest);*/
 
         this.queueTokenRequest.add(tokenRequest);
 
@@ -134,7 +134,7 @@ public class Token {
         if (!this.queueTokenRequest.isEmpty()) {
             TokenRequest tokenRequest = this.queueTokenRequest.remove(0);
 
-            System.out.println("DEQUE FOR " + tokenRequest.getSender().getID() + " tokenRequest = " + tokenRequest);
+            /*System.out.println("DEQUE FOR " + tokenRequest.getSender().getID() + " tokenRequest = " + tokenRequest);*/
 
             return tokenRequest;
         } else
@@ -190,7 +190,7 @@ public class Token {
      * @param loanRequest
      */
     public void addLoanRequest(LoanRequest loanRequest) {
-        System.out.println("ADD FOR " + loanRequest.getSender().getID() + " loanRequest = " + loanRequest);
+        /*System.out.println("ADD FOR " + loanRequest.getSender().getID() + " loanRequest = " + loanRequest);*/
 
         this.queueLoanRequest.add(loanRequest);
 
@@ -213,7 +213,7 @@ public class Token {
         if (!this.queueLoanRequest.isEmpty()) {
             LoanRequest loanRequest = this.queueLoanRequest.remove(0);
 
-            System.out.println("DEQUE FOR " + loanRequest.getSender().getID() + " loanRequest = " + loanRequest);
+            /*System.out.println("DEQUE FOR " + loanRequest.getSender().getID() + " loanRequest = " + loanRequest);*/
 
             return loanRequest;
         } else

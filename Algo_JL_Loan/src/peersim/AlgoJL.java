@@ -263,7 +263,7 @@ public class AlgoJL implements EDProtocol {
                                 this.dynamicTree[resourceID]);
                         buff.add(counterRequest);
                     } else {
-                        if (this.dynamicTree[resourceID] != null)
+                        /*if (this.dynamicTree[resourceID] != null)*/
                             /*System.out.println(
                                     "N = " + this.node.getID() + " PB -> ON A LE NOEUD MAIS DYNAMIC TREE PAS NULL -> "
                                             + this.dynamicTree[resourceID]);*/
@@ -276,11 +276,11 @@ public class AlgoJL implements EDProtocol {
                 this.setInCS();
             }
         } else {
-            if (this.currentRequestingCS != null)
+            /*if (this.currentRequestingCS != null)*/
                 /*System.out.println("N = " + this.node.getID()
                         + "PB -> ATTENTION!!! DEMANDE DE CS ALORS QU'IL Y EN A UNE DEJA EN COURS.");*/
 
-            if (this.state != State.NOTHING)
+            /*if (this.state != State.NOTHING)*/
                 /*System.out.println("N = " + this.node.getID()
                         + "PB -> ATTENTION!!! DEMANDE DE CS ALORS QUE L'ETAT N'EST PAS NOTHING.");*/
         }
@@ -320,7 +320,7 @@ public class AlgoJL implements EDProtocol {
             Node lender = token.getLenderNode();
 
             if (!token.tokenRequestQueueEmpty() && lender == null) {
-                System.out.println("N = " + this.node.getID() + " SEND T / R = " + resourceID);
+                /*System.out.println("N = " + this.node.getID() + " SEND T / R = " + resourceID);*/
                 buff.add(this.sendToken(resourceID, token.nextTokenRequest().getSender()));
             } else if (lender != null) {
                 token.setLenderNode(null);
@@ -1048,7 +1048,7 @@ public class AlgoJL implements EDProtocol {
         if (this.arrayToken[token.getResourceID()] == null) {
             this.arrayToken[token.getResourceID()] = token;
         } else {
-            System.out.println("N = " + this.node.getID() + " PB -> RECEPTION D'UN JETON DEJA PRESENT!!!!");
+            /*System.out.println("N = " + this.node.getID() + " PB -> RECEPTION D'UN JETON DEJA PRESENT!!!!");*/
         }
     }
 
