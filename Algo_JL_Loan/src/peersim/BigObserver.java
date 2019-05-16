@@ -2,7 +2,6 @@ package peersim;
 
 import common.util.Token;
 import peersim.core.CommonState;
-import peersim.edsim.EDSimulator;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -23,7 +22,7 @@ public class BigObserver {
     private Map<Long, Set<Integer>> mapNodeCSResource = new HashMap<>();
     private Map<Long, Long> mapNodeTimeBeginCS = new HashMap<>();
 
-    private List<AlgoJL> listAlgoJL = new ArrayList<>();
+    private List<AlgoJL> listAlgoJLS = new ArrayList<>();
 
     private BufferedWriter writerCSV;
     private BufferedWriter writerTotal;
@@ -106,7 +105,7 @@ public class BigObserver {
     public void displayArrayToken() {
         /*System.out.println("Observer---------------------------------------------------------------------------------------");*/
 
-        for (AlgoJL algoJL : this.listAlgoJL) {
+        for (AlgoJL algoJL : this.listAlgoJLS) {
             Token[] array = algoJL.getArrayToken();
 
             System.out.print("N = " + algoJL.getNode().getID() + " [");
@@ -120,8 +119,8 @@ public class BigObserver {
     }
 
     public void addAlgoJL(AlgoJL algoJL) {
-        if (!this.listAlgoJL.contains(algoJL) && algoJL.getNode().getID() >= 0) {
-            this.listAlgoJL.add(algoJL);
+        if (!this.listAlgoJLS.contains(algoJL) && algoJL.getNode().getID() >= 0) {
+            this.listAlgoJLS.add(algoJL);
         }
     }
 

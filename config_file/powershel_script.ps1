@@ -14,6 +14,6 @@
     echo "protocol.algoJL.max_cs 35" >> "config_$i.txt"
     echo "init.algoJLInit peersim.InitJL" >> "config_$i.txt"
     echo "init.algoJLInit.jl algoJL" >> "config_$i.txt"
-    echo "echo init.algoJLInit.min 2" >> "config_$i.txt"
+    echo "init.algoJLInit.min 2" >> "config_$i.txt"
     echo "init.algoJLInit.max 3" >> "config_$i.txt"
 }

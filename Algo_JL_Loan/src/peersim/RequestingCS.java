@@ -2,7 +2,6 @@ package peersim;
 
 import common.message.CounterMessage;
 import common.message.Message;
-import common.message.TokenMessage;
 import common.message.TokenRequest;
 import common.util.Token;
 import peersim.core.Node;
