@@ -11,7 +11,7 @@ protocol.algoJL peersim.AlgoJL
 protocol.algoJL.tr transportPID
 protocol.algoJL.nb_resource 80
 protocol.algoJL.nbCS -1
-protocol.algoJL.nb_max_r_asked 10;
+protocol.algoJL.nb_max_r_asked 10
 protocol.algoJL.min_cs 5
 protocol.algoJL.max_cs 35
 

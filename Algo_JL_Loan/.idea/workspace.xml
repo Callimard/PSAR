@@ -3,12 +3,11 @@
   <component name="ChangeListManager">
     <list default="true" id="308dcfc9-abd2-44cd-8fbf-8471ec30fabc" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/../AlgoJL_Rework/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../AlgoJL_Rework/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../AlgoJL_Rework/out/production/AlgoJL_Rework/config-algoJL.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../AlgoJL_Rework/out/production/AlgoJL_Rework/config-algoJL.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../AlgoJL_Rework/src/config-algoJL.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../AlgoJL_Rework/src/config-algoJL.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../AlgoJL_Rework/src/peersim/AlgoJL.java" beforeDir="false" afterPath="$PROJECT_DIR$/../AlgoJL_Rework/src/peersim/AlgoJL.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../AlgoJL_Rework/src/peersim/BigObserver.java" beforeDir="false" afterPath="$PROJECT_DIR$/../AlgoJL_Rework/src/peersim/BigObserver.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/peersim/AlgoJL.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/peersim/AlgoJL.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/peersim/BigObserver.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/peersim/BigObserver.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/config-algoJL.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/config-algoJL.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Algo_JL_Optimized/.project" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Algo_JL_Optimized/bin/.project" beforeDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/classes/" />
     <ignored path="$PROJECT_DIR$/bin/" />
@@ -20,11 +19,20 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/peersim/BigObserver.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="665">
-              <caret line="98" column="8" lean-forward="true" selection-start-line="98" selection-start-column="8" selection-end-line="98" selection-end-column="47" />
+              <caret line="98" column="8" selection-start-line="98" selection-start-column="8" selection-end-line="98" selection-end-column="47" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/config-algoJL.txt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="340">
+              <caret line="20" column="21" lean-forward="true" selection-start-line="20" selection-start-column="21" selection-end-line="20" selection-end-column="21" />
             </state>
           </provider>
         </entry>
@@ -50,9 +58,9 @@
         <option value="$PROJECT_DIR$/src/peersim/RequestingCS.java" />
         <option value="$PROJECT_DIR$/src/common/message/TokenMessage.java" />
         <option value="$PROJECT_DIR$/src/common/util/Token.java" />
-        <option value="$PROJECT_DIR$/src/config-algoJL.txt" />
         <option value="$PROJECT_DIR$/src/peersim/AlgoJL.java" />
         <option value="$PROJECT_DIR$/src/peersim/BigObserver.java" />
+        <option value="$PROJECT_DIR$/src/config-algoJL.txt" />
       </list>
     </option>
   </component>
@@ -67,6 +75,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -90,7 +99,6 @@
         </subPane>
       </pane>
       <pane id="PackagesPane" />
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -98,7 +106,7 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../AlgoJL_Rework" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
@@ -144,17 +152,17 @@
       <workItem from="1557742278960" duration="903000" />
       <workItem from="1557765582545" duration="2372000" />
       <workItem from="1558021950706" duration="4459000" />
+      <workItem from="1558028001744" duration="94000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="14690000" />
+    <option name="totallyTimeSpent" value="14784000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="0" width="1294" height="1407" extended-state="0" />
-    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.1458671" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.14829822" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Designer" order="2" />
       <window_info id="Image Layers" order="3" />
@@ -164,7 +172,7 @@
       <window_info id="Favorites" order="7" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32967034" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.077708006" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.433281" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.3998441" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -229,13 +237,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/config-algoJL.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret selection-end-line="20" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/peersim/AlgoJL.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1644">
@@ -274,7 +275,14 @@
     <entry file="file://$PROJECT_DIR$/src/peersim/BigObserver.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="665">
-          <caret line="98" column="8" lean-forward="true" selection-start-line="98" selection-start-column="8" selection-end-line="98" selection-end-column="47" />
+          <caret line="98" column="8" selection-start-line="98" selection-start-column="8" selection-end-line="98" selection-end-column="47" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/config-algoJL.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="340">
+          <caret line="20" column="21" lean-forward="true" selection-start-line="20" selection-start-column="21" selection-end-line="20" selection-end-column="21" />
         </state>
       </provider>
     </entry>
