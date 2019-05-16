@@ -14,7 +14,7 @@ public class BigObserver {
 
     // Constant.
 
-    public static final BigObserver BIG_OBERVER = new BigObserver();
+    public static final BigObserver BIG_OBSERVER = new BigObserver();
 
     private static final String FILE = "results/log_1";
 
@@ -25,21 +25,19 @@ public class BigObserver {
 
     private List<AlgoJL> listAlgoJL = new ArrayList<>();
 
-    private File csvFile = new File(FILE + ".csv");
-    private File totalFile = new File(FILE + "_total.csv");
-
     private BufferedWriter writerCSV;
     private BufferedWriter writerTotal;
 
     private long total = 0;
-    private double percent;
 
     // Constructors.
 
     private BigObserver() {
         try {
-            this.writerCSV = new BufferedWriter(new FileWriter(this.csvFile));
-            this.writerTotal = new BufferedWriter(new FileWriter(this.totalFile));
+            File csvFile = new File(FILE + ".csv");
+            this.writerCSV = new BufferedWriter(new FileWriter(csvFile));
+            File totalFile = new File(FILE + "_total.csv");
+            this.writerTotal = new BufferedWriter(new FileWriter(totalFile));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -85,14 +83,14 @@ public class BigObserver {
         assert endTime > beginTime;
         Long timeCS = endTime - beginTime;
         this.total += (((long) resourceSet.size()) * timeCS);
-        this.percent = (((double)(this.total) * 100.0d) / 8_000_000.0d);
+        double percent = (((double) (this.total) * 100.0d) / 8_000_000.0d);
 
         try {
             this.writerCSV.newLine();
             this.writerCSV.write(nodeID + ";" + this.mapNodeCSResource.size() + ";" + timeCS + ";");
 
             this.writerTotal.newLine();
-            this.writerTotal.write(this.total + ";" + this.percent + ";");
+            this.writerTotal.write(this.total + ";" + percent + ";");
         } catch (IOException e) {
             e.printStackTrace();
         }

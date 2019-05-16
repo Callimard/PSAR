@@ -47,6 +47,11 @@ public class AlgoJL implements EDProtocol {
     private int nbCS;
 
     /**
+     * <p>Le nombre maximal de ressource que l'on a le droit de demander.</p>
+     */
+    private int nbMaxResourceAsked;
+
+    /**
      * <p>Permet de recuperer le la requete CS courante, doit etre incremente à chaque fin de CS.</p>
      */
     private int iteListSetRequestCS = 0;
@@ -100,6 +105,7 @@ public class AlgoJL implements EDProtocol {
         this(Configuration.getPid(prefix + ".tr"), Configuration.getInt(prefix + ".nb_resource"),
                 Configuration.lookupPid(prefix.split("\\.")[prefix.split("\\.").length - 1]),
                 Configuration.getInt(prefix + ".nbCS"),
+                Configuration.getInt(prefix + ".nb_max_r_asked"),
                 Configuration.getInt(prefix + ".min_cs"),
                 Configuration.getInt(prefix + ".max_cs"));
     }
@@ -112,7 +118,7 @@ public class AlgoJL implements EDProtocol {
      * @param min_cs
      * @param max_cs
      */
-    private AlgoJL(int transportPID, int nbResource, int myPid, int nbCS, int min_cs, int max_cs) {
+    private AlgoJL(int transportPID, int nbResource, int myPid, int nbCS, int nbMaxResourceAsked, int min_cs, int max_cs) {
         this.MIN_CS = min_cs;
         this.MAX_CS = max_cs;
 
@@ -132,35 +138,39 @@ public class AlgoJL implements EDProtocol {
         }
 
         this.listPendingRequest = new LinkedList<>();
-        this.listSetRequestCS = new ArrayList<>();
 
         this.nbCS = nbCS;
-        // On cree les set de resources de chaque Requete CS.
-        for (int i = 0; i < this.nbCS; i++) {
-            Set<Integer> setResources = new TreeSet<Integer>();
+        if (!this.isInfinite()) {
+            this.listSetRequestCS = new ArrayList<>();
+            // On cree les set de resources de chaque Requete CS.
+            for (int i = 0; i < this.nbCS; i++) {
+                Set<Integer> setResources = new TreeSet<Integer>();
 
-            int nbRes = Util.generateRandom(1, this.nbResource);
+                int nbRes = Util.generateRandom(1, this.nbResource);
 
-            int j = 0;
+                int j = 0;
 
-            while (j < nbRes) {
-                int generate = CommonState.r.nextInt(this.nbResource);
+                while (j < nbRes) {
+                    int generate = CommonState.r.nextInt(this.nbResource);
 
-                if (setResources.add(generate)) {
-                    j++;
+                    if (setResources.add(generate)) {
+                        j++;
+                    }
                 }
+
+                this.listSetRequestCS.add(setResources);
             }
-
-            this.listSetRequestCS.add(setResources);
         }
 
-        System.out.println("----------------------------------------------------------------------");
+        this.nbMaxResourceAsked = nbMaxResourceAsked;
 
-        for (int i = 0; i < this.listSetRequestCS.size(); i++) {
-            System.out.println(this.listSetRequestCS.get(i));
+        if (!this.isInfinite()) {
+            System.out.println("----------------------------------------------------------------------");
+            for (int i = 0; i < this.listSetRequestCS.size(); i++) {
+                System.out.println(this.listSetRequestCS.get(i));
+            }
+            System.out.println("----------------------------------------------------------------------");
         }
-
-        System.out.println("----------------------------------------------------------------------");
     }
 
     // Methods.
@@ -173,7 +183,7 @@ public class AlgoJL implements EDProtocol {
     public void requestCS(Set<Integer> resources) {
         System.out.println("N = " + this.node.getID() + " ReqCS---------------------------------------------------------------------------------------");
 
-        /*BigObserver.BIG_OBERVER.displayArrayToken();*/
+        /*BigObserver.BIG_OBSERVER.displayArrayToken();*/
 
         if (this.currentRequestingCS == null && this.state == State.NOTHING) {
             this.currentRequestingCS = new RequestingCS(resources, this);
@@ -206,7 +216,7 @@ public class AlgoJL implements EDProtocol {
                 System.out.println("N = " + this.node.getID() + "PB -> ATTENTION!!! DEMANDE DE CS ALORS QUE L'ETAT N'EST PAS NOTHING.");
         }
 
-        /*BigObserver.BIG_OBERVER.displayArrayToken();*/
+        /*BigObserver.BIG_OBSERVER.displayArrayToken();*/
 
         System.out.println("---------------------------------------------------------------------------------------");
     }
@@ -217,11 +227,11 @@ public class AlgoJL implements EDProtocol {
     public void releaseCS() {
         System.out.println("N = " + this.node.getID() + " RelCS--------------------------------------------------------------------------------------");
 
-        /*BigObserver.BIG_OBERVER.displayArrayToken();*/
+        /*BigObserver.BIG_OBSERVER.displayArrayToken();*/
 
         this.setState(State.NOTHING);
 
-        BigObserver.BIG_OBERVER.releaseCS(this.node.getID());
+        BigObserver.BIG_OBSERVER.releaseCS(this.node.getID());
 
         System.out.println("N = " + this.node.getID() + " currentRequestingCS = " + this.currentRequestingCS);
         Set<Integer> resourceRequired = this.currentRequestingCS.getResourceRequiredSet();
@@ -243,16 +253,21 @@ public class AlgoJL implements EDProtocol {
 
         this.sendBuff(buff, false);
 
-        this.iteListSetRequestCS++;
+        if (!this.isInfinite()) {
+            this.iteListSetRequestCS++;
 
-        if (this.iteListSetRequestCS >= this.nbCS) {
-            System.out.println("N = " + this.node.getID() + " FIN DU NOEUD!!!!!!!!!!");
+            if (this.iteListSetRequestCS >= this.nbCS) {
+                System.out.println("N = " + this.node.getID() + " FIN DU NOEUD!!!!!!!!!!");
+            } else {
+                int delay = Util.generateRandom(this.MIN_CS, this.MAX_CS);
+                EDSimulator.add(delay, new BeginMessage(-1, null, null), this.node, this.myPid);
+            }
         } else {
             int delay = Util.generateRandom(this.MIN_CS, this.MAX_CS);
             EDSimulator.add(delay, new BeginMessage(-1, null, null), this.node, this.myPid);
         }
 
-        /*BigObserver.BIG_OBERVER.displayArrayToken();*/
+        /*BigObserver.BIG_OBSERVER.displayArrayToken();*/
 
         System.out.println("---------------------------------------------------------------------------------------");
     }
@@ -267,7 +282,7 @@ public class AlgoJL implements EDProtocol {
 
         System.out.println("N = " + this.node.getID() + " RcvREQ_C--------------------------------------------------------------------------------------- Sender = " + sender.getID() + " State = " + this.getState());
 
-        /*BigObserver.BIG_OBERVER.displayArrayToken();*/
+        /*BigObserver.BIG_OBSERVER.displayArrayToken();*/
 
         System.out.println("N = " + this.node.getID() + " RECV " + counterRequest);
 
@@ -301,7 +316,7 @@ public class AlgoJL implements EDProtocol {
         this.sendBuff(buff, false);
         this.sendBuff(buffTrue, true);
 
-        /*BigObserver.BIG_OBERVER.displayArrayToken();*/
+        /*BigObserver.BIG_OBSERVER.displayArrayToken();*/
 
         System.out.println("---------------------------------------------------------------------------------------");
     }
@@ -316,7 +331,7 @@ public class AlgoJL implements EDProtocol {
 
         System.out.println("N = " + this.node.getID() + " RcvREQ_T--------------------------------------------------------------------------------------- Sender = " + sender.getID() + " State = " + this.getState());
 
-        /*BigObserver.BIG_OBERVER.displayArrayToken();*/
+        /*BigObserver.BIG_OBSERVER.displayArrayToken();*/
 
         System.out.println("N = " + this.node.getID() + " RECV " + tokenRequest);
 
@@ -359,7 +374,7 @@ public class AlgoJL implements EDProtocol {
         this.sendBuff(buff, false);
         this.sendBuff(buffTrue, true);
 
-        /*BigObserver.BIG_OBERVER.displayArrayToken();*/
+        /*BigObserver.BIG_OBSERVER.displayArrayToken();*/
 
         System.out.println("---------------------------------------------------------------------------------------");
     }
@@ -371,7 +386,7 @@ public class AlgoJL implements EDProtocol {
         System.out.println("N = " + this.node.getID() + " RcvC--------------------------------------------------------------------------------------- Sender = " + sender.getID() + " State = " + this.getState());
         System.out.println("R = " + resourceID + " counter = " + counterMessage.getCounter());
 
-        /*BigObserver.BIG_OBERVER.displayArrayToken();*/
+        /*BigObserver.BIG_OBSERVER.displayArrayToken();*/
 
         assert ((sender.getID() != this.node.getID()) || ((sender.getID() == this.node.getID()) && !counterMessage.isVisitedNode(this.node))) : "Sender = " + sender.getID() + " N = " + this.getNode().getID() + " VisitedNode = " + counterMessage.getVisitedNode() + " Message envoye a nous meme.";
 
@@ -381,7 +396,7 @@ public class AlgoJL implements EDProtocol {
             this.processCounterNeededEmpty();
         }
 
-        /*BigObserver.BIG_OBERVER.displayArrayToken();*/
+        /*BigObserver.BIG_OBSERVER.displayArrayToken();*/
 
         System.out.println("---------------------------------------------------------------------------------------");
     }
@@ -395,7 +410,7 @@ public class AlgoJL implements EDProtocol {
 
         System.out.println("N = " + this.node.getID() + " RecvT = " + tokenMessage.getToken().getResourceID());
 
-        /*BigObserver.BIG_OBERVER.displayArrayToken();*/
+        /*BigObserver.BIG_OBSERVER.displayArrayToken();*/
 
         assert ((sender.getID() != this.node.getID()) || ((sender.getID() == this.node.getID()) && !tokenMessage.isVisitedNode(this.node))) : "Sender = " + sender.getID() + " N = " + this.getNode().getID() + " VisitedNode = " + tokenMessage.getVisitedNode() + " Message envoye a nous meme.";
 
@@ -440,18 +455,18 @@ public class AlgoJL implements EDProtocol {
 
         this.sendBuff(buff, false);
 
-        /*BigObserver.BIG_OBERVER.displayArrayToken();*/
+        /*BigObserver.BIG_OBSERVER.displayArrayToken();*/
 
         System.out.println("---------------------------------------------------------------------------------------");
     }
 
     private void setInCS() {
-        /*BigObserver.BIG_OBERVER.displayArrayToken();*/
+        /*BigObserver.BIG_OBSERVER.displayArrayToken();*/
 
         this.setState(State.IN_CS);
         System.out.println("N = " + this.node.getID() + " SET_IN_CS / R = " + this.currentRequestingCS.getResourceRequiredSet());
 
-        BigObserver.BIG_OBERVER.setInCS(this.node.getID(), this.currentRequestingCS.getResourceRequiredSet());
+        BigObserver.BIG_OBSERVER.setInCS(this.node.getID(), this.currentRequestingCS.getResourceRequiredSet());
 
         // Genère un evenement qui lancera le relachement de la CS.
         int delay = Util.generateRandom(this.MIN_CS, this.MAX_CS);
@@ -474,7 +489,7 @@ public class AlgoJL implements EDProtocol {
         this.setNodeLink(resourceID, receiver);
         this.arrayToken[resourceID] = null;
 
-        /*BigObserver.BIG_OBERVER.displayArrayToken();*/
+        /*BigObserver.BIG_OBSERVER.displayArrayToken();*/
 
         return tokenMessage;
     }
@@ -633,7 +648,21 @@ public class AlgoJL implements EDProtocol {
             } else if (o instanceof ReleaseMessage) {
                 this.releaseCS();
             } else if (o instanceof BeginMessage) {
-                Set<Integer> setResource = this.listSetRequestCS.get(this.iteListSetRequestCS);
+                Set<Integer> setResource = null;
+                if (!this.isInfinite()) {
+                    setResource = this.listSetRequestCS.get(this.iteListSetRequestCS);
+                } else {
+                    setResource = new TreeSet<>();
+                    int nbRes = Util.generateRandom(1, this.nbMaxResourceAsked + 1);
+                    int j = 0;
+                    while (j < nbRes) {
+                        int generate = CommonState.r.nextInt(this.nbResource);
+
+                        if (setResource.add(generate)) {
+                            j++;
+                        }
+                    }
+                }
                 this.requestCS(setResource);
             } else {
                 throw new RuntimeException("Mauvais event");
@@ -645,7 +674,7 @@ public class AlgoJL implements EDProtocol {
 
     @Override
     public Object clone() {
-        return new AlgoJL(this.transportPID, this.nbResource, this.myPid, this.nbCS, this.MIN_CS, this.MAX_CS);
+        return new AlgoJL(this.transportPID, this.nbResource, this.myPid, this.nbCS, this.nbMaxResourceAsked, this.MIN_CS, this.MAX_CS);
     }
 
     /**
@@ -658,7 +687,7 @@ public class AlgoJL implements EDProtocol {
             // IMPORTANT
             this.node = node;
 
-            BigObserver.BIG_OBERVER.addAlgoJL(this);
+            BigObserver.BIG_OBSERVER.addAlgoJL(this);
         }
     }
 
@@ -739,6 +768,10 @@ public class AlgoJL implements EDProtocol {
 
     public int getRequestID() {
         return this.requestID;
+    }
+
+    public boolean isInfinite() {
+        return this.nbCS <= 0;
     }
 
     // Public enum.

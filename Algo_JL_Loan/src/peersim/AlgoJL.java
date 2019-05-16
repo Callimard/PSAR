@@ -12,8 +12,6 @@ import peersim.transport.Transport;
 
 import java.util.*;
 
-import javax.print.attribute.SetOfIntegerSyntax;
-
 public class AlgoJL implements EDProtocol {
 
     // Constants.
@@ -245,7 +243,7 @@ public class AlgoJL implements EDProtocol {
         System.out.println("N = " + this.node.getID()
                 + " ReqCS---------------------------------------------------------------------------------------");
 
-        /* BigObserver.BIG_OBERVER.displayArrayToken(); */
+        /* BigObserver.BIG_OBSERVER.displayArrayToken(); */
 
         System.out.println("SetResource = " + resources);
 
@@ -285,7 +283,7 @@ public class AlgoJL implements EDProtocol {
                         + "PB -> ATTENTION!!! DEMANDE DE CS ALORS QUE L'ETAT N'EST PAS NOTHING.");
         }
 
-        /* BigObserver.BIG_OBERVER.displayArrayToken(); */
+        /* BigObserver.BIG_OBSERVER.displayArrayToken(); */
 
         System.out.println("---------------------------------------------------------------------------------------");
     }
@@ -300,12 +298,12 @@ public class AlgoJL implements EDProtocol {
         System.out.println("N = " + this.node.getID()
                 + " RelCS--------------------------------------------------------------------------------------");
 
-        /* BigObserver.BIG_OBERVER.displayArrayToken(); */
+        /* BigObserver.BIG_OBSERVER.displayArrayToken(); */
 
         this.setState(State.NOTHING);
         this.loanAsked = false;
 
-        BigObserver.BIG_OBERVER.releaseCS(this.node.getID());
+        BigObserver.BIG_OBSERVER.releaseCS(this.node.getID());
 
         System.out.println("N = " + this.node.getID() + " currentRequestingCS = " + this.currentRequestingCS);
         Set<Integer> resourceRequired = this.currentRequestingCS.getResourceRequiredSet();
@@ -348,7 +346,7 @@ public class AlgoJL implements EDProtocol {
             EDSimulator.add(delay, new BeginMessage(-1, null, null), this.node, this.myPid);
         }
 
-        /* BigObserver.BIG_OBERVER.displayArrayToken(); */
+        /* BigObserver.BIG_OBSERVER.displayArrayToken(); */
 
         System.out.println("---------------------------------------------------------------------------------------");
     }
@@ -365,7 +363,7 @@ public class AlgoJL implements EDProtocol {
                 + " RcvREQ_C--------------------------------------------------------------------------------------- Sender = "
                 + sender.getID() + " State = " + this.getState());
 
-        /* BigObserver.BIG_OBERVER.displayArrayToken(); */
+        /* BigObserver.BIG_OBSERVER.displayArrayToken(); */
 
         System.out.println("N = " + this.node.getID() + " RECV " + counterRequest);
 
@@ -411,7 +409,7 @@ public class AlgoJL implements EDProtocol {
         this.sendBuff(buff, false);
         this.sendBuff(buffTrue, true);
 
-        /* BigObserver.BIG_OBERVER.displayArrayToken(); */
+        /* BigObserver.BIG_OBSERVER.displayArrayToken(); */
 
         System.out.println("---------------------------------------------------------------------------------------");
     }
@@ -428,7 +426,7 @@ public class AlgoJL implements EDProtocol {
                 + " RcvREQ_T--------------------------------------------------------------------------------------- Sender = "
                 + sender.getID() + " State = " + this.getState());
 
-        /* BigObserver.BIG_OBERVER.displayArrayToken(); */
+        /* BigObserver.BIG_OBSERVER.displayArrayToken(); */
 
         System.out.println("N = " + this.node.getID() + " RECV " + tokenRequest);
 
@@ -484,7 +482,7 @@ public class AlgoJL implements EDProtocol {
         this.sendBuff(buff, false);
         this.sendBuff(buffTrue, true);
 
-        /* BigObserver.BIG_OBERVER.displayArrayToken(); */
+        /* BigObserver.BIG_OBSERVER.displayArrayToken(); */
 
         System.out.println("---------------------------------------------------------------------------------------");
     }
@@ -541,7 +539,7 @@ public class AlgoJL implements EDProtocol {
                 + sender.getID() + " State = " + this.getState());
         System.out.println("R = " + resourceID + " counter = " + counterMessage.getCounter());
 
-        /* BigObserver.BIG_OBERVER.displayArrayToken(); */
+        /* BigObserver.BIG_OBSERVER.displayArrayToken(); */
 
         assert ((sender.getID() != this.node.getID())
                 || ((sender.getID() == this.node.getID()) && !counterMessage.isVisitedNode(this.node))) : "Sender = "
@@ -554,7 +552,7 @@ public class AlgoJL implements EDProtocol {
             this.processCounterNeededEmpty();
         }
 
-        /* BigObserver.BIG_OBERVER.displayArrayToken(); */
+        /* BigObserver.BIG_OBSERVER.displayArrayToken(); */
 
         System.out.println("---------------------------------------------------------------------------------------");
     }
@@ -570,7 +568,7 @@ public class AlgoJL implements EDProtocol {
 
         System.out.println("N = " + this.node.getID() + " RecvT = " + tokenMessage.getToken().getResourceID());
 
-        /* BigObserver.BIG_OBERVER.displayArrayToken(); */
+        /* BigObserver.BIG_OBSERVER.displayArrayToken(); */
 
         assert ((sender.getID() != this.node.getID())
                 || ((sender.getID() == this.node.getID()) && !tokenMessage.isVisitedNode(this.node))) : "Sender = "
@@ -648,19 +646,19 @@ public class AlgoJL implements EDProtocol {
 
         this.sendBuff(buff, false);
 
-        /* BigObserver.BIG_OBERVER.displayArrayToken(); */
+        /* BigObserver.BIG_OBSERVER.displayArrayToken(); */
 
         System.out.println("---------------------------------------------------------------------------------------");
     }
 
     private void setInCS() {
-        /* BigObserver.BIG_OBERVER.displayArrayToken(); */
+        /* BigObserver.BIG_OBSERVER.displayArrayToken(); */
 
         this.setState(State.IN_CS);
         System.out.println(
                 "N = " + this.node.getID() + " SET_IN_CS / R = " + this.currentRequestingCS.getResourceRequiredSet());
 
-        BigObserver.BIG_OBERVER.setInCS(this.node.getID(), this.currentRequestingCS.getResourceRequiredSet());
+        BigObserver.BIG_OBSERVER.setInCS(this.node.getID(), this.currentRequestingCS.getResourceRequiredSet());
 
         // Genère un evenement qui lancera le relachement de la CS.
         int delay = Util.generateRandom(this.MIN_CS, this.MAX_CS);
@@ -683,7 +681,7 @@ public class AlgoJL implements EDProtocol {
         this.setNodeLink(resourceID, receiver);
         this.arrayToken[resourceID] = null;
 
-        /* BigObserver.BIG_OBERVER.displayArrayToken(); */
+        /* BigObserver.BIG_OBSERVER.displayArrayToken(); */
 
         return tokenMessage;
     }
@@ -994,7 +992,7 @@ public class AlgoJL implements EDProtocol {
             // IMPORTANT
             this.node = node;
 
-            BigObserver.BIG_OBERVER.addAlgoJL(this);
+            BigObserver.BIG_OBSERVER.addAlgoJL(this);
         }
     }
 

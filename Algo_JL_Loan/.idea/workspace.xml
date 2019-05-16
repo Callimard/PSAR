@@ -2,7 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="308dcfc9-abd2-44cd-8fbf-8471ec30fabc" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/src/config-algoJL.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/config-algoJL.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../AlgoJL_Rework/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../AlgoJL_Rework/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../AlgoJL_Rework/src/config-algoJL.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../AlgoJL_Rework/src/config-algoJL.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../AlgoJL_Rework/src/peersim/AlgoJL.java" beforeDir="false" afterPath="$PROJECT_DIR$/../AlgoJL_Rework/src/peersim/AlgoJL.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../AlgoJL_Rework/src/peersim/BigObserver.java" beforeDir="false" afterPath="$PROJECT_DIR$/../AlgoJL_Rework/src/peersim/BigObserver.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/peersim/AlgoJL.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/peersim/AlgoJL.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/peersim/BigObserver.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/peersim/BigObserver.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/classes/" />
@@ -14,7 +19,17 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300" />
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/peersim/BigObserver.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="665">
+              <caret line="98" column="8" lean-forward="true" selection-start-line="98" selection-start-column="8" selection-end-line="98" selection-end-column="47" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
@@ -35,13 +50,13 @@
         <option value="$PROJECT_DIR$/src/peersim/RequestingCS.java" />
         <option value="$PROJECT_DIR$/src/common/message/TokenMessage.java" />
         <option value="$PROJECT_DIR$/src/common/util/Token.java" />
-        <option value="$PROJECT_DIR$/src/peersim/AlgoJL.java" />
         <option value="$PROJECT_DIR$/src/config-algoJL.txt" />
+        <option value="$PROJECT_DIR$/src/peersim/AlgoJL.java" />
         <option value="$PROJECT_DIR$/src/peersim/BigObserver.java" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
+  <component name="ProjectFrameBounds">
     <option name="x" value="-7" />
     <option name="width" value="1294" />
     <option name="height" value="1407" />
@@ -83,7 +98,7 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../AlgoJL_Rework" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
@@ -128,17 +143,18 @@
       <workItem from="1557693057156" duration="6956000" />
       <workItem from="1557742278960" duration="903000" />
       <workItem from="1557765582545" duration="2372000" />
-      <workItem from="1558021950706" duration="3764000" />
+      <workItem from="1558021950706" duration="4459000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="13995000" />
+    <option name="totallyTimeSpent" value="14690000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="2576" height="1416" extended-state="6" />
+    <frame x="-7" y="0" width="1294" height="1407" extended-state="0" />
+    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.16534181" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.1458671" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Designer" order="2" />
       <window_info id="Image Layers" order="3" />
@@ -147,8 +163,8 @@
       <window_info id="Learn" order="6" />
       <window_info id="Favorites" order="7" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.3289166" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.32967034" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.077708006" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.3998441" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -206,46 +222,59 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/peersim/AlgoJL.java">
+    <entry file="jar://$PROJECT_DIR$/librairies/peersim-1.0.5.jar!/peersim/edsim/EDSimulator.class">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="271">
-          <caret line="307" column="32" selection-start-line="307" selection-start-column="32" selection-end-line="307" selection-end-column="32" />
-          <folding>
-            <element signature="e#43399#43400#0" expanded="true" />
-            <element signature="e#43489#43490#0" expanded="true" />
-            <element signature="e#43561#43562#0" expanded="true" />
-            <element signature="e#43677#43678#0" expanded="true" />
-            <element signature="e#43772#43773#0" expanded="true" />
-            <element signature="e#43848#43849#0" expanded="true" />
-            <element signature="e#43912#43913#0" expanded="true" />
-            <element signature="e#43987#43988#0" expanded="true" />
-            <element signature="e#44057#44058#0" expanded="true" />
-            <element signature="e#44125#44126#0" expanded="true" />
-            <element signature="e#44218#44219#0" expanded="true" />
-            <element signature="e#44300#44301#0" expanded="true" />
-            <element signature="e#44372#44373#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="-64">
+          <caret line="17" column="13" selection-start-line="17" selection-start-column="13" selection-end-line="17" selection-end-column="13" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/config-algoJL.txt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" lean-forward="true" selection-start-line="2" selection-end-line="2" />
+        <state>
+          <caret selection-end-line="20" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/peersim/AlgoJL.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1644">
+          <caret line="336" column="8" selection-start-line="336" selection-start-column="8" selection-end-line="336" selection-end-column="33" />
+          <folding>
+            <element signature="e#43341#43342#0" expanded="true" />
+            <element signature="e#43399#43400#0" expanded="true" />
+            <element signature="e#43457#43458#0" expanded="true" />
+            <element signature="e#43489#43490#0" expanded="true" />
+            <element signature="e#43523#43524#0" expanded="true" />
+            <element signature="e#43561#43562#0" expanded="true" />
+            <element signature="e#43621#43622#0" expanded="true" />
+            <element signature="e#43677#43678#0" expanded="true" />
+            <element signature="e#43722#43723#0" expanded="true" />
+            <element signature="e#43772#43773#0" expanded="true" />
+            <element signature="e#43810#43811#0" expanded="true" />
+            <element signature="e#43848#43849#0" expanded="true" />
+            <element signature="e#43879#43880#0" expanded="true" />
+            <element signature="e#43912#43913#0" expanded="true" />
+            <element signature="e#43953#43954#0" expanded="true" />
+            <element signature="e#43987#43988#0" expanded="true" />
+            <element signature="e#44020#44021#0" expanded="true" />
+            <element signature="e#44057#44058#0" expanded="true" />
+            <element signature="e#44093#44094#0" expanded="true" />
+            <element signature="e#44125#44126#0" expanded="true" />
+            <element signature="e#44176#44177#0" expanded="true" />
+            <element signature="e#44218#44219#0" expanded="true" />
+            <element signature="e#44264#44265#0" expanded="true" />
+            <element signature="e#44300#44301#0" expanded="true" />
+            <element signature="e#44335#44336#0" expanded="true" />
+            <element signature="e#44372#44373#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/peersim/BigObserver.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="561">
-          <caret line="100" column="47" selection-start-line="100" selection-start-column="47" selection-end-line="100" selection-end-column="47" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$PROJECT_DIR$/librairies/peersim-1.0.5.jar!/peersim/edsim/EDSimulator.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-64">
-          <caret line="17" column="13" selection-start-line="17" selection-start-column="13" selection-end-line="17" selection-end-column="13" />
+        <state relative-caret-position="665">
+          <caret line="98" column="8" lean-forward="true" selection-start-line="98" selection-start-column="8" selection-end-line="98" selection-end-column="47" />
         </state>
       </provider>
     </entry>
