@@ -74,7 +74,7 @@ public class Token {
      */
     public void addTokenRequest(TokenRequest tokenRequest) {
 
-        System.out.println("ADD FOR " + tokenRequest.getSender().getID() + " tokenRequest = " + tokenRequest);
+       /* System.out.println("ADD FOR " + tokenRequest.getSender().getID() + " tokenRequest = " + tokenRequest);*/
 
         this.queueTokenRequest.add(tokenRequest);
 
@@ -95,7 +95,7 @@ public class Token {
         if (!this.queueTokenRequest.isEmpty()) {
             TokenRequest tokenRequest = this.queueTokenRequest.remove(0);
 
-            System.out.println("DEQUE FOR " + tokenRequest.getSender().getID() + " tokenRequest = " + tokenRequest);
+            /*System.out.println("DEQUE FOR " + tokenRequest.getSender().getID() + " tokenRequest = " + tokenRequest);*/
 
             return tokenRequest;
         } else

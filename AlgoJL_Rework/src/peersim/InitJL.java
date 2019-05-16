@@ -49,7 +49,7 @@ public class InitJL implements Control {
             EDSimulator.add(delay, new BeginMessage(-1, null, null), node, this.algoJL);
         }
 
-        System.out.println("Init fini.");
+        /*System.out.println("Init fini.");*/
 
         return false;
     }

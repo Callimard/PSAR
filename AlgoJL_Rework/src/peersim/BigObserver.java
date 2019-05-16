@@ -36,7 +36,7 @@ public class BigObserver {
     // Methods.
 
     public void setInCS(long nodeID, Set<Integer> resourceSet) {
-        System.out.println("Observer---------------------------------------------------------------------------------------");
+        /*System.out.println("Observer---------------------------------------------------------------------------------------");*/
 
         Set<Integer> set = this.mapNodeCSResource.get(nodeID);
 
@@ -58,11 +58,11 @@ public class BigObserver {
             }
         }
 
-        System.out.println("---------------------------------------------------------------------------------------");
+        /*System.out.println("---------------------------------------------------------------------------------------");*/
     }
 
     public void releaseCS(long nodeID) {
-        System.out.println("Observer---------------------------------------------------------------------------------------");
+        /*System.out.println("Observer---------------------------------------------------------------------------------------");*/
 
         Set<Integer> resourceSet = this.mapNodeCSResource.get(nodeID);
 
@@ -99,11 +99,11 @@ public class BigObserver {
         this.mapNodeCSResource.remove(nodeID);
         this.mapNodeTimeBeginCS.remove(nodeID);
 
-        System.out.println("---------------------------------------------------------------------------------------");
+        /*System.out.println("---------------------------------------------------------------------------------------");*/
     }
 
     public void displayArrayToken() {
-        System.out.println("Observer---------------------------------------------------------------------------------------");
+        /*System.out.println("Observer---------------------------------------------------------------------------------------");*/
 
         for (AlgoJL algoJL : this.listAlgoJL) {
             Token array[] = algoJL.getArrayToken();
@@ -115,7 +115,7 @@ public class BigObserver {
             System.out.println("]");
         }
 
-        System.out.println("---------------------------------------------------------------------------------------");
+        /*System.out.println("---------------------------------------------------------------------------------------");*/
     }
 
     public void addAlgoJL(AlgoJL algoJL) {

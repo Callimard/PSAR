@@ -111,29 +111,19 @@ public class RequestingCS {
         long counter = counterMessage.getCounter();
         Node sender = counterMessage.getSender();
 
-        System.out.println("-------------------------------------------------------------------------");
+        /*System.out.println("-------------------------------------------------------------------------");
 
         System.out.println("Node = " + this.parent.getNode().getID() + " Reception counter pour = " + resourceID);
-        System.out.println("SENDER = " + sender.getID());
+        System.out.println("SENDER = " + sender.getID());*/
 
         boolean res = this.counterReceived.add(resourceID);
 
         assert res : "Sender = " + sender.getID() + " N = " + this.parent.getNode().getID();
 
-        if (res) {
-            System.out.println("Node = " + this.parent.getNode().getID() + " AJOUT POUR = " + resourceID);
-            this.parent.setCounter(resourceID, counter);
-            this.parent.setNodeLink(resourceID, sender);
-            System.out.println("-------------------------------------------------------------------------");
-        } else {
-            try {
-                throw new Exception("PB - > ATTENTION!!! Reception d'un COUNTER que l'on a deja recu.");
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            System.out.println("N = " + this.parent.getNode().getID() + " PB -> DEJA RECU POUR = " + resourceID);
-            System.out.println("-------------------------------------------------------------------------");
-        }
+        /*System.out.println("Node = " + this.parent.getNode().getID() + " AJOUT POUR = " + resourceID);*/
+        this.parent.setCounter(resourceID, counter);
+        this.parent.setNodeLink(resourceID, sender);
+        /*System.out.println("-------------------------------------------------------------------------");*/
     }
 
     /**
@@ -157,7 +147,7 @@ public class RequestingCS {
                 this.parent.setCounter(resourceID, this.parent.getToken(resourceID).incrementCounter());
             }
         } else {
-            System.err.println("N = " + this.parent.getNode().getID() + "PB - > ATTENTION!!! Reception d'un TOKEN que l'on a deja recu.");
+            /*System.err.println("N = " + this.parent.getNode().getID() + "PB - > ATTENTION!!! Reception d'un TOKEN que l'on a deja recu.");*/
         }
     }
 
@@ -200,7 +190,7 @@ public class RequestingCS {
             this.listTokenRequestSend.add(tokenRequest);
             return true;
         } else {
-            System.out.println("TOKEN_REQUEST DEJA ENREGISTREE.");
+            /*System.out.println("TOKEN_REQUEST DEJA ENREGISTREE.");*/
             return false;
         }
     }
