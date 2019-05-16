@@ -171,6 +171,8 @@ public class AlgoJL implements EDProtocol {
             }
             System.out.println("----------------------------------------------------------------------");
         }
+
+        BigObserver.BIG_OBSERVER.setNbMaxResourceAsked(this.nbMaxResourceAsked);
     }
 
     // Methods.

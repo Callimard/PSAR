@@ -16,7 +16,7 @@ public class BigObserver {
 
     public static final BigObserver BIG_OBSERVER = new BigObserver();
 
-    private static final String FILE = "results/log_1";
+    private static final String FILE = "results/loan_1_log_";
 
     // Variables.
 
@@ -30,18 +30,9 @@ public class BigObserver {
 
     private long total = 0;
 
-    // Constructors.
+    private int nbMaxResourceAsked = -1;
 
-    private BigObserver() {
-        try {
-            File csvFile = new File(FILE + ".csv");
-            this.writerCSV = new BufferedWriter(new FileWriter(csvFile));
-            File totalFile = new File(FILE + "_total.csv");
-            this.writerTotal = new BufferedWriter(new FileWriter(totalFile));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+    // Constructors.
 
     // Methods.
 
@@ -85,6 +76,17 @@ public class BigObserver {
         this.total += (((long) resourceSet.size()) * timeCS);
         double percent = (((double) (this.total) * 100.0d) / 8_000_000.0d);
 
+        if (this.writerCSV == null) {
+            try {
+                File csvFile = new File(FILE + this.nbMaxResourceAsked + ".csv");
+                this.writerCSV = new BufferedWriter(new FileWriter(csvFile));
+                File totalFile = new File(FILE + this.nbMaxResourceAsked + "_total.csv");
+                this.writerTotal = new BufferedWriter(new FileWriter(totalFile));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
         try {
             this.writerCSV.newLine();
             this.writerCSV.write(nodeID + ";" + this.mapNodeCSResource.size() + ";" + timeCS + ";");
@@ -121,5 +123,9 @@ public class BigObserver {
         if (!this.listAlgoJL.contains(algoJL) && algoJL.getNode().getID() >= 0) {
             this.listAlgoJL.add(algoJL);
         }
+    }
+
+    public void setNbMaxResourceAsked(int nbMaxResourceAsked) {
+        this.nbMaxResourceAsked = nbMaxResourceAsked;
     }
 }
