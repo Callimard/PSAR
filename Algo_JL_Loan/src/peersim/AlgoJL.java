@@ -497,6 +497,8 @@ public class AlgoJL implements EDProtocol {
         List<Message> buff = new ArrayList<>();
         List<Message> buffTrue = new ArrayList<>();
 
+        /*System.out.println("N = " + this.node.getID() + " REQUETE LOAN -> " + loanRequest + " resourceMissing -> " + loanRequest.getMissingResource());*/
+
         /*System.out.println("N = " + this.node.getID()
                 + " RcvREQ_L--------------------------------------------------------------------------------------- Sender = "
                 + sender.getID() + " State = " + this.getState());*/
@@ -837,8 +839,15 @@ public class AlgoJL implements EDProtocol {
         int resourceID = loanRequest.getResourceID();
         Node sender = loanRequest.getSender();
 
-        if (!this.isObsoletedRequest(loanRequest)) { // TODO Revoir comme une requete Loan est obselete.
+        System.out.println("OKOKOKOKO");
+
+        if (!this.isObsoletedRequest(loanRequest)) {
+            System.out.println("LALALALALAL");
+
             if (this.canLend(loanRequest)) {
+
+                System.out.println("ICICI");
+
                 this.lentResources.addAll(loanRequest.getMissingResource());
                 for (int resource : this.lentResources) {
                     this.arrayToken[resource].setLenderNode(this.getNode());
@@ -852,8 +861,14 @@ public class AlgoJL implements EDProtocol {
                 }
             } else {
                 if (this.getState() == State.NOTHING || this.getState() == State.WAIT_S || (this.currentRequestingCS != null && !this.currentRequestingCS.isTokenNeeded(resourceID))) {
+
+                    System.out.println("HAHAHAH");
+
                     buff.add(this.sendToken(resourceID, sender));
                 } else if (!this.arrayToken[resourceID].contains(loanRequest)) {
+
+                    System.out.println("OUUUUUUUCH");
+
                     this.arrayToken[resourceID].addLoanRequest(loanRequest);
                 }
             }
