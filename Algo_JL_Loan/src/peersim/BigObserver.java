@@ -85,7 +85,6 @@ public class BigObserver {
         this.total += (((long) resourceSet.size()) * timeCS);
         double percent = (((double) (this.total) * 100.0d) / 8_000_000.0d);
 
-
         File resultsDirectory = new File(RESULTS_DIRECTORY);
         File fileTotal = new File(RESULTS_DIRECTORY + TOTAL_FILE);
         File fileOther = new File(RESULTS_DIRECTORY + OTHER_FILE);

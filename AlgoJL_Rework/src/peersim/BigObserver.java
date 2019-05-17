@@ -7,6 +7,8 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.*;
 
 public class BigObserver {
@@ -15,7 +17,12 @@ public class BigObserver {
 
     public static final BigObserver BIG_OBSERVER = new BigObserver();
 
-    private static final String FILE = "results/pure_1_log_";
+    private static final int TEST_NUMBER = 666;
+
+    private static final String RESULTS_DIRECTORY = "results/" + TEST_NUMBER + "/";
+
+    private static final String TOTAL_FILE = "total/";
+    private static final String OTHER_FILE = "other/";
 
     // Variables.
 
@@ -75,11 +82,23 @@ public class BigObserver {
         this.total += (((long) resourceSet.size()) * timeCS);
         double percent = (((double) (this.total) * 100.0d) / 8_000_000.0d);
 
+        File resultsDirectory = new File(RESULTS_DIRECTORY);
+        File fileTotal = new File(RESULTS_DIRECTORY + TOTAL_FILE);
+        File fileOther = new File(RESULTS_DIRECTORY + OTHER_FILE);
+
+        try {
+            this.createDirectory(resultsDirectory);
+            this.createDirectory(fileTotal);
+            this.createDirectory(fileOther);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         if (this.writerCSV == null) {
             try {
-                File csvFile = new File(FILE + this.nbMaxResourceAsked + ".csv");
+                File csvFile = new File(RESULTS_DIRECTORY + OTHER_FILE + this.nbMaxResourceAsked + ".csv");
                 this.writerCSV = new BufferedWriter(new FileWriter(csvFile));
-                File totalFile = new File(FILE + this.nbMaxResourceAsked + "_total.csv");
+                File totalFile = new File(RESULTS_DIRECTORY + TOTAL_FILE + this.nbMaxResourceAsked + "_total.csv");
                 this.writerTotal = new BufferedWriter(new FileWriter(totalFile));
             } catch (IOException e) {
                 e.printStackTrace();
@@ -116,6 +135,11 @@ public class BigObserver {
         }
 
         /*System.out.println("---------------------------------------------------------------------------------------");*/
+    }
+
+    private void createDirectory(File directory) throws IOException {
+        if (!directory.exists())
+            Files.createDirectory(Paths.get(directory.getAbsolutePath()));
     }
 
     public void addAlgoJL(AlgoJL algoJL) {
