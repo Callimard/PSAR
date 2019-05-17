@@ -7,6 +7,8 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.*;
 
 public class BigObserver {
@@ -15,17 +17,25 @@ public class BigObserver {
 
     public static final BigObserver BIG_OBSERVER = new BigObserver();
 
-    private static final String FILE = "results/loan_1_log_";
+    private static final int TEST_NUMBER = 666;
+
+    private static final String RESULTS_DIRECTORY = "results/" + TEST_NUMBER + "/";
+
+    private static final String TOTAL_FILE = "total/";
+    private static final String OTHER_FILE = "other/";
+    private static final String LOAN_FILE = "loan/";
 
     // Variables.
 
     private Map<Long, Set<Integer>> mapNodeCSResource = new HashMap<>();
     private Map<Long, Long> mapNodeTimeBeginCS = new HashMap<>();
+    private Map<Long, Long> mapNodeLoan = new HashMap<>();
 
     private List<AlgoJL> listAlgoJLS = new ArrayList<>();
 
     private BufferedWriter writerCSV;
     private BufferedWriter writerTotal;
+    private BufferedWriter writerLoan;
 
     private long total = 0;
 
@@ -75,11 +85,26 @@ public class BigObserver {
         this.total += (((long) resourceSet.size()) * timeCS);
         double percent = (((double) (this.total) * 100.0d) / 8_000_000.0d);
 
+
+        File resultsDirectory = new File(RESULTS_DIRECTORY);
+        File fileTotal = new File(RESULTS_DIRECTORY + TOTAL_FILE);
+        File fileOther = new File(RESULTS_DIRECTORY + OTHER_FILE);
+        File fileLoan = new File(RESULTS_DIRECTORY + LOAN_FILE);
+
+        try {
+            this.createDirectory(resultsDirectory);
+            this.createDirectory(fileTotal);
+            this.createDirectory(fileOther);
+            this.createDirectory(fileLoan);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         if (this.writerCSV == null) {
             try {
-                File csvFile = new File(FILE + this.nbMaxResourceAsked + ".csv");
+                File csvFile = new File(RESULTS_DIRECTORY + OTHER_FILE + this.nbMaxResourceAsked + ".csv");
                 this.writerCSV = new BufferedWriter(new FileWriter(csvFile));
-                File totalFile = new File(FILE + this.nbMaxResourceAsked + "_total.csv");
+                File totalFile = new File(RESULTS_DIRECTORY + TOTAL_FILE + this.nbMaxResourceAsked + "_total.csv");
                 this.writerTotal = new BufferedWriter(new FileWriter(totalFile));
             } catch (IOException e) {
                 e.printStackTrace();
@@ -88,10 +113,10 @@ public class BigObserver {
 
         try {
             this.writerCSV.newLine();
-            this.writerCSV.write(nodeID + ";" + this.mapNodeCSResource.size() + ";" + timeCS + ";");
+            this.writerCSV.write(nodeID + ";" + this.mapNodeCSResource.size() + ";" + timeCS);
 
             this.writerTotal.newLine();
-            this.writerTotal.write(this.total + ";" + percent + ";");
+            this.writerTotal.write(this.total + ";" + percent);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -118,9 +143,37 @@ public class BigObserver {
         /*System.out.println("---------------------------------------------------------------------------------------");*/
     }
 
+    private void createDirectory(File directory) throws IOException {
+        if (!directory.exists())
+            Files.createDirectory(Paths.get(directory.getAbsolutePath()));
+    }
+
     public void addAlgoJL(AlgoJL algoJL) {
         if (!this.listAlgoJLS.contains(algoJL) && algoJL.getNode().getID() >= 0) {
             this.listAlgoJLS.add(algoJL);
+        }
+    }
+
+    public void loanSuccess(long nodeID) {
+        Long nbLoan = this.mapNodeLoan.get(nodeID);
+        if (nbLoan == null) {
+            this.mapNodeLoan.put(nodeID, 1L);
+        } else {
+            this.mapNodeLoan.put(nodeID, nbLoan + 1);
+        }
+
+        if (this.writerLoan == null) {
+            try {
+                this.writerLoan = new BufferedWriter(new FileWriter(new File(RESULTS_DIRECTORY + LOAN_FILE + "loan.csv")));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        try {
+            this.writerLoan.write(nodeID + ";" + (nbLoan + 1L));
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 

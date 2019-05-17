@@ -1,7 +1,90 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="308dcfc9-abd2-44cd-8fbf-8471ec30fabc" name="Default Changelist" comment="" />
+    <list default="true" id="308dcfc9-abd2-44cd-8fbf-8471ec30fabc" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/src/peersim/AlgoJL.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/peersim/AlgoJL.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/peersim/BigObserver.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/peersim/BigObserver.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../config_file/config-1.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../config_file/config-10.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../config_file/config-11.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../config_file/config-12.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../config_file/config-13.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../config_file/config-14.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../config_file/config-15.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../config_file/config-16.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../config_file/config-17.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../config_file/config-18.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../config_file/config-19.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../config_file/config-2.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../config_file/config-20.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../config_file/config-21.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../config_file/config-22.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../config_file/config-23.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../config_file/config-24.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../config_file/config-25.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../config_file/config-26.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../config_file/config-27.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../config_file/config-28.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../config_file/config-29.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../config_file/config-3.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../config_file/config-30.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../config_file/config-31.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../config_file/config-32.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../config_file/config-33.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../config_file/config-34.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../config_file/config-35.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../config_file/config-36.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../config_file/config-37.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../config_file/config-38.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../config_file/config-39.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../config_file/config-4.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../config_file/config-40.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../config_file/config-41.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../config_file/config-42.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../config_file/config-43.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../config_file/config-44.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../config_file/config-45.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../config_file/config-46.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../config_file/config-47.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../config_file/config-48.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../config_file/config-49.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../config_file/config-5.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../config_file/config-50.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../config_file/config-51.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../config_file/config-52.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../config_file/config-53.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../config_file/config-54.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../config_file/config-55.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../config_file/config-56.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../config_file/config-57.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../config_file/config-58.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../config_file/config-59.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../config_file/config-6.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../config_file/config-60.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../config_file/config-61.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../config_file/config-62.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../config_file/config-63.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../config_file/config-64.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../config_file/config-65.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../config_file/config-66.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../config_file/config-67.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../config_file/config-68.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../config_file/config-69.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../config_file/config-7.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../config_file/config-70.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../config_file/config-71.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../config_file/config-72.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../config_file/config-73.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../config_file/config-74.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../config_file/config-75.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../config_file/config-76.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../config_file/config-77.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../config_file/config-78.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../config_file/config-79.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../config_file/config-8.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../config_file/config-80.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../config_file/config-9.txt" beforeDir="false" />
+    </list>
     <ignored path="$PROJECT_DIR$/classes/" />
     <ignored path="$PROJECT_DIR$/bin/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -15,11 +98,38 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/peersim/AlgoJL.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="581">
-              <caret line="957" column="82" selection-start-line="957" selection-start-column="82" selection-end-line="957" selection-end-column="82" />
+            <state relative-caret-position="-727">
+              <caret line="494" column="35" selection-start-line="494" selection-start-column="35" selection-end-line="494" selection-end-column="35" />
+              <folding>
+                <element signature="e#43952#43953#0" expanded="true" />
+                <element signature="e#44042#44043#0" expanded="true" />
+                <element signature="e#44114#44115#0" expanded="true" />
+                <element signature="e#44230#44231#0" expanded="true" />
+                <element signature="e#44325#44326#0" expanded="true" />
+                <element signature="e#44401#44402#0" expanded="true" />
+                <element signature="e#44465#44466#0" expanded="true" />
+                <element signature="e#44540#44541#0" expanded="true" />
+                <element signature="e#44610#44611#0" expanded="true" />
+                <element signature="e#44678#44679#0" expanded="true" />
+                <element signature="e#44771#44772#0" expanded="true" />
+                <element signature="e#44853#44854#0" expanded="true" />
+                <element signature="e#44925#44926#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/peersim/BigObserver.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="150">
+              <caret line="19" column="46" selection-start-line="19" selection-start-column="46" selection-end-line="19" selection-end-column="46" />
+              <folding>
+                <element signature="e#6453#6454#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -28,7 +138,7 @@
         <entry file="file://$PROJECT_DIR$/src/common/util/Util.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="240">
-              <caret line="16" lean-forward="true" selection-start-line="16" selection-end-line="16" />
+              <caret line="16" selection-start-line="16" selection-end-line="16" />
             </state>
           </provider>
         </entry>
@@ -51,7 +161,11 @@
       <find>FIN</find>
       <find>ReqCS</find>
       <find>System</find>
+      <find>R</find>
     </findStrings>
+    <replaceStrings>
+      <replace />
+    </replaceStrings>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
@@ -63,18 +177,18 @@
         <option value="$PROJECT_DIR$/src/peersim/Main.java" />
         <option value="$PROJECT_DIR$/src/peersim/RequestingCS.java" />
         <option value="$PROJECT_DIR$/src/peersim/InitJL.java" />
-        <option value="$PROJECT_DIR$/src/peersim/BigObserver.java" />
         <option value="$PROJECT_DIR$/src/common/util/Token.java" />
         <option value="$PROJECT_DIR$/src/config.txt" />
         <option value="$PROJECT_DIR$/config/config_3.txt" />
         <option value="$PROJECT_DIR$/src/config_3.txt" />
-        <option value="$PROJECT_DIR$/src/peersim/AlgoJL.java" />
         <option value="$PROJECT_DIR$/src/config-JL.txt" />
         <option value="$PROJECT_DIR$/src/config-algoJL.txt" />
         <option value="$PROJECT_DIR$/config/config-algoJL-3.txt" />
         <option value="$PROJECT_DIR$/src/config-algoJL-3.txt" />
         <option value="$PROJECT_DIR$/src/config" />
         <option value="$PROJECT_DIR$/launch.sh" />
+        <option value="$PROJECT_DIR$/src/peersim/AlgoJL.java" />
+        <option value="$PROJECT_DIR$/src/peersim/BigObserver.java" />
       </list>
     </option>
   </component>
@@ -116,8 +230,8 @@
           <select />
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
       <pane id="Scope" />
+      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -161,7 +275,7 @@
       <output_file path="$PROJECT_DIR$/../../Vrac/log.txt" is_save="true" />
       <option name="MAIN_CLASS_NAME" value="peersim.Simulator" />
       <module name="AlgoJL_Loan" />
-      <option name="PROGRAM_PARAMETERS" value="config/config-30.txt" />
+      <option name="PROGRAM_PARAMETERS" value="config/1/config-30.txt" />
       <option name="VM_PARAMETERS" value="-ea" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -193,16 +307,18 @@
       <workItem from="1558043057737" duration="71000" />
       <workItem from="1558043142311" duration="32000" />
       <workItem from="1558049300274" duration="95000" />
+      <workItem from="1558112177450" duration="1096000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="20467000" />
+    <option name="totallyTimeSpent" value="21563000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="67" y="25" width="2493" height="1415" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.16264814" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.16387413" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Designer" order="2" />
       <window_info id="Image Layers" order="3" />
@@ -210,6 +326,7 @@
       <window_info id="UI Designer" order="5" />
       <window_info id="Learn" order="6" />
       <window_info id="Favorites" order="7" side_tool="true" />
+      <window_info anchor="bottom" id="Duplicate detector" weight="0.32970452" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32967034" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.43180045" />
@@ -274,13 +391,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/peersim/BigObserver.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="946">
-          <caret line="118" column="10" selection-start-line="118" selection-start-column="8" selection-end-line="118" selection-end-column="122" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/config/config_3.txt" />
     <entry file="file://$PROJECT_DIR$/../../Vrac/log.txt" />
     <entry file="file://$PROJECT_DIR$/src/config_3.txt" />
@@ -321,14 +431,39 @@
     <entry file="file://$PROJECT_DIR$/src/common/util/Util.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="240">
-          <caret line="16" lean-forward="true" selection-start-line="16" selection-end-line="16" />
+          <caret line="16" selection-start-line="16" selection-end-line="16" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/peersim/AlgoJL.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="581">
-          <caret line="957" column="82" selection-start-line="957" selection-start-column="82" selection-end-line="957" selection-end-column="82" />
+        <state relative-caret-position="-727">
+          <caret line="494" column="35" selection-start-line="494" selection-start-column="35" selection-end-line="494" selection-end-column="35" />
+          <folding>
+            <element signature="e#43952#43953#0" expanded="true" />
+            <element signature="e#44042#44043#0" expanded="true" />
+            <element signature="e#44114#44115#0" expanded="true" />
+            <element signature="e#44230#44231#0" expanded="true" />
+            <element signature="e#44325#44326#0" expanded="true" />
+            <element signature="e#44401#44402#0" expanded="true" />
+            <element signature="e#44465#44466#0" expanded="true" />
+            <element signature="e#44540#44541#0" expanded="true" />
+            <element signature="e#44610#44611#0" expanded="true" />
+            <element signature="e#44678#44679#0" expanded="true" />
+            <element signature="e#44771#44772#0" expanded="true" />
+            <element signature="e#44853#44854#0" expanded="true" />
+            <element signature="e#44925#44926#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/peersim/BigObserver.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="19" column="46" selection-start-line="19" selection-start-column="46" selection-end-line="19" selection-end-column="46" />
+          <folding>
+            <element signature="e#6453#6454#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

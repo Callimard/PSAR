@@ -580,6 +580,14 @@ public class AlgoJL implements EDProtocol {
         this.processUpdate(tokenMessage, buff);
 
         if (this.currentRequestingCS != null && this.currentRequestingCS.allTokenAreReceived()) {
+
+            for (int resource : this.currentRequestingCS.getResourceRequiredSet()) {
+                if (this.arrayToken[resource].getLenderNode() != null) {
+                    BigObserver.BIG_OBSERVER.loanSuccess(this.node.getID());
+                    break;
+                }
+            }
+
             this.setInCS();
         } else {
 
