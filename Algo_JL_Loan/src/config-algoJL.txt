@@ -10,7 +10,7 @@ protocol.algoJL.nb_resource 80
 protocol.algoJL.nbCS -1
 protocol.algoJL.nb_max_r_asked 32
 protocol.algoJL.min_cs 5
-protocol.algoJL.max_cs 35
+protocol.algoJL.max_cs 3
 init.algoJLInit peersim.InitJL
 init.algoJLInit.jl algoJL
 init.algoJLInit.min 2

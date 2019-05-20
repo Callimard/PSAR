@@ -17,7 +17,7 @@ public class BigObserver {
 
     public static final BigObserver BIG_OBSERVER = new BigObserver();
 
-    private static final int TEST_NUMBER = 666;
+    private static final int TEST_NUMBER = 777;
 
     private static final String RESULTS_DIRECTORY = "results/" + TEST_NUMBER + "/";
 

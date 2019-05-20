@@ -524,6 +524,7 @@ public class AlgoJL implements EDProtocol {
             /*System.out.println("N = " + this.node.getID() + " ROUT / Loan R = " + resourceID + " dynamicTree["
                     + resourceID + "] = " + this.dynamicTree[resourceID].getID());
             this.listPendingRequest.add(loanRequest);*/
+        	
             loanRequest.setReceiver(this.dynamicTree[resourceID]);
             buffTrue.add(loanRequest);
         }
@@ -838,16 +839,9 @@ public class AlgoJL implements EDProtocol {
     private void processRequestLoan(LoanRequest loanRequest, List<Message> buff) {
         int resourceID = loanRequest.getResourceID();
         Node sender = loanRequest.getSender();
-
-        System.out.println("OKOKOKOKO");
-
+        
         if (!this.isObsoletedRequest(loanRequest)) {
-            System.out.println("LALALALALAL");
-
             if (this.canLend(loanRequest)) {
-
-                System.out.println("ICICI");
-
                 this.lentResources.addAll(loanRequest.getMissingResource());
                 for (int resource : this.lentResources) {
                     this.arrayToken[resource].setLenderNode(this.getNode());
@@ -861,15 +855,9 @@ public class AlgoJL implements EDProtocol {
                 }
             } else {
                 if (this.getState() == State.NOTHING || this.getState() == State.WAIT_S || (this.currentRequestingCS != null && !this.currentRequestingCS.isTokenNeeded(resourceID))) {
-
-                    System.out.println("HAHAHAH");
-
-                    buff.add(this.sendToken(resourceID, sender));
+                	buff.add(this.sendToken(resourceID, sender));
                 } else if (!this.arrayToken[resourceID].contains(loanRequest)) {
-
-                    System.out.println("OUUUUUUUCH");
-
-                    this.arrayToken[resourceID].addLoanRequest(loanRequest);
+                	this.arrayToken[resourceID].addLoanRequest(loanRequest);
                 }
             }
         }
@@ -887,7 +875,7 @@ public class AlgoJL implements EDProtocol {
             return this.arrayToken[request.getResourceID()].getLastCS(request.getSender().getID()) >= request
                     .getRequestID();
         } else {
-            return request.getSender().getID() != this.node.getID(); /*this.arrayToken[request.getResourceID()].contains((LoanRequest) request);*/ // Condition a verifier.
+            return request.getSender().getID() == this.node.getID(); /*this.arrayToken[request.getResourceID()].contains((LoanRequest) request);*/ // Condition a verifier.
         }
     }
 
