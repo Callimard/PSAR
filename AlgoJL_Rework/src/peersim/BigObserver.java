@@ -42,7 +42,7 @@ public class BigObserver {
 	private long total = 0;
 
 	private long nbMessage = 0;
-
+	
 	private int nbMaxResourceAsked = -1;
 
 	// Constructors.

@@ -40,6 +40,8 @@ public class BigObserver {
 	private BufferedWriter writerNbMessage;
 	private BufferedWriter writerLoan;
 
+	private boolean begin = false;
+	
 	private long total = 0;
 
 	private long nbMessage = 0;
@@ -72,6 +74,8 @@ public class BigObserver {
 		 */
 
 		if (CommonState.getIntTime() >= TIME_BEGIN) {
+			this.begin = true;
+			
 			Set<Integer> set = this.mapNodeCSResource.get(nodeID);
 
 			assert set == null : "N = " + nodeID + " CS alors qu'il est deja en CS.";
@@ -108,7 +112,7 @@ public class BigObserver {
 		 * );
 		 */
 
-		if (CommonState.getIntTime() >= TIME_BEGIN) {
+		if (CommonState.getIntTime() >= TIME_BEGIN && this.begin) {
 			Set<Integer> resourceSet = this.mapNodeCSResource.get(nodeID);
 
 			assert resourceSet != null : "N = " + nodeID + " Release CS alors qu'il etait pas en CS";
