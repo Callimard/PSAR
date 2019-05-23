@@ -29,7 +29,7 @@ public class RequestingCS {
     /**
      * <p>Le set de ressources qui représente toutes les ressources que l'on veut pour entrer en CS.</p>
      */
-    private final Set<Integer> resourceSet;
+    private final Set<Integer> resourceRequiredSet;
 
     /**
      * <p>Le set de compteur que l'on a recu, Initialement vide.</p>
@@ -62,11 +62,11 @@ public class RequestingCS {
     public RequestingCS(Set<Integer> resourceSet, AlgoJL parent) {
         this.parent = parent;
 
-        this.resourceSet = resourceSet;
+        this.resourceRequiredSet = resourceSet;
 
         this.counterReceived = new TreeSet<>();
         for (int resourceID = 0; resourceID < this.parent.getArrayToken().length; resourceID++) {
-            if (this.parent.hasToken(resourceID) && this.resourceSet.contains(resourceID)) {
+            if (this.parent.hasToken(resourceID) && this.resourceRequiredSet.contains(resourceID)) {
                 this.counterReceived.add(resourceID);
                 this.parent.setCounter(resourceID, this.parent.getToken(resourceID).incrementCounter());
             }
@@ -74,7 +74,7 @@ public class RequestingCS {
 
         this.tokenReceived = new TreeSet<>();
         for (int resourceID = 0; resourceID < this.parent.getArrayToken().length; resourceID++) {
-            if (this.parent.hasToken(resourceID) && this.resourceSet.contains(resourceID)) {
+            if (this.parent.hasToken(resourceID) && this.resourceRequiredSet.contains(resourceID)) {
                 this.tokenReceived.add(resourceID);
             }
         }
@@ -88,14 +88,14 @@ public class RequestingCS {
      * @return true si tous les compteurs de chaque ressources ont ete recu, sinon false.
      */
     public boolean allCounterAreReceived() {
-        return this.counterReceived.containsAll(this.resourceSet);
+        return this.counterReceived.containsAll(this.resourceRequiredSet);
     }
 
     /**
      * @return true si tous les jetons de chaque ressources ont ete recu, sinon false.
      */
     public boolean allTokenAreReceived() {
-        return this.tokenReceived.containsAll(this.resourceSet);
+        return this.tokenReceived.containsAll(this.resourceRequiredSet);
     }
 
     /**
@@ -183,7 +183,7 @@ public class RequestingCS {
      * @return true si le compteur de la ressource est un compteur dont on veut la valeur et qu'on n'a pas encore recu, sinon false.
      */
     public boolean isCounterNeeded(int resourceID) {
-        return this.resourceSet.contains(resourceID) && !this.counterReceived.contains(resourceID);
+        return this.resourceRequiredSet.contains(resourceID) && !this.counterReceived.contains(resourceID);
     }
 
     /**
@@ -191,7 +191,7 @@ public class RequestingCS {
      * @return true si c'est une ressource dont on a besoin pour entrer en CS, sinon false.
      */
     public boolean isTokenNeeded(int resourceID) {
-        return this.resourceSet.contains(resourceID);
+        return this.resourceRequiredSet.contains(resourceID);
     }
 
     public boolean addTokenRequestSend(TokenRequest tokenRequest) {
@@ -219,7 +219,7 @@ public class RequestingCS {
     public Set<Integer> getMissingResource() {
         Set<Integer> missingResource = new TreeSet<>();
 
-        for (int resource : this.resourceSet) {
+        for (int resource : this.resourceRequiredSet) {
             if (!this.tokenReceived.contains(resource)) {
                 missingResource.add(resource);
             }
@@ -229,7 +229,7 @@ public class RequestingCS {
     }
 
     public Set<Integer> getResourceRequiredSet() {
-        return this.resourceSet;
+        return this.resourceRequiredSet;
     }
 
     public double getMyRequestMark() {

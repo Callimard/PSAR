@@ -201,7 +201,7 @@ public class BigObserver {
 		if (CommonState.getIntTime() >= TIME_BEGIN) {
 			try {
 				if (this.writerNbMessage == null) {
-					File nbMessageFile = new File(RESULTS_DIRECTORY + OTHER_FILE + "messages.csv");
+					File nbMessageFile = new File(RESULTS_DIRECTORY + OTHER_FILE + "messages_" + this.nbMaxResourceAsked + ".csv");
 					this.writerNbMessage = new BufferedWriter(new FileWriter(nbMessageFile));
 				}
 
