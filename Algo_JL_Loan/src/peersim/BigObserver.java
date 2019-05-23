@@ -40,8 +40,6 @@ public class BigObserver {
 	private BufferedWriter writerNbMessage;
 	private BufferedWriter writerLoan;
 
-	private boolean begin = false;
-	
 	private long total = 0;
 
 	private long nbMessage = 0;
@@ -74,8 +72,7 @@ public class BigObserver {
 		 */
 
 		if (CommonState.getIntTime() >= TIME_BEGIN) {
-			this.begin = true;
-			
+
 			Set<Integer> set = this.mapNodeCSResource.get(nodeID);
 
 			assert set == null : "N = " + nodeID + " CS alors qu'il est deja en CS.";
@@ -112,55 +109,59 @@ public class BigObserver {
 		 * );
 		 */
 
-		if (CommonState.getIntTime() >= TIME_BEGIN && this.begin) {
+		if (CommonState.getIntTime() >= TIME_BEGIN) {
 			Set<Integer> resourceSet = this.mapNodeCSResource.get(nodeID);
 
-			assert resourceSet != null : "N = " + nodeID + " Release CS alors qu'il etait pas en CS";
+//			assert resourceSet != null : "N = " + nodeID + " Release CS alors qu'il etait pas en CS";
 
-			Long beginTime = this.mapNodeTimeBeginCS.get(nodeID);
-			Long endTime = CommonState.getTime();
-			assert endTime > beginTime;
-			Long timeCS = endTime - beginTime;
-			this.total += (((long) resourceSet.size()) * timeCS);
-			double percent = (((double) (this.total) * 100.0d) / 8_000_000.0d);
+			if (resourceSet != null) {
 
-			File resultsDirectory = new File(RESULTS_DIRECTORY);
-			File fileTotal = new File(RESULTS_DIRECTORY + TOTAL_FILE);
-			File fileOther = new File(RESULTS_DIRECTORY + OTHER_FILE);
-			File fileLoan = new File(RESULTS_DIRECTORY + LOAN_FILE);
+				Long beginTime = this.mapNodeTimeBeginCS.get(nodeID);
+				Long endTime = CommonState.getTime();
+				assert endTime > beginTime;
+				Long timeCS = endTime - beginTime;
+				this.total += (((long) resourceSet.size()) * timeCS);
+				double percent = (((double) (this.total) * 100.0d) / 8_000_000.0d);
 
-			try {
-				this.createDirectory(resultsDirectory);
-				this.createDirectory(fileTotal);
-				this.createDirectory(fileOther);
-				this.createDirectory(fileLoan);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+				File resultsDirectory = new File(RESULTS_DIRECTORY);
+				File fileTotal = new File(RESULTS_DIRECTORY + TOTAL_FILE);
+				File fileOther = new File(RESULTS_DIRECTORY + OTHER_FILE);
+				File fileLoan = new File(RESULTS_DIRECTORY + LOAN_FILE);
 
-			if (this.writerCSV == null) {
 				try {
-					File csvFile = new File(RESULTS_DIRECTORY + OTHER_FILE + this.nbMaxResourceAsked + ".csv");
-					this.writerCSV = new BufferedWriter(new FileWriter(csvFile));
-					File totalFile = new File(RESULTS_DIRECTORY + TOTAL_FILE + this.nbMaxResourceAsked + "_total.csv");
-					this.writerTotal = new BufferedWriter(new FileWriter(totalFile));
+					this.createDirectory(resultsDirectory);
+					this.createDirectory(fileTotal);
+					this.createDirectory(fileOther);
+					this.createDirectory(fileLoan);
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
+
+				if (this.writerCSV == null) {
+					try {
+						File csvFile = new File(RESULTS_DIRECTORY + OTHER_FILE + this.nbMaxResourceAsked + ".csv");
+						this.writerCSV = new BufferedWriter(new FileWriter(csvFile));
+						File totalFile = new File(
+								RESULTS_DIRECTORY + TOTAL_FILE + this.nbMaxResourceAsked + "_total.csv");
+						this.writerTotal = new BufferedWriter(new FileWriter(totalFile));
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
+
+				try {
+					this.writerCSV.newLine();
+					this.writerCSV.write(nodeID + ";" + this.mapNodeCSResource.size() + ";" + timeCS);
+
+					this.writerTotal.newLine();
+					this.writerTotal.write(this.total + ";" + percent);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+
+				this.mapNodeCSResource.remove(nodeID);
+				this.mapNodeTimeBeginCS.remove(nodeID);
 			}
-
-			try {
-				this.writerCSV.newLine();
-				this.writerCSV.write(nodeID + ";" + this.mapNodeCSResource.size() + ";" + timeCS);
-
-				this.writerTotal.newLine();
-				this.writerTotal.write(this.total + ";" + percent);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-
-			this.mapNodeCSResource.remove(nodeID);
-			this.mapNodeTimeBeginCS.remove(nodeID);
 		}
 
 		/*

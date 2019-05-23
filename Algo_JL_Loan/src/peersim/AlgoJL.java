@@ -519,12 +519,13 @@ public class AlgoJL implements EDProtocol {
                 + loanRequest.getVisitedNode() + " Message envoye a nous meme.";
 
         if (this.hasToken(resourceID)) {
+        	System.out.println("Je suis la");
             this.processRequestLoan(loanRequest, buff);
         } else {
-            /*System.out.println("N = " + this.node.getID() + " ROUT / Loan R = " + resourceID + " dynamicTree["
-                    + resourceID + "] = " + this.dynamicTree[resourceID].getID());
-            this.listPendingRequest.add(loanRequest);*/
+//            System.out.println("N = " + this.node.getID() + " ROUT / Loan R = " + resourceID + " dynamicTree["
+//                    + resourceID + "] = " + this.dynamicTree[resourceID].getID());
         	
+            this.listPendingRequest.add(loanRequest);
             loanRequest.setReceiver(this.dynamicTree[resourceID]);
             buffTrue.add(loanRequest);
         }
@@ -844,6 +845,7 @@ public class AlgoJL implements EDProtocol {
         
         if (!this.isObsoletedRequest(loanRequest)) {
             if (this.canLend(loanRequest)) {
+            	System.out.println("DAMN I LENT");
                 this.lentResources.addAll(loanRequest.getMissingResource());
                 for (int resource : this.lentResources) {
                     this.arrayToken[resource].setLenderNode(this.getNode());
@@ -856,12 +858,20 @@ public class AlgoJL implements EDProtocol {
                     buff.add(this.sendToken(resource, sender));
                 }
             } else {
+            	System.out.println("RAIiiiiiiii!!");
+//            	System.out.println("this.getState() == State.NOTHING = " + (this.getState() == State.NOTHING));
+//            	System.out.println("this.getState() == State.WAIT_S = " + (this.getState() == State.WAIT_S));
+//            	System.out.println("(this.currentRequestingCS != null && !this.currentRequestingCS.isTokenNeeded(resourceID)) = " + (this.currentRequestingCS != null && !this.currentRequestingCS.isTokenNeeded(resourceID)));
                 if (this.getState() == State.NOTHING || this.getState() == State.WAIT_S || (this.currentRequestingCS != null && !this.currentRequestingCS.isTokenNeeded(resourceID))) {
+                	System.out.println("Yeessss!!");
                 	buff.add(this.sendToken(resourceID, sender));
                 } else if (!this.arrayToken[resourceID].contains(loanRequest)) {
+                	System.out.println("Noooononononooon!!");
                 	this.arrayToken[resourceID].addLoanRequest(loanRequest);
                 }
             }
+        } else {
+        	System.out.println("Ouououououuouou!!");
         }
     }
 
