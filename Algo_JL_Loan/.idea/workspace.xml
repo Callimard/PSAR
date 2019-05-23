@@ -2,7 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="308dcfc9-abd2-44cd-8fbf-8471ec30fabc" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/src/peersim/AlgoJL.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/peersim/AlgoJL.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../AlgoJL_Rework/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../AlgoJL_Rework/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../AlgoJL_Rework/src/peersim/BigObserver.java" beforeDir="false" afterPath="$PROJECT_DIR$/../AlgoJL_Rework/src/peersim/BigObserver.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/classes/" />
     <ignored path="$PROJECT_DIR$/bin/" />
@@ -21,35 +23,7 @@
         <entry file="file://$PROJECT_DIR$/src/peersim/AlgoJL.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="386">
-              <caret line="644" column="24" selection-start-line="644" selection-start-column="24" selection-end-line="644" selection-end-column="71" />
-              <folding>
-                <element signature="e#43894#43895#0" expanded="true" />
-                <element signature="e#43952#43953#0" expanded="true" />
-                <element signature="e#44010#44011#0" expanded="true" />
-                <element signature="e#44042#44043#0" expanded="true" />
-                <element signature="e#44076#44077#0" expanded="true" />
-                <element signature="e#44114#44115#0" expanded="true" />
-                <element signature="e#44174#44175#0" expanded="true" />
-                <element signature="e#44230#44231#0" expanded="true" />
-                <element signature="e#44275#44276#0" expanded="true" />
-                <element signature="e#44325#44326#0" expanded="true" />
-                <element signature="e#44363#44364#0" expanded="true" />
-                <element signature="e#44401#44402#0" expanded="true" />
-                <element signature="e#44432#44433#0" expanded="true" />
-                <element signature="e#44465#44466#0" expanded="true" />
-                <element signature="e#44506#44507#0" expanded="true" />
-                <element signature="e#44540#44541#0" expanded="true" />
-                <element signature="e#44573#44574#0" expanded="true" />
-                <element signature="e#44610#44611#0" expanded="true" />
-                <element signature="e#44646#44647#0" expanded="true" />
-                <element signature="e#44678#44679#0" expanded="true" />
-                <element signature="e#44729#44730#0" expanded="true" />
-                <element signature="e#44771#44772#0" expanded="true" />
-                <element signature="e#44817#44818#0" expanded="true" />
-                <element signature="e#44853#44854#0" expanded="true" />
-                <element signature="e#44888#44889#0" expanded="true" />
-                <element signature="e#44925#44926#0" expanded="true" />
-              </folding>
+              <caret line="646" column="24" selection-start-line="646" selection-start-column="24" selection-end-line="646" selection-end-column="24" />
             </state>
           </provider>
         </entry>
@@ -105,10 +79,10 @@
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="67" />
-    <option name="y" value="25" />
-    <option name="width" value="1247" />
-    <option name="height" value="1415" />
+    <option name="x" value="1313" />
+    <option name="y" value="27" />
+    <option name="width" value="1237" />
+    <option name="height" value="1413" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -116,35 +90,9 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="ProjectPane">
-        <subPane>
-          <expand>
-            <path>
-              <item name="AlgoJL_Loan" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Algo_JL_Loan" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="AlgoJL_Loan" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Algo_JL_Loan" type="462c0819:PsiDirectoryNode" />
-              <item name="bin" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="AlgoJL_Loan" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Algo_JL_Loan" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="AlgoJL_Loan" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Algo_JL_Loan" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="peersim" type="462c0819:PsiDirectoryNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
-      <pane id="Scope" />
       <pane id="PackagesPane" />
+      <pane id="ProjectPane" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -221,16 +169,18 @@
       <workItem from="1558043142311" duration="32000" />
       <workItem from="1558049300274" duration="95000" />
       <workItem from="1558112177450" duration="2111000" />
+      <workItem from="1558646399182" duration="13000" />
+      <workItem from="1558646444451" duration="62000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="22578000" />
+    <option name="totallyTimeSpent" value="22653000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="67" y="25" width="2493" height="1415" extended-state="6" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.15324888" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.15570086" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Designer" order="2" />
       <window_info id="Image Layers" order="3" />
@@ -238,7 +188,6 @@
       <window_info id="UI Designer" order="5" />
       <window_info id="Learn" order="6" />
       <window_info id="Favorites" order="7" side_tool="true" />
-      <window_info anchor="bottom" id="Duplicate detector" weight="0.32970452" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32967034" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.43157077" />
@@ -252,6 +201,7 @@
       <window_info anchor="bottom" id="Terminal" order="10" />
       <window_info anchor="bottom" id="Event Log" order="11" side_tool="true" />
       <window_info anchor="bottom" id="Messages" order="12" weight="0.32967034" />
+      <window_info anchor="bottom" id="Duplicate detector" order="13" weight="0.32970452" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -333,13 +283,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/config-algoJL.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
-          <caret line="16" column="21" lean-forward="true" selection-start-line="16" selection-start-column="21" selection-end-line="16" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/src/config-algoJL.txt" />
     <entry file="file://$PROJECT_DIR$/src/peersim/BigObserver.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="619">
@@ -365,35 +309,7 @@
     <entry file="file://$PROJECT_DIR$/src/peersim/AlgoJL.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="386">
-          <caret line="644" column="24" selection-start-line="644" selection-start-column="24" selection-end-line="644" selection-end-column="71" />
-          <folding>
-            <element signature="e#43894#43895#0" expanded="true" />
-            <element signature="e#43952#43953#0" expanded="true" />
-            <element signature="e#44010#44011#0" expanded="true" />
-            <element signature="e#44042#44043#0" expanded="true" />
-            <element signature="e#44076#44077#0" expanded="true" />
-            <element signature="e#44114#44115#0" expanded="true" />
-            <element signature="e#44174#44175#0" expanded="true" />
-            <element signature="e#44230#44231#0" expanded="true" />
-            <element signature="e#44275#44276#0" expanded="true" />
-            <element signature="e#44325#44326#0" expanded="true" />
-            <element signature="e#44363#44364#0" expanded="true" />
-            <element signature="e#44401#44402#0" expanded="true" />
-            <element signature="e#44432#44433#0" expanded="true" />
-            <element signature="e#44465#44466#0" expanded="true" />
-            <element signature="e#44506#44507#0" expanded="true" />
-            <element signature="e#44540#44541#0" expanded="true" />
-            <element signature="e#44573#44574#0" expanded="true" />
-            <element signature="e#44610#44611#0" expanded="true" />
-            <element signature="e#44646#44647#0" expanded="true" />
-            <element signature="e#44678#44679#0" expanded="true" />
-            <element signature="e#44729#44730#0" expanded="true" />
-            <element signature="e#44771#44772#0" expanded="true" />
-            <element signature="e#44817#44818#0" expanded="true" />
-            <element signature="e#44853#44854#0" expanded="true" />
-            <element signature="e#44888#44889#0" expanded="true" />
-            <element signature="e#44925#44926#0" expanded="true" />
-          </folding>
+          <caret line="646" column="24" selection-start-line="646" selection-start-column="24" selection-end-line="646" selection-end-column="24" />
         </state>
       </provider>
     </entry>
