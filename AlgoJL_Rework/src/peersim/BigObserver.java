@@ -13,142 +13,174 @@ import java.util.*;
 
 public class BigObserver {
 
-    // Constant.
+	// Constant.
 
-    public static final BigObserver BIG_OBSERVER = new BigObserver();
+	public static final int TIME_BEGIN = 5_000;
 
-    private static final int TEST_NUMBER = 666;
+	public static final BigObserver BIG_OBSERVER = new BigObserver();
 
-    private static final String RESULTS_DIRECTORY = "results/" + TEST_NUMBER + "/";
+	private static final int TEST_NUMBER = 2;
 
-    private static final String TOTAL_FILE = "total/";
-    private static final String OTHER_FILE = "other/";
+	private static final String RESULTS_DIRECTORY = "results/" + TEST_NUMBER + "/";
 
-    // Variables.
+	private static final String TOTAL_FILE = "total/";
+	private static final String OTHER_FILE = "other/";
 
-    private Map<Long, Set<Integer>> mapNodeCSResource = new HashMap<>();
-    private Map<Long, Long> mapNodeTimeBeginCS = new HashMap<>();
+	// Variables.
 
-    private List<AlgoJL> listAlgoJL = new ArrayList<>();
+	private Map<Long, Set<Integer>> mapNodeCSResource = new HashMap<>();
+	private Map<Long, Long> mapNodeTimeBeginCS = new HashMap<>();
 
-    private BufferedWriter writerCSV;
-    private BufferedWriter writerTotal;
+	private List<AlgoJL> listAlgoJL = new ArrayList<>();
 
-    private long total = 0;
+	private BufferedWriter writerCSV;
+	private BufferedWriter writerTotal;
 
-    private int nbMaxResourceAsked = -1;
+	private long total = 0;
 
-    // Constructors.
+	private int nbMaxResourceAsked = -1;
 
-    // Methods.
+	// Constructors.
 
-    public void setInCS(long nodeID, Set<Integer> resourceSet) {
-        /*System.out.println("Observer---------------------------------------------------------------------------------------");*/
+	// Methods.
 
-        Set<Integer> set = this.mapNodeCSResource.get(nodeID);
+	public void setInCS(long nodeID, Set<Integer> resourceSet) {
+		/*
+		 * System.out.println(
+		 * "Observer---------------------------------------------------------------------------------------"
+		 * );
+		 */
 
-        assert set == null : "N = " + nodeID + " CS alors qu'il est deja en CS.";
+		if (CommonState.getIntTime() >= TIME_BEGIN) {
 
-        this.mapNodeCSResource.put(nodeID, resourceSet);
+			Set<Integer> set = this.mapNodeCSResource.get(nodeID);
 
-        this.mapNodeTimeBeginCS.put(nodeID, CommonState.getTime());
+			assert set == null : "N = " + nodeID + " CS alors qu'il est deja en CS.";
 
-        Set<Map.Entry<Long, Set<Integer>>> setEntry = this.mapNodeCSResource.entrySet();
+			this.mapNodeCSResource.put(nodeID, resourceSet);
 
-        for (Map.Entry<Long, Set<Integer>> entry : setEntry) {
-            if (entry.getKey() != nodeID) {
-                for (int resourceI : entry.getValue()) {
-                    for (int resourceJ : resourceSet) {
-                        assert resourceI != resourceJ : "N = " + nodeID + " en commun R = " + resourceI + " avec N = " + entry.getKey();
-                    }
-                }
-            }
-        }
+			this.mapNodeTimeBeginCS.put(nodeID, CommonState.getTime());
 
-        /*System.out.println("---------------------------------------------------------------------------------------");*/
-    }
+			Set<Map.Entry<Long, Set<Integer>>> setEntry = this.mapNodeCSResource.entrySet();
 
-    public void releaseCS(long nodeID) {
-        /*System.out.println("Observer---------------------------------------------------------------------------------------");*/
+			for (Map.Entry<Long, Set<Integer>> entry : setEntry) {
+				if (entry.getKey() != nodeID) {
+					for (int resourceI : entry.getValue()) {
+						for (int resourceJ : resourceSet) {
+							assert resourceI != resourceJ : "N = " + nodeID + " en commun R = " + resourceI
+									+ " avec N = " + entry.getKey();
+						}
+					}
+				}
+			}
+		}
 
-        Set<Integer> resourceSet = this.mapNodeCSResource.get(nodeID);
+		/*
+		 * System.out.println(
+		 * "---------------------------------------------------------------------------------------"
+		 * );
+		 */
+	}
 
-        assert resourceSet != null : "N = " + nodeID + " Release CS alors qu'il etait pas en CS";
+	public void releaseCS(long nodeID) {
+		/*
+		 * System.out.println(
+		 * "Observer---------------------------------------------------------------------------------------"
+		 * );
+		 */
 
-        Long beginTime = this.mapNodeTimeBeginCS.get(nodeID);
-        Long endTime = CommonState.getTime();
-        assert endTime > beginTime;
-        Long timeCS = endTime - beginTime;
-        this.total += (((long) resourceSet.size()) * timeCS);
-        double percent = (((double) (this.total) * 100.0d) / 8_000_000.0d);
+		if (CommonState.getIntTime() >= TIME_BEGIN) {
+			Set<Integer> resourceSet = this.mapNodeCSResource.get(nodeID);
 
-        File resultsDirectory = new File(RESULTS_DIRECTORY);
-        File fileTotal = new File(RESULTS_DIRECTORY + TOTAL_FILE);
-        File fileOther = new File(RESULTS_DIRECTORY + OTHER_FILE);
+			assert resourceSet != null : "N = " + nodeID + " Release CS alors qu'il etait pas en CS";
 
-        try {
-            this.createDirectory(resultsDirectory);
-            this.createDirectory(fileTotal);
-            this.createDirectory(fileOther);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+			Long beginTime = this.mapNodeTimeBeginCS.get(nodeID);
+			Long endTime = CommonState.getTime();
+			assert endTime > beginTime;
+			Long timeCS = endTime - beginTime;
+			this.total += (((long) resourceSet.size()) * timeCS);
+			double percent = (((double) (this.total) * 100.0d) / 8_000_000.0d);
 
-        if (this.writerCSV == null) {
-            try {
-                File csvFile = new File(RESULTS_DIRECTORY + OTHER_FILE + this.nbMaxResourceAsked + ".csv");
-                this.writerCSV = new BufferedWriter(new FileWriter(csvFile));
-                File totalFile = new File(RESULTS_DIRECTORY + TOTAL_FILE + this.nbMaxResourceAsked + "_total.csv");
-                this.writerTotal = new BufferedWriter(new FileWriter(totalFile));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
+			File resultsDirectory = new File(RESULTS_DIRECTORY);
+			File fileTotal = new File(RESULTS_DIRECTORY + TOTAL_FILE);
+			File fileOther = new File(RESULTS_DIRECTORY + OTHER_FILE);
 
-        try {
-            this.writerCSV.newLine();
-            this.writerCSV.write(nodeID + ";" + this.mapNodeCSResource.size() + ";" + timeCS + ";");
+			try {
+				this.createDirectory(resultsDirectory);
+				this.createDirectory(fileTotal);
+				this.createDirectory(fileOther);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 
-            this.writerTotal.newLine();
-            this.writerTotal.write(this.total + ";" + percent + ";");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+			if (this.writerCSV == null) {
+				try {
+					File csvFile = new File(RESULTS_DIRECTORY + OTHER_FILE + this.nbMaxResourceAsked + ".csv");
+					this.writerCSV = new BufferedWriter(new FileWriter(csvFile));
+					File totalFile = new File(RESULTS_DIRECTORY + TOTAL_FILE + this.nbMaxResourceAsked + "_total.csv");
+					this.writerTotal = new BufferedWriter(new FileWriter(totalFile));
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
 
-        this.mapNodeCSResource.remove(nodeID);
-        this.mapNodeTimeBeginCS.remove(nodeID);
+			try {
+				this.writerCSV.newLine();
+				this.writerCSV.write(nodeID + ";" + this.mapNodeCSResource.size() + ";" + timeCS + ";");
 
-        /*System.out.println("---------------------------------------------------------------------------------------");*/
-    }
+				this.writerTotal.newLine();
+				this.writerTotal.write(this.total + ";" + percent + ";");
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 
-    public void displayArrayToken() {
-        /*System.out.println("Observer---------------------------------------------------------------------------------------");*/
+			this.mapNodeCSResource.remove(nodeID);
+			this.mapNodeTimeBeginCS.remove(nodeID);
+		}
 
-        for (AlgoJL algoJL : this.listAlgoJL) {
-            Token array[] = algoJL.getArrayToken();
+		/*
+		 * System.out.println(
+		 * "---------------------------------------------------------------------------------------"
+		 * );
+		 */
+	}
 
-            System.out.print("N = " + algoJL.getNode().getID() + " [");
-            for (int i = 0; i < array.length; i++) {
-                System.out.print(" " + (array[i] != null ? 1 : 0) + " ");
-            }
-            System.out.println("]");
-        }
+	public void displayArrayToken() {
+		/*
+		 * System.out.println(
+		 * "Observer---------------------------------------------------------------------------------------"
+		 * );
+		 */
 
-        /*System.out.println("---------------------------------------------------------------------------------------");*/
-    }
+		for (AlgoJL algoJL : this.listAlgoJL) {
+			Token array[] = algoJL.getArrayToken();
 
-    private void createDirectory(File directory) throws IOException {
-        if (!directory.exists())
-            Files.createDirectory(Paths.get(directory.getAbsolutePath()));
-    }
+			System.out.print("N = " + algoJL.getNode().getID() + " [");
+			for (int i = 0; i < array.length; i++) {
+				System.out.print(" " + (array[i] != null ? 1 : 0) + " ");
+			}
+			System.out.println("]");
+		}
 
-    public void addAlgoJL(AlgoJL algoJL) {
-        if (!this.listAlgoJL.contains(algoJL) && algoJL.getNode().getID() >= 0) {
-            this.listAlgoJL.add(algoJL);
-        }
-    }
+		/*
+		 * System.out.println(
+		 * "---------------------------------------------------------------------------------------"
+		 * );
+		 */
+	}
 
-    public void setNbMaxResourceAsked(int nbMaxResourceAsked) {
-        this.nbMaxResourceAsked = nbMaxResourceAsked;
-    }
+	private void createDirectory(File directory) throws IOException {
+		if (!directory.exists())
+			Files.createDirectory(Paths.get(directory.getAbsolutePath()));
+	}
+
+	public void addAlgoJL(AlgoJL algoJL) {
+		if (!this.listAlgoJL.contains(algoJL) && algoJL.getNode().getID() >= 0) {
+			this.listAlgoJL.add(algoJL);
+		}
+	}
+
+	public void setNbMaxResourceAsked(int nbMaxResourceAsked) {
+		this.nbMaxResourceAsked = nbMaxResourceAsked;
+	}
 }

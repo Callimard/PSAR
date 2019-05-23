@@ -13,170 +13,204 @@ import java.util.*;
 
 public class BigObserver {
 
-    // Constant.
+	// Constant.
 
-    public static final BigObserver BIG_OBSERVER = new BigObserver();
+	public static final int TIME_BEGIN = 5_000;
 
-    private static final int TEST_NUMBER = 777;
+	public static final BigObserver BIG_OBSERVER = new BigObserver();
 
-    private static final String RESULTS_DIRECTORY = "results/" + TEST_NUMBER + "/";
+	private static final int TEST_NUMBER = 777;
 
-    private static final String TOTAL_FILE = "total/";
-    private static final String OTHER_FILE = "other/";
-    private static final String LOAN_FILE = "loan/";
+	private static final String RESULTS_DIRECTORY = "results/" + TEST_NUMBER + "/";
 
-    // Variables.
+	private static final String TOTAL_FILE = "total/";
+	private static final String OTHER_FILE = "other/";
+	private static final String LOAN_FILE = "loan/";
 
-    private Map<Long, Set<Integer>> mapNodeCSResource = new HashMap<>();
-    private Map<Long, Long> mapNodeTimeBeginCS = new HashMap<>();
-    private Map<Long, Long> mapNodeLoan = new HashMap<>();
+	// Variables.
 
-    private List<AlgoJL> listAlgoJLS = new ArrayList<>();
+	private Map<Long, Set<Integer>> mapNodeCSResource = new HashMap<>();
+	private Map<Long, Long> mapNodeTimeBeginCS = new HashMap<>();
+	private Map<Long, Long> mapNodeLoan = new HashMap<>();
 
-    private BufferedWriter writerCSV;
-    private BufferedWriter writerTotal;
-    private BufferedWriter writerLoan;
+	private List<AlgoJL> listAlgoJLS = new ArrayList<>();
 
-    private long total = 0;
+	private BufferedWriter writerCSV;
+	private BufferedWriter writerTotal;
+	private BufferedWriter writerLoan;
 
-    private int nbMaxResourceAsked = -1;
+	private long total = 0;
 
-    // Constructors.
+	private int nbMaxResourceAsked = -1;
 
-    // Methods.
+	// Constructors.
 
-    public void setInCS(long nodeID, Set<Integer> resourceSet) {
-        /*System.out.println("Observer---------------------------------------------------------------------------------------");*/
+	// Methods.
 
-        Set<Integer> set = this.mapNodeCSResource.get(nodeID);
+	public void setInCS(long nodeID, Set<Integer> resourceSet) {
+		/*
+		 * System.out.println(
+		 * "Observer---------------------------------------------------------------------------------------"
+		 * );
+		 */
 
-        assert set == null : "N = " + nodeID + " CS alors qu'il est deja en CS.";
+		if (CommonState.getIntTime() >= TIME_BEGIN) {
+			Set<Integer> set = this.mapNodeCSResource.get(nodeID);
 
-        this.mapNodeCSResource.put(nodeID, resourceSet);
+			assert set == null : "N = " + nodeID + " CS alors qu'il est deja en CS.";
 
-        this.mapNodeTimeBeginCS.put(nodeID, CommonState.getTime());
+			this.mapNodeCSResource.put(nodeID, resourceSet);
 
-        Set<Map.Entry<Long, Set<Integer>>> setEntry = this.mapNodeCSResource.entrySet();
+			this.mapNodeTimeBeginCS.put(nodeID, CommonState.getTime());
 
-        for (Map.Entry<Long, Set<Integer>> entry : setEntry) {
-            if (entry.getKey() != nodeID) {
-                for (int resourceI : entry.getValue()) {
-                    for (int resourceJ : resourceSet) {
-                        assert resourceI != resourceJ : "N = " + nodeID + " en commun R = " + resourceI + " avec N = " + entry.getKey();
-                    }
-                }
-            }
-        }
+			Set<Map.Entry<Long, Set<Integer>>> setEntry = this.mapNodeCSResource.entrySet();
 
-        /*System.out.println("---------------------------------------------------------------------------------------");*/
-    }
+			for (Map.Entry<Long, Set<Integer>> entry : setEntry) {
+				if (entry.getKey() != nodeID) {
+					for (int resourceI : entry.getValue()) {
+						for (int resourceJ : resourceSet) {
+							assert resourceI != resourceJ : "N = " + nodeID + " en commun R = " + resourceI
+									+ " avec N = " + entry.getKey();
+						}
+					}
+				}
+			}
+		}
 
-    public void releaseCS(long nodeID) {
-        /*System.out.println("Observer---------------------------------------------------------------------------------------");*/
+		/*
+		 * System.out.println(
+		 * "---------------------------------------------------------------------------------------"
+		 * );
+		 */
+	}
 
-        Set<Integer> resourceSet = this.mapNodeCSResource.get(nodeID);
+	public void releaseCS(long nodeID) {
+		/*
+		 * System.out.println(
+		 * "Observer---------------------------------------------------------------------------------------"
+		 * );
+		 */
 
-        assert resourceSet != null : "N = " + nodeID + " Release CS alors qu'il etait pas en CS";
+		if (CommonState.getIntTime() >= TIME_BEGIN) {
+			Set<Integer> resourceSet = this.mapNodeCSResource.get(nodeID);
 
-        Long beginTime = this.mapNodeTimeBeginCS.get(nodeID);
-        Long endTime = CommonState.getTime();
-        assert endTime > beginTime;
-        Long timeCS = endTime - beginTime;
-        this.total += (((long) resourceSet.size()) * timeCS);
-        double percent = (((double) (this.total) * 100.0d) / 8_000_000.0d);
+			assert resourceSet != null : "N = " + nodeID + " Release CS alors qu'il etait pas en CS";
 
-        File resultsDirectory = new File(RESULTS_DIRECTORY);
-        File fileTotal = new File(RESULTS_DIRECTORY + TOTAL_FILE);
-        File fileOther = new File(RESULTS_DIRECTORY + OTHER_FILE);
-        File fileLoan = new File(RESULTS_DIRECTORY + LOAN_FILE);
+			Long beginTime = this.mapNodeTimeBeginCS.get(nodeID);
+			Long endTime = CommonState.getTime();
+			assert endTime > beginTime;
+			Long timeCS = endTime - beginTime;
+			this.total += (((long) resourceSet.size()) * timeCS);
+			double percent = (((double) (this.total) * 100.0d) / 8_000_000.0d);
 
-        try {
-            this.createDirectory(resultsDirectory);
-            this.createDirectory(fileTotal);
-            this.createDirectory(fileOther);
-            this.createDirectory(fileLoan);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+			File resultsDirectory = new File(RESULTS_DIRECTORY);
+			File fileTotal = new File(RESULTS_DIRECTORY + TOTAL_FILE);
+			File fileOther = new File(RESULTS_DIRECTORY + OTHER_FILE);
+			File fileLoan = new File(RESULTS_DIRECTORY + LOAN_FILE);
 
-        if (this.writerCSV == null) {
-            try {
-                File csvFile = new File(RESULTS_DIRECTORY + OTHER_FILE + this.nbMaxResourceAsked + ".csv");
-                this.writerCSV = new BufferedWriter(new FileWriter(csvFile));
-                File totalFile = new File(RESULTS_DIRECTORY + TOTAL_FILE + this.nbMaxResourceAsked + "_total.csv");
-                this.writerTotal = new BufferedWriter(new FileWriter(totalFile));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
+			try {
+				this.createDirectory(resultsDirectory);
+				this.createDirectory(fileTotal);
+				this.createDirectory(fileOther);
+				this.createDirectory(fileLoan);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 
-        try {
-            this.writerCSV.newLine();
-            this.writerCSV.write(nodeID + ";" + this.mapNodeCSResource.size() + ";" + timeCS);
+			if (this.writerCSV == null) {
+				try {
+					File csvFile = new File(RESULTS_DIRECTORY + OTHER_FILE + this.nbMaxResourceAsked + ".csv");
+					this.writerCSV = new BufferedWriter(new FileWriter(csvFile));
+					File totalFile = new File(RESULTS_DIRECTORY + TOTAL_FILE + this.nbMaxResourceAsked + "_total.csv");
+					this.writerTotal = new BufferedWriter(new FileWriter(totalFile));
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
 
-            this.writerTotal.newLine();
-            this.writerTotal.write(this.total + ";" + percent);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+			try {
+				this.writerCSV.newLine();
+				this.writerCSV.write(nodeID + ";" + this.mapNodeCSResource.size() + ";" + timeCS);
 
-        this.mapNodeCSResource.remove(nodeID);
-        this.mapNodeTimeBeginCS.remove(nodeID);
+				this.writerTotal.newLine();
+				this.writerTotal.write(this.total + ";" + percent);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 
-        /*System.out.println("---------------------------------------------------------------------------------------");*/
-    }
+			this.mapNodeCSResource.remove(nodeID);
+			this.mapNodeTimeBeginCS.remove(nodeID);
+		}
 
-    public void displayArrayToken() {
-        /*System.out.println("Observer---------------------------------------------------------------------------------------");*/
+		/*
+		 * System.out.println(
+		 * "---------------------------------------------------------------------------------------"
+		 * );
+		 */
+	}
 
-        for (AlgoJL algoJL : this.listAlgoJLS) {
-            Token[] array = algoJL.getArrayToken();
+	public void displayArrayToken() {
+		/*
+		 * System.out.println(
+		 * "Observer---------------------------------------------------------------------------------------"
+		 * );
+		 */
 
-            System.out.print("N = " + algoJL.getNode().getID() + " [");
-            for (int i = 0; i < array.length; i++) {
-                System.out.print(" " + (array[i] != null ? 1 : 0) + " ");
-            }
-            System.out.println("]");
-        }
+		if (CommonState.getIntTime() >= TIME_BEGIN) {
+			for (AlgoJL algoJL : this.listAlgoJLS) {
+				Token[] array = algoJL.getArrayToken();
 
-        /*System.out.println("---------------------------------------------------------------------------------------");*/
-    }
+				System.out.print("N = " + algoJL.getNode().getID() + " [");
+				for (int i = 0; i < array.length; i++) {
+					System.out.print(" " + (array[i] != null ? 1 : 0) + " ");
+				}
+				System.out.println("]");
+			}
+		}
 
-    private void createDirectory(File directory) throws IOException {
-        if (!directory.exists())
-            Files.createDirectory(Paths.get(directory.getAbsolutePath()));
-    }
+		/*
+		 * System.out.println(
+		 * "---------------------------------------------------------------------------------------"
+		 * );
+		 */
+	}
 
-    public void addAlgoJL(AlgoJL algoJL) {
-        if (!this.listAlgoJLS.contains(algoJL) && algoJL.getNode().getID() >= 0) {
-            this.listAlgoJLS.add(algoJL);
-        }
-    }
+	private void createDirectory(File directory) throws IOException {
+		if (!directory.exists())
+			Files.createDirectory(Paths.get(directory.getAbsolutePath()));
+	}
 
-    public void loanSuccess(long nodeID) {
-        Long nbLoan = this.mapNodeLoan.get(nodeID);
-        if (nbLoan == null) {
-            this.mapNodeLoan.put(nodeID, 1L);
-        } else {
-            this.mapNodeLoan.put(nodeID, nbLoan + 1);
-        }
+	public void addAlgoJL(AlgoJL algoJL) {
+		if (!this.listAlgoJLS.contains(algoJL) && algoJL.getNode().getID() >= 0) {
+			this.listAlgoJLS.add(algoJL);
+		}
+	}
 
-        if (this.writerLoan == null) {
-            try {
-                this.writerLoan = new BufferedWriter(new FileWriter(new File(RESULTS_DIRECTORY + LOAN_FILE + "loan.csv")));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
+	public void loanSuccess(long nodeID) {
+		Long nbLoan = this.mapNodeLoan.get(nodeID);
+		if (nbLoan == null) {
+			this.mapNodeLoan.put(nodeID, 1L);
+		} else {
+			this.mapNodeLoan.put(nodeID, nbLoan + 1);
+		}
 
-        try {
-            this.writerLoan.write(nodeID + ";" + (nbLoan + 1L));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+		if (this.writerLoan == null) {
+			try {
+				this.writerLoan = new BufferedWriter(
+						new FileWriter(new File(RESULTS_DIRECTORY + LOAN_FILE + "loan.csv")));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
 
-    public void setNbMaxResourceAsked(int nbMaxResourceAsked) {
-        this.nbMaxResourceAsked = nbMaxResourceAsked;
-    }
+		try {
+			this.writerLoan.write(nodeID + ";" + (nbLoan + 1L));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void setNbMaxResourceAsked(int nbMaxResourceAsked) {
+		this.nbMaxResourceAsked = nbMaxResourceAsked;
+	}
 }
