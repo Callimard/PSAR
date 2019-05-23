@@ -509,6 +509,8 @@ public class AlgoJL implements EDProtocol {
         if (addInVisitedNode)
             message.addVisitedNode(this.node);
 
+        BigObserver.BIG_OBSERVER.messageSend();
+        
         tr.send(message.getSender(), message.getReceiver(), message, this.myPid);
     }
 

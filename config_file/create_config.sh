@@ -1,6 +1,4 @@
-if [ ! -d "$1"]; then
-	mkdir "$1"
-fi
+mkdir "$1"
 
 for i in {1..80};
 do

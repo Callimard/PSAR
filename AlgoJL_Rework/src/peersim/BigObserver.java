@@ -35,13 +35,32 @@ public class BigObserver {
 
 	private BufferedWriter writerCSV;
 	private BufferedWriter writerTotal;
+	private BufferedWriter writerNbMessage;
 
+	private boolean begin = false;
+	
 	private long total = 0;
+
+	private long nbMessage = 0;
 
 	private int nbMaxResourceAsked = -1;
 
 	// Constructors.
 
+	private BigObserver() {
+		File resultsDirectory = new File(RESULTS_DIRECTORY);
+		File fileTotal = new File(RESULTS_DIRECTORY + TOTAL_FILE);
+		File fileOther = new File(RESULTS_DIRECTORY + OTHER_FILE);
+
+		try {
+			this.createDirectory(resultsDirectory);
+			this.createDirectory(fileTotal);
+			this.createDirectory(fileOther);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	// Methods.
 
 	public void setInCS(long nodeID, Set<Integer> resourceSet) {
@@ -53,6 +72,8 @@ public class BigObserver {
 
 		if (CommonState.getIntTime() >= TIME_BEGIN) {
 
+			this.begin = true;
+			
 			Set<Integer> set = this.mapNodeCSResource.get(nodeID);
 
 			assert set == null : "N = " + nodeID + " CS alors qu'il est deja en CS.";
@@ -89,7 +110,7 @@ public class BigObserver {
 		 * );
 		 */
 
-		if (CommonState.getIntTime() >= TIME_BEGIN) {
+		if (CommonState.getIntTime() >= TIME_BEGIN && this.begin) {
 			Set<Integer> resourceSet = this.mapNodeCSResource.get(nodeID);
 
 			assert resourceSet != null : "N = " + nodeID + " Release CS alors qu'il etait pas en CS";
@@ -100,18 +121,6 @@ public class BigObserver {
 			Long timeCS = endTime - beginTime;
 			this.total += (((long) resourceSet.size()) * timeCS);
 			double percent = (((double) (this.total) * 100.0d) / 8_000_000.0d);
-
-			File resultsDirectory = new File(RESULTS_DIRECTORY);
-			File fileTotal = new File(RESULTS_DIRECTORY + TOTAL_FILE);
-			File fileOther = new File(RESULTS_DIRECTORY + OTHER_FILE);
-
-			try {
-				this.createDirectory(resultsDirectory);
-				this.createDirectory(fileTotal);
-				this.createDirectory(fileOther);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
 
 			if (this.writerCSV == null) {
 				try {
@@ -167,6 +176,25 @@ public class BigObserver {
 		 * "---------------------------------------------------------------------------------------"
 		 * );
 		 */
+	}
+
+	public void messageSend() {
+		if (CommonState.getIntTime() >= TIME_BEGIN) {
+			try {
+				if (this.writerNbMessage == null) {
+					File nbMessageFile = new File(RESULTS_DIRECTORY + OTHER_FILE + "messages.csv");
+					this.writerNbMessage = new BufferedWriter(new FileWriter(nbMessageFile));
+				}
+
+				this.nbMessage++;
+
+				this.writerNbMessage.newLine();
+				this.writerNbMessage.write(String.valueOf(this.nbMessage));
+
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 
 	private void createDirectory(File directory) throws IOException {
