@@ -941,7 +941,7 @@ public class AlgoJL implements EDProtocol {
         /* boucle verifiant si une ressource a deja ete pretee */
         for (int i = 0; i < ownedResources.size(); i++) {
             index = ownedResources.get(i);
-            if (arrayToken[index].getLenderNode() == null) {
+            if (arrayToken[index].getLenderNode() != null) {
                 lentResources = true;
                 break; // Plus aucun interet de chercher, on ne pretera pas.
             }
@@ -950,8 +950,12 @@ public class AlgoJL implements EDProtocol {
         if (ownedResources.containsAll(missingResources) && !lentResources && this.lentResources.isEmpty()
                 && this.getState() != State.IN_CS) {
             if (this.getState() == State.WAIT_CS) {
+                if (!this.loanAsked || this.compareRequest(loanRequest, this.currentRequestingCS.getMyRequestMark())) {
+                    System.out.println("JE PRETE!!!!!!!!!!!");
+                }
                 return !this.loanAsked || this.compareRequest(loanRequest, this.currentRequestingCS.getMyRequestMark());
             } else {
+                System.out.println("JE PRETE!!!!!!!!!!! 2");
                 return true;
             }
         } else {
