@@ -160,11 +160,11 @@ public class BigObserver {
 		 * "Observer---------------------------------------------------------------------------------------"
 		 * );
 		 */
-
+		System.out.println("Répartition des Tokens :");
 		for (AlgoJL algoJL : this.listAlgoJL) {
 			Token array[] = algoJL.getArrayToken();
 
-			System.out.print("N = " + algoJL.getNode().getID() + " [");
+			System.out.print("Noeud " + algoJL.getNode().getID() + " [");
 			for (int i = 0; i < array.length; i++) {
 				System.out.print(" " + (array[i] != null ? 1 : 0) + " ");
 			}
