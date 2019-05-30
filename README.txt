@@ -1,4 +1,4 @@
-README :
+﻿README :
 
 Dans le cadre de ce projet, nous avons utilisé l'IDE Eclipse. Les instructions qui suivent ne fonctionnent donc qu'avec cet IDE :
 
@@ -22,3 +22,4 @@ Dans ce fichier de configuration, vous pouvez faire varier les valeurs suivantes
 - protocol.algoJL.nb_resource indique le nombre de ressources
 - protocol.algoJL.nbCS indique le nombre de sections critiques que doit efectuer chaque noeud (-1 = infini)
 - protocol.transportPID.mindelay et .maxdelay permet de faire varier la latence du réseau
+- protocol.algoJL.nb_max_r_asked le nombre maximal de ressource que le peut demander par requête (doit être inférieur au nombre de ressources total)
